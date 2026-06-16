@@ -1,99 +1,117 @@
 import QuoteForm from '@/components/QuoteForm';
-import Link from 'next/link';
 
 export const metadata = {
   title: 'Contact & Free Quote | Clearwater Plumbing',
   description: 'Get a free plumbing quote or book a service call. Fast response guaranteed.',
 };
 
+const serviceAreas = ['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam', 'Delta', 'Langley', 'Maple Ridge'];
+
 export default function Contact() {
   return (
     <div>
+      <style>{`
+        .contact-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        @media (min-width: 1024px) {
+          .contact-grid { grid-template-columns: 2fr 1fr; }
+        }
+        .areas-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          gap: 1rem;
+          max-width: 42rem;
+          margin: 0 auto;
+          text-align: center;
+        }
+      `}</style>
+
       {/* Hero */}
-      <section className="section-navy py-16 md:py-24">
-        <div className="container-wide text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+      <section className="section-navy" style={{ padding: '4rem 0' }}>
+        <div className="container-wide" style={{ textAlign: 'center' }}>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '1rem' }}>
             Get in Touch
           </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          <p style={{ fontSize: '1.125rem', color: '#d1d5db', maxWidth: '42rem', marginLeft: 'auto', marginRight: 'auto' }}>
             Need a plumber? Fill out the form below for a free quote, or call us directly.
           </p>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="section-light py-20 md:py-28">
+      <section className="section-light" style={{ padding: '5rem 0' }}>
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Form - Takes 2 columns on desktop */}
-            <div className="lg:col-span-2">
-              <div className="bg-white p-8 rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold text-navy mb-2">
+          <div className="contact-grid">
+            {/* Form — 2 columns on desktop */}
+            <div>
+              <div style={{
+                backgroundColor: '#ffffff',
+                padding: '2rem',
+                borderRadius: '0.5rem',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+              }}>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.5rem' }}>
                   Get Your Free Quote
                 </h2>
-                <p className="text-gray-600 mb-6">
+                <p style={{ color: '#4b5563', marginBottom: '1.5rem' }}>
                   Tell us about the work you need done, and we'll get back to you within 2 hours with a quote.
                 </p>
                 <QuoteForm />
               </div>
             </div>
 
-            {/* Contact Info - 1 column on desktop */}
-            <div className="space-y-8">
-              {/* Direct Contact */}
-              <div className="bg-white p-6 rounded-lg border border-gray-200">
-                <h3 className="font-bold text-lg text-navy mb-4">
+            {/* Contact Info — 1 column on desktop */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div style={{ backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '0.5rem', border: '1px solid #e5e7eb' }}>
+                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', color: '#1B3A5C', marginBottom: '1rem' }}>
                   Call Us Directly
                 </h3>
                 <a
                   href="tel:6045550123"
-                  className="text-3xl font-bold text-blue hover:text-navy transition-colors"
+                  style={{ fontSize: '1.875rem', fontWeight: 700, color: '#2E86C1' }}
                 >
                   (604) 555-0123
                 </a>
-                <p className="text-gray-600 text-sm mt-4">
+                <p style={{ color: '#4b5563', fontSize: '0.875rem', marginTop: '1rem' }}>
                   For emergencies, call anytime. For estimates, call during business hours.
                 </p>
               </div>
 
-              {/* Email */}
-              <div className="bg-white p-6 rounded-lg border border-gray-200">
-                <h3 className="font-bold text-lg text-navy mb-4">
+              <div style={{ backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '0.5rem', border: '1px solid #e5e7eb' }}>
+                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', color: '#1B3A5C', marginBottom: '1rem' }}>
                   Email Us
                 </h3>
                 <a
                   href="mailto:info@clearwaterplumbing.com"
-                  className="text-blue hover:text-navy transition-colors font-600"
+                  style={{ color: '#2E86C1', fontWeight: 600 }}
                 >
                   info@clearwaterplumbing.com
                 </a>
               </div>
 
-              {/* Hours */}
-              <div className="bg-white p-6 rounded-lg border border-gray-200">
-                <h3 className="font-bold text-lg text-navy mb-4">
+              <div style={{ backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '0.5rem', border: '1px solid #e5e7eb' }}>
+                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', color: '#1B3A5C', marginBottom: '1rem' }}>
                   Hours
                 </h3>
-                <div className="text-sm text-gray-600 space-y-1">
-                  <p><span className="font-600">Mon-Fri:</span> 7am - 6pm</p>
-                  <p><span className="font-600">Sat-Sun:</span> 8am - 4pm</p>
-                  <p className="mt-2 text-blue font-600">
-                    24/7 for emergencies
-                  </p>
+                <div style={{ fontSize: '0.875rem', color: '#4b5563', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                  <p><span style={{ fontWeight: 600 }}>Mon-Fri:</span> 7am - 6pm</p>
+                  <p><span style={{ fontWeight: 600 }}>Sat-Sun:</span> 8am - 4pm</p>
+                  <p style={{ marginTop: '0.5rem', color: '#2E86C1', fontWeight: 600 }}>24/7 for emergencies</p>
                 </div>
               </div>
 
-              {/* Badge */}
-              <div className="bg-blue/10 p-6 rounded-lg border border-blue/20">
-                <p className="text-sm font-bold text-navy mb-2">
-                  ✓ Licensed #L12345
-                </p>
-                <p className="text-sm font-bold text-navy mb-2">
-                  ✓ Fully Insured
-                </p>
-                <p className="text-sm font-bold text-navy">
-                  ✓ Bonded
-                </p>
+              <div style={{
+                backgroundColor: 'rgba(46, 134, 193, 0.08)',
+                padding: '1.5rem',
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(46, 134, 193, 0.2)',
+              }}>
+                <p style={{ fontSize: '0.875rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.5rem' }}>✓ Licensed #L12345</p>
+                <p style={{ fontSize: '0.875rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.5rem' }}>✓ Fully Insured</p>
+                <p style={{ fontSize: '0.875rem', fontWeight: 700, color: '#1B3A5C' }}>✓ Bonded</p>
               </div>
             </div>
           </div>
@@ -101,41 +119,43 @@ export default function Contact() {
       </section>
 
       {/* Service Areas */}
-      <section className="section-navy py-16 md:py-20">
+      <section className="section-navy" style={{ padding: '4rem 0' }}>
         <div className="container-wide">
-          <h2 className="text-2xl font-bold text-center mb-8">
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, textAlign: 'center', marginBottom: '2rem' }}>
             Service Areas
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto text-center text-sm">
-            {['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam', 'Delta', 'Langley', 'Maple Ridge'].map((area) => (
-              <p key={area} className="text-gray-300">
-                ✓ {area}
-              </p>
+          <div className="areas-grid">
+            {serviceAreas.map((area) => (
+              <p key={area} style={{ color: '#d1d5db', fontSize: '0.875rem' }}>✓ {area}</p>
             ))}
           </div>
-          <p className="text-center text-gray-400 text-sm mt-6">
+          <p style={{ textAlign: 'center', color: '#9ca3af', fontSize: '0.875rem', marginTop: '1.5rem' }}>
             Not listed? Call us—we may still serve your area.
           </p>
         </div>
       </section>
 
-      {/* Calendly Embed - Placeholder */}
-      <section className="section-light py-20 md:py-28">
+      {/* Calendly Placeholder */}
+      <section className="section-light" style={{ padding: '5rem 0' }}>
         <div className="container-wide">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold text-navy mb-2 text-center">
+          <div style={{ maxWidth: '42rem', marginLeft: 'auto', marginRight: 'auto' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.5rem', textAlign: 'center' }}>
               Book a Service Call
             </h2>
-            <p className="text-gray-600 text-center mb-8">
+            <p style={{ color: '#4b5563', textAlign: 'center', marginBottom: '2rem' }}>
               Prefer to schedule online? Use the calendar below to book a time that works for you.
             </p>
-
-            {/* Calendly Placeholder */}
-            <div className="bg-white border-2 border-dashed border-blue rounded-lg p-12 text-center">
-              <p className="text-gray-600 mb-4">
+            <div style={{
+              backgroundColor: '#ffffff',
+              border: '2px dashed #2E86C1',
+              borderRadius: '0.5rem',
+              padding: '3rem',
+              textAlign: 'center',
+            }}>
+              <p style={{ color: '#4b5563', marginBottom: '1rem' }}>
                 Calendly calendar embed will appear here.
               </p>
-              <p className="text-sm text-gray-500">
+              <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
                 Once you provide the Calendly embed code, this section will display your booking calendar.
               </p>
             </div>

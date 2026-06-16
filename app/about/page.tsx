@@ -5,27 +5,67 @@ export const metadata = {
   description: 'Learn about Clearwater Plumbing. Licensed, insured, bonded. Serving the Lower Mainland since 2012.',
 };
 
+const differences = [
+  { title: 'Licensed & Insured', text: 'We carry full liability insurance and are bonded. Your home and our work are fully protected.' },
+  { title: 'No Hidden Fees', text: "We quote before we start. The price you're given is the price you pay, unless you approve changes." },
+  { title: 'Only Qualified Plumbers', text: "Every job is handled by a licensed plumber. We don't send apprentices to do professional work." },
+  { title: 'Same-Day Response', text: 'Emergency or routine, we respond within 2 hours during business hours. 24/7 availability for emergencies.' },
+  { title: 'Guarantee Your Satisfaction', text: "If you're not happy with the work, we'll make it right. Guaranteed." },
+  { title: 'Local & Accountable', text: 'We live in this community. We care about our reputation, and we want to be your plumber for life.' },
+];
+
+const stats = [
+  { stat: '12+', label: 'Years in Business' },
+  { stat: '20+', label: 'Years Experience' },
+  { stat: '2000+', label: 'Happy Customers' },
+];
+
+const serviceAreas = ['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam', 'Delta', 'Langley', 'Maple Ridge'];
+
 export default function About() {
   return (
     <div>
+      <style>{`
+        .differences-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 2.5rem;
+          max-width: 52rem;
+          margin: 0 auto;
+        }
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          gap: 2rem;
+          text-align: center;
+        }
+        .areas-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+          gap: 1rem;
+        }
+      `}</style>
+
       {/* Hero */}
-      <section className="section-navy py-16 md:py-24">
-        <div className="container-wide text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+      <section className="section-navy" style={{ padding: '4rem 0' }}>
+        <div className="container-wide" style={{ textAlign: 'center' }}>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '1rem' }}>
             About Clearwater Plumbing
           </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          <p style={{ fontSize: '1.125rem', color: '#d1d5db', maxWidth: '42rem', marginLeft: 'auto', marginRight: 'auto' }}>
             12+ years of professional plumbing service in the Lower Mainland. Licensed, insured, and bonded.
           </p>
         </div>
       </section>
 
       {/* Story */}
-      <section className="section-light py-20 md:py-28">
+      <section className="section-light" style={{ padding: '5rem 0' }}>
         <div className="container-wide">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-navy mb-6">Our Story</h2>
-            <div className="space-y-4 text-gray-700">
+          <div style={{ maxWidth: '48rem', marginLeft: 'auto', marginRight: 'auto' }}>
+            <h2 style={{ fontSize: '1.875rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '1.5rem' }}>
+              Our Story
+            </h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: '#374151' }}>
               <p>
                 In 2012, I started Clearwater Plumbing with one simple idea: plumbing work should be honest, fast, and professional. No shortcuts. No surprises. No trying to upsell customers on work they don't need.
               </p>
@@ -44,76 +84,48 @@ export default function About() {
       </section>
 
       {/* Why We're Different */}
-      <section className="section-navy py-20 md:py-28">
+      <section className="section-navy" style={{ padding: '5rem 0' }}>
         <div className="container-wide">
-          <h2 className="text-3xl font-bold text-center mb-12">
+          <h2 style={{ fontSize: '1.875rem', fontWeight: 700, textAlign: 'center', marginBottom: '3rem' }}>
             Why We're Different
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto">
-            <div>
-              <h3 className="font-bold text-lg mb-3">Licensed & Insured</h3>
-              <p className="text-gray-300 text-sm">
-                We carry full liability insurance and are bonded. Your home and our work are fully protected.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-bold text-lg mb-3">No Hidden Fees</h3>
-              <p className="text-gray-300 text-sm">
-                We quote before we start. The price you're given is the price you pay, unless you approve changes.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-bold text-lg mb-3">Only Qualified Plumbers</h3>
-              <p className="text-gray-300 text-sm">
-                Every job is handled by a licensed plumber. We don't send apprentices to do professional work.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-bold text-lg mb-3">Same-Day Response</h3>
-              <p className="text-gray-300 text-sm">
-                Emergency or routine, we respond within 2 hours during business hours. 24/7 availability for emergencies.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-bold text-lg mb-3">Guarantee Your Satisfaction</h3>
-              <p className="text-gray-300 text-sm">
-                If you're not happy with the work, we'll make it right. Guaranteed.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-bold text-lg mb-3">Local & Accountable</h3>
-              <p className="text-gray-300 text-sm">
-                We live in this community. We care about our reputation, and we want to be your plumber for life.
-              </p>
-            </div>
+          <div className="differences-grid">
+            {differences.map((item) => (
+              <div key={item.title}>
+                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', marginBottom: '0.75rem' }}>{item.title}</h3>
+                <p style={{ color: '#d1d5db', fontSize: '0.875rem' }}>{item.text}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Credentials */}
-      <section className="section-light py-20 md:py-28">
+      <section className="section-light" style={{ padding: '5rem 0' }}>
         <div className="container-wide">
-          <h2 className="text-3xl font-bold text-center mb-12 text-navy">
+          <h2 style={{ fontSize: '1.875rem', fontWeight: 700, textAlign: 'center', marginBottom: '3rem', color: '#1B3A5C' }}>
             Credentials
           </h2>
-          <div className="max-w-2xl mx-auto bg-white border border-gray-200 rounded-lg p-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-              <div>
-                <p className="text-3xl font-bold text-blue mb-2">12+</p>
-                <p className="font-600 text-navy">Years in Business</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-blue mb-2">20+</p>
-                <p className="font-600 text-navy">Years Experience</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-blue mb-2">2000+</p>
-                <p className="font-600 text-navy">Happy Customers</p>
-              </div>
+          <div style={{
+            maxWidth: '42rem',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            backgroundColor: '#ffffff',
+            border: '1px solid #e5e7eb',
+            borderRadius: '0.5rem',
+            padding: '2rem',
+          }}>
+            <div className="stats-grid">
+              {stats.map((item) => (
+                <div key={item.label}>
+                  <p style={{ fontSize: '1.875rem', fontWeight: 700, color: '#2E86C1', marginBottom: '0.5rem' }}>{item.stat}</p>
+                  <p style={{ fontWeight: 600, color: '#1B3A5C' }}>{item.label}</p>
+                </div>
+              ))}
             </div>
-            <div className="mt-8 pt-8 border-t border-gray-200 text-center">
-              <p className="font-bold text-navy mb-3">Licensed #L12345</p>
-              <p className="text-sm text-gray-600">
+            <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid #e5e7eb', textAlign: 'center' }}>
+              <p style={{ fontWeight: 700, color: '#1B3A5C', marginBottom: '0.75rem' }}>Licensed #L12345</p>
+              <p style={{ fontSize: '0.875rem', color: '#4b5563' }}>
                 Fully insured and bonded. All work meets Building Code standards.
               </p>
             </div>
@@ -122,18 +134,18 @@ export default function About() {
       </section>
 
       {/* Service Area */}
-      <section className="section-navy py-20 md:py-28">
-        <div className="container-wide text-center">
-          <h2 className="text-3xl font-bold mb-12">
+      <section className="section-navy" style={{ padding: '5rem 0' }}>
+        <div className="container-wide" style={{ textAlign: 'center' }}>
+          <h2 style={{ fontSize: '1.875rem', fontWeight: 700, marginBottom: '3rem' }}>
             Service Area
           </h2>
-          <div className="max-w-2xl mx-auto">
-            <p className="text-lg text-gray-300 mb-6">
+          <div style={{ maxWidth: '42rem', marginLeft: 'auto', marginRight: 'auto' }}>
+            <p style={{ fontSize: '1.125rem', color: '#d1d5db', marginBottom: '1.5rem' }}>
               We serve the Lower Mainland from Port Moody to Langley, and north to Whistler. Our main service areas include:
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              {['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam', 'Delta', 'Langley', 'Maple Ridge'].map((area) => (
-                <p key={area} className="text-gray-300">✓ {area}</p>
+            <div className="areas-grid">
+              {serviceAreas.map((area) => (
+                <p key={area} style={{ color: '#d1d5db', fontSize: '0.875rem' }}>✓ {area}</p>
               ))}
             </div>
           </div>
@@ -141,15 +153,15 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="section-light py-20 md:py-28">
-        <div className="container-wide text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
+      <section className="section-light" style={{ padding: '5rem 0' }}>
+        <div className="container-wide" style={{ textAlign: 'center' }}>
+          <h2 style={{ fontSize: '2rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '1.5rem' }}>
             Ready to Work With Us?
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
+          <p style={{ fontSize: '1.125rem', color: '#4b5563', marginBottom: '2rem' }}>
             Get a free quote on any plumbing work.
           </p>
-          <Link href="/contact" className="btn-primary bg-blue font-bold text-lg">
+          <Link href="/contact" className="btn-primary" style={{ fontWeight: 700, fontSize: '1.125rem' }}>
             Request a Free Quote
           </Link>
         </div>

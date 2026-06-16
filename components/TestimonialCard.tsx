@@ -6,14 +6,22 @@ interface TestimonialCardProps {
 
 export default function TestimonialCard({ quote, author, rating }: TestimonialCardProps) {
   return (
-    <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-      <div className="flex gap-1 mb-4">
+    <div style={{
+      backgroundColor: '#ffffff',
+      padding: '1.5rem',
+      borderRadius: '0.5rem',
+      border: '1px solid #e5e7eb',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+    }}>
+      <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '1rem' }}>
         {[...Array(rating)].map((_, i) => (
-          <span key={i} className="star">★</span>
+          <span key={i} style={{ color: '#f59e0b', fontSize: '1.25rem' }}>★</span>
         ))}
       </div>
-      <p className="text-gray-700 text-sm mb-4 italic">"{quote}"</p>
-      <p className="font-600 text-dark text-sm">— {author}</p>
+      <p style={{ color: '#374151', fontSize: '0.875rem', marginBottom: '1rem', fontStyle: 'italic' }}>
+        "{quote}"
+      </p>
+      <p style={{ fontWeight: 600, color: '#2C3E50', fontSize: '0.875rem' }}>— {author}</p>
     </div>
   );
 }

@@ -1,82 +1,76 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-
-* {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 body {
-  font-family: "Inter", sans-serif;
-  color: #2C3E50;
-  background: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #374151;
+  line-height: 1.6;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
 }
 
-button {
-  font-family: inherit;
+img {
+  max-width: 100%;
+  display: block;
 }
 
-/* Utility classes */
-.btn-primary {
-  background-color: #2E86C1;
-  color: white;
-  padding: 12px 32px;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  min-height: 48px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Layout */
+.container-wide {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-.btn-primary:hover {
-  background-color: #1a5fa8;
-}
-
-.btn-primary:focus {
-  outline: 2px solid #2E86C1;
-  outline-offset: 2px;
-}
-
+/* Section backgrounds */
 .section-navy {
   background-color: #1B3A5C;
-  color: white;
-}
-
-.section-blue {
-  background-color: #2E86C1;
-  color: white;
+  color: #ffffff;
 }
 
 .section-light {
   background-color: #F8FAFB;
 }
 
-.container-wide {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+.section-blue {
+  background-color: #2E86C1;
+  color: #ffffff;
 }
 
-.star {
-  color: #FDB022;
-  font-size: 14px;
-  letter-spacing: 2px;
+/* Primary button */
+.btn-primary {
+  display: inline-block;
+  background-color: #2E86C1;
+  color: #ffffff;
+  padding: 0.75rem 1.75rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s ease;
+  text-align: center;
+}
+
+.btn-primary:hover {
+  opacity: 0.88;
+}
+
+/* Hover colour utilities */
+.hover-blue:hover {
+  color: #2E86C1;
+}
+
+.hover-navy:hover {
+  color: #1B3A5C;
 }

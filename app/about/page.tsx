@@ -5,19 +5,19 @@ export const metadata = {
   description: 'Learn about Clearwater Plumbing. Licensed, insured, bonded. Serving the Lower Mainland since 2012.',
 };
 
-const differences = [
-  { title: 'Licensed & Insured', text: 'We carry full liability insurance and are bonded. Your home and our work are fully protected.' },
-  { title: 'No Hidden Fees', text: "We quote before we start. The price you're given is the price you pay, unless you approve changes." },
-  { title: 'Only Qualified Plumbers', text: "Every job is handled by a licensed plumber. We don't send apprentices to do professional work." },
-  { title: 'Same-Day Response', text: 'Emergency or routine, we respond within 2 hours during business hours. 24/7 availability for emergencies.' },
-  { title: 'Guarantee Your Satisfaction', text: "If you're not happy with the work, we'll make it right. Guaranteed." },
-  { title: 'Local & Accountable', text: 'We live in this community. We care about our reputation, and we want to be your plumber for life.' },
-];
-
 const stats = [
   { stat: '12+', label: 'Years in Business' },
-  { stat: '20+', label: 'Years Experience' },
-  { stat: '2000+', label: 'Happy Customers' },
+  { stat: '20+', label: 'Years of Experience' },
+  { stat: '2,000+', label: 'Jobs Completed' },
+];
+
+const differences = [
+  { title: 'Licensed & Insured', text: 'We carry full liability insurance and are bonded. Every job is handled by a licensed plumber, not an apprentice doing unsupervised work.' },
+  { title: 'No Hidden Fees', text: "We quote before we start. The price you're given is the price you pay. If anything changes mid-job, we ask first." },
+  { title: 'Same-Day Response', text: 'We respond within 2 hours during business hours. For true emergencies, we pick up the phone at any hour.' },
+  { title: 'Honest Advice', text: "We'll tell you what actually needs fixing. If it doesn't need replacing, we won't suggest it. Repeat business matters more to us than upselling." },
+  { title: 'Clean Workmanship', text: 'We treat your home like our own. We clean up after every job and leave the space better than we found it.' },
+  { title: 'Local & Accountable', text: 'We live in this community. Our reputation is built on word-of-mouth from neighbours who trust us with their homes.' },
 ];
 
 const serviceAreas = ['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam', 'Delta', 'Langley', 'Maple Ridge'];
@@ -26,74 +26,115 @@ export default function About() {
   return (
     <div>
       <style>{`
-        .differences-grid {
+        .about-diff-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          grid-template-columns: 1fr;
           gap: 2.5rem;
-          max-width: 52rem;
-          margin: 0 auto;
         }
-        .stats-grid {
+        @media (min-width: 768px) {
+          .about-diff-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 4rem; }
+        }
+        .about-stats-row {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-          gap: 2rem;
+          grid-template-columns: repeat(3, 1fr);
           text-align: center;
         }
-        .areas-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-          gap: 1rem;
+        @media (max-width: 480px) {
+          .about-stats-row { grid-template-columns: 1fr; gap: 2rem; text-align: left; }
         }
       `}</style>
 
       {/* Hero */}
-      <section className="section-navy" style={{ padding: '4rem 0' }}>
-        <div className="container-wide" style={{ textAlign: 'center' }}>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '1rem' }}>
+      <section style={{ backgroundColor: '#1B3A5C', padding: '4rem 0' }}>
+        <div className="container-wide">
+          <h1 style={{
+            fontSize: 'clamp(32px, 5vw, 54px)',
+            fontWeight: 900,
+            color: '#ffffff',
+            marginBottom: '1rem',
+            lineHeight: 1.1,
+            letterSpacing: '-0.01em',
+          }}>
             About Clearwater Plumbing
           </h1>
-          <p style={{ fontSize: '1.125rem', color: '#d1d5db', maxWidth: '42rem', marginLeft: 'auto', marginRight: 'auto' }}>
-            12+ years of professional plumbing service in the Lower Mainland. Licensed, insured, and bonded.
+          <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.7)', maxWidth: '500px', lineHeight: 1.65 }}>
+            12+ years of professional plumbing in the Lower Mainland. Licensed, insured, and bonded.
           </p>
         </div>
       </section>
 
       {/* Story */}
-      <section className="section-light" style={{ padding: '5rem 0' }}>
+      <section style={{ backgroundColor: '#ffffff', padding: '5rem 0' }}>
         <div className="container-wide">
-          <div style={{ maxWidth: '48rem', marginLeft: 'auto', marginRight: 'auto' }}>
-            <h2 style={{ fontSize: '1.875rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '1.5rem' }}>
+          <div style={{ maxWidth: '720px' }}>
+            <h2 style={{
+              fontSize: 'clamp(24px, 3.5vw, 36px)',
+              fontWeight: 900,
+              color: '#1B3A5C',
+              marginBottom: '2rem',
+              lineHeight: 1.1,
+              letterSpacing: '-0.01em',
+            }}>
               Our Story
             </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: '#374151' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', fontSize: '16px', color: '#1e293b', lineHeight: 1.75 }}>
               <p>
                 In 2012, I started Clearwater Plumbing with one simple idea: plumbing work should be honest, fast, and professional. No shortcuts. No surprises. No trying to upsell customers on work they don't need.
               </p>
               <p>
-                After 20 years as a plumber working for other companies, I'd seen too much—rushed jobs, hidden costs, contractors who treated homes like just another number. I wanted to do it differently.
+                After 20 years as a plumber working for other companies, I'd seen too much — rushed jobs, hidden costs, contractors who treated homes like just another number. I wanted to do it differently.
               </p>
               <p>
-                Today, we've built a reputation for showing up on time, doing the work right, quoting fairly, and treating your home with respect. Repeat customers make up over 60% of our work, which tells you something about our service.
+                Today, we've built a reputation for showing up on time, doing the work right, quoting fairly, and treating your home with respect. Repeat customers make up over 60% of our work — that tells you something about how we operate.
               </p>
               <p>
-                We're still a small team of licensed plumbers—no apprentices doing unsupervised work. Every job gets a qualified professional. Every quote is honest. That's what drives us.
+                We're still a small team. Every job gets a qualified, licensed plumber. Every quote is honest. That's not a marketing line — it's just how we work.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why We're Different */}
-      <section className="section-navy" style={{ padding: '5rem 0' }}>
+      {/* Stats Band */}
+      <section style={{ backgroundColor: '#1B3A5C', padding: '3.5rem 0' }}>
         <div className="container-wide">
-          <h2 style={{ fontSize: '1.875rem', fontWeight: 700, textAlign: 'center', marginBottom: '3rem' }}>
+          <div className="about-stats-row">
+            {stats.map((item, i) => (
+              <div key={item.stat} style={{
+                paddingLeft: i > 0 ? '2rem' : '0',
+                paddingRight: i < stats.length - 1 ? '2rem' : '0',
+                borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.15)' : 'none',
+              }}>
+                <p style={{ fontSize: '2.5rem', fontWeight: 900, color: '#ffffff', lineHeight: 1, marginBottom: '0.5rem' }}>
+                  {item.stat}
+                </p>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)' }}>{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why We're Different */}
+      <section style={{ backgroundColor: '#F0F4F8', padding: '5rem 0' }}>
+        <div className="container-wide">
+          <h2 style={{
+            fontSize: 'clamp(24px, 3.5vw, 36px)',
+            fontWeight: 900,
+            color: '#1B3A5C',
+            marginBottom: '3rem',
+            lineHeight: 1.1,
+            letterSpacing: '-0.01em',
+          }}>
             Why We're Different
           </h2>
-          <div className="differences-grid">
+          <div className="about-diff-grid">
             {differences.map((item) => (
               <div key={item.title}>
-                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', marginBottom: '0.75rem' }}>{item.title}</h3>
-                <p style={{ color: '#d1d5db', fontSize: '0.875rem' }}>{item.text}</p>
+                <h3 style={{ fontWeight: 800, fontSize: '1.0625rem', color: '#1B3A5C', marginBottom: '0.625rem' }}>
+                  {item.title}
+                </h3>
+                <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.7 }}>{item.text}</p>
               </div>
             ))}
           </div>
@@ -101,69 +142,79 @@ export default function About() {
       </section>
 
       {/* Credentials */}
-      <section className="section-light" style={{ padding: '5rem 0' }}>
+      <section style={{ backgroundColor: '#ffffff', padding: '4rem 0' }}>
         <div className="container-wide">
-          <h2 style={{ fontSize: '1.875rem', fontWeight: 700, textAlign: 'center', marginBottom: '3rem', color: '#1B3A5C' }}>
-            Credentials
-          </h2>
-          <div style={{
-            maxWidth: '42rem',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            backgroundColor: '#ffffff',
-            border: '1px solid #e5e7eb',
-            borderRadius: '0.5rem',
-            padding: '2rem',
-          }}>
-            <div className="stats-grid">
-              {stats.map((item) => (
-                <div key={item.label}>
-                  <p style={{ fontSize: '1.875rem', fontWeight: 700, color: '#2E86C1', marginBottom: '0.5rem' }}>{item.stat}</p>
-                  <p style={{ fontWeight: 600, color: '#1B3A5C' }}>{item.label}</p>
-                </div>
+          <div style={{ maxWidth: '480px' }}>
+            <h2 style={{
+              fontSize: 'clamp(22px, 3vw, 30px)',
+              fontWeight: 900,
+              color: '#1B3A5C',
+              marginBottom: '1.75rem',
+              lineHeight: 1.1,
+            }}>
+              Credentials
+            </h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {[
+                'Licensed Plumber — Licence #L12345',
+                'Fully insured — $2M liability coverage',
+                'Bonded for your protection',
+                'All work meets BC Building Code standards',
+                'Serving the Lower Mainland since 2012',
+              ].map((item) => (
+                <p key={item} style={{ fontSize: '15px', color: '#1e293b' }}>
+                  <span style={{ color: '#2E86C1', fontWeight: 700, marginRight: '0.5rem' }}>✓</span>
+                  {item}
+                </p>
               ))}
-            </div>
-            <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid #e5e7eb', textAlign: 'center' }}>
-              <p style={{ fontWeight: 700, color: '#1B3A5C', marginBottom: '0.75rem' }}>Licensed #L12345</p>
-              <p style={{ fontSize: '0.875rem', color: '#4b5563' }}>
-                Fully insured and bonded. All work meets Building Code standards.
-              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Service Area */}
-      <section className="section-navy" style={{ padding: '5rem 0' }}>
-        <div className="container-wide" style={{ textAlign: 'center' }}>
-          <h2 style={{ fontSize: '1.875rem', fontWeight: 700, marginBottom: '3rem' }}>
-            Service Area
-          </h2>
-          <div style={{ maxWidth: '42rem', marginLeft: 'auto', marginRight: 'auto' }}>
-            <p style={{ fontSize: '1.125rem', color: '#d1d5db', marginBottom: '1.5rem' }}>
-              We serve the Lower Mainland from Port Moody to Langley, and north to Whistler. Our main service areas include:
-            </p>
-            <div className="areas-grid">
-              {serviceAreas.map((area) => (
-                <p key={area} style={{ color: '#d1d5db', fontSize: '0.875rem' }}>✓ {area}</p>
-              ))}
-            </div>
-          </div>
+      <section style={{ backgroundColor: '#1B3A5C', padding: '4rem 0' }}>
+        <div className="container-wide">
+          <p style={{
+            fontSize: '11px',
+            fontWeight: 700,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: 'rgba(255,255,255,0.45)',
+            marginBottom: '0.75rem',
+          }}>
+            Service Areas
+          </p>
+          <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.8)', marginBottom: '0.625rem' }}>
+            {serviceAreas.join(' · ')}
+          </p>
+          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginTop: '0.5rem' }}>
+            We serve the entire Lower Mainland. Call to confirm your area: (604) 555-0123
+          </p>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section-light" style={{ padding: '5rem 0' }}>
-        <div className="container-wide" style={{ textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '1.5rem' }}>
+      <section style={{ backgroundColor: '#F0F4F8', padding: '4rem 0' }}>
+        <div className="container-wide">
+          <h2 style={{
+            fontSize: 'clamp(24px, 3.5vw, 36px)',
+            fontWeight: 900,
+            color: '#1B3A5C',
+            marginBottom: '1rem',
+            lineHeight: 1.1,
+          }}>
             Ready to Work With Us?
           </h2>
-          <p style={{ fontSize: '1.125rem', color: '#4b5563', marginBottom: '2rem' }}>
+          <p style={{ fontSize: '16px', color: '#64748b', marginBottom: '2rem' }}>
             Get a free quote on any plumbing work.
           </p>
-          <Link href="/contact" className="btn-primary" style={{ fontWeight: 700, fontSize: '1.125rem' }}>
-            Request a Free Quote
-          </Link>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            <Link href="/contact" className="btn-primary">Request a Free Quote</Link>
+            <a href="tel:6045550123" style={{ fontSize: '15px', color: '#64748b', textDecoration: 'none' }}>
+              or call <span style={{ color: '#2E86C1', fontWeight: 600 }}>(604) 555-0123</span>
+            </a>
+          </div>
         </div>
       </section>
     </div>

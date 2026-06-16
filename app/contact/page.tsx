@@ -11,152 +11,207 @@ export default function Contact() {
   return (
     <div>
       <style>{`
-        .contact-grid {
+        .contact-layout {
           display: grid;
           grid-template-columns: 1fr;
-          gap: 3rem;
+          gap: 3.5rem;
+          align-items: start;
         }
         @media (min-width: 1024px) {
-          .contact-grid { grid-template-columns: 2fr 1fr; }
-        }
-        .areas-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-          gap: 1rem;
-          max-width: 42rem;
-          margin: 0 auto;
-          text-align: center;
+          .contact-layout { grid-template-columns: 2fr 1fr; gap: 5rem; }
         }
       `}</style>
 
       {/* Hero */}
-      <section className="section-navy" style={{ padding: '4rem 0' }}>
-        <div className="container-wide" style={{ textAlign: 'center' }}>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '1rem' }}>
+      <section style={{ backgroundColor: '#1B3A5C', padding: '4rem 0' }}>
+        <div className="container-wide">
+          <h1 style={{
+            fontSize: 'clamp(32px, 5vw, 54px)',
+            fontWeight: 900,
+            color: '#ffffff',
+            marginBottom: '1rem',
+            lineHeight: 1.1,
+            letterSpacing: '-0.01em',
+          }}>
             Get in Touch
           </h1>
-          <p style={{ fontSize: '1.125rem', color: '#d1d5db', maxWidth: '42rem', marginLeft: 'auto', marginRight: 'auto' }}>
-            Need a plumber? Fill out the form below for a free quote, or call us directly.
+          <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.7)', maxWidth: '480px', lineHeight: 1.65 }}>
+            Need a plumber? Fill out the form for a free quote, or call us directly. We respond within 2 hours.
           </p>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="section-light" style={{ padding: '5rem 0' }}>
+      <section style={{ backgroundColor: '#F0F4F8', padding: '5rem 0' }}>
         <div className="container-wide">
-          <div className="contact-grid">
-            {/* Form — 2 columns on desktop */}
+          <div className="contact-layout">
+            {/* Quote Form */}
             <div>
-              <div style={{
-                backgroundColor: '#ffffff',
-                padding: '2rem',
-                borderRadius: '0.5rem',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-              }}>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.5rem' }}>
+              <div style={{ backgroundColor: '#ffffff', padding: '2.5rem' }}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 900,
+                  color: '#1B3A5C',
+                  marginBottom: '0.5rem',
+                  lineHeight: 1.1,
+                }}>
                   Get Your Free Quote
                 </h2>
-                <p style={{ color: '#4b5563', marginBottom: '1.5rem' }}>
-                  Tell us about the work you need done, and we'll get back to you within 2 hours with a quote.
+                <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '2rem', lineHeight: 1.65 }}>
+                  Describe the job and we'll get back to you within 2 hours with pricing.
                 </p>
                 <QuoteForm />
               </div>
             </div>
 
-            {/* Contact Info — 1 column on desktop */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <div style={{ backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '0.5rem', border: '1px solid #e5e7eb' }}>
-                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', color: '#1B3A5C', marginBottom: '1rem' }}>
+            {/* Sidebar — plain text, no card boxes */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+              {/* Phone */}
+              <div>
+                <p style={{
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: '#64748b',
+                  marginBottom: '0.625rem',
+                }}>
                   Call Us Directly
-                </h3>
-                <a
-                  href="tel:6045550123"
-                  style={{ fontSize: '1.875rem', fontWeight: 700, color: '#2E86C1' }}
-                >
+                </p>
+                <a href="tel:6045550123" style={{
+                  display: 'block',
+                  fontSize: '2rem',
+                  fontWeight: 900,
+                  color: '#1B3A5C',
+                  textDecoration: 'none',
+                  lineHeight: 1.1,
+                  marginBottom: '0.625rem',
+                }}>
                   (604) 555-0123
                 </a>
-                <p style={{ color: '#4b5563', fontSize: '0.875rem', marginTop: '1rem' }}>
-                  For emergencies, call anytime. For estimates, call during business hours.
+                <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65 }}>
+                  Call anytime for emergencies. For estimates, call during business hours.
                 </p>
               </div>
 
-              <div style={{ backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '0.5rem', border: '1px solid #e5e7eb' }}>
-                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', color: '#1B3A5C', marginBottom: '1rem' }}>
-                  Email Us
-                </h3>
-                <a
-                  href="mailto:info@clearwaterplumbing.com"
-                  style={{ color: '#2E86C1', fontWeight: 600 }}
-                >
+              {/* Email */}
+              <div>
+                <p style={{
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: '#64748b',
+                  marginBottom: '0.625rem',
+                }}>
+                  Email
+                </p>
+                <a href="mailto:info@clearwaterplumbing.com" style={{
+                  fontSize: '15px',
+                  color: '#2E86C1',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                }}>
                   info@clearwaterplumbing.com
                 </a>
               </div>
 
-              <div style={{ backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '0.5rem', border: '1px solid #e5e7eb' }}>
-                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', color: '#1B3A5C', marginBottom: '1rem' }}>
+              {/* Hours */}
+              <div>
+                <p style={{
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: '#64748b',
+                  marginBottom: '0.75rem',
+                }}>
                   Hours
-                </h3>
-                <div style={{ fontSize: '0.875rem', color: '#4b5563', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                  <p><span style={{ fontWeight: 600 }}>Mon-Fri:</span> 7am - 6pm</p>
-                  <p><span style={{ fontWeight: 600 }}>Sat-Sun:</span> 8am - 4pm</p>
-                  <p style={{ marginTop: '0.5rem', color: '#2E86C1', fontWeight: 600 }}>24/7 for emergencies</p>
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem', fontSize: '15px', color: '#1e293b' }}>
+                  <p><span style={{ fontWeight: 600, minWidth: '80px', display: 'inline-block' }}>Mon–Fri</span> 7am – 6pm</p>
+                  <p><span style={{ fontWeight: 600, minWidth: '80px', display: 'inline-block' }}>Sat–Sun</span> 8am – 4pm</p>
+                  <p style={{ color: '#2E86C1', fontWeight: 600, marginTop: '4px' }}>24/7 for emergencies</p>
                 </div>
               </div>
 
-              <div style={{
-                backgroundColor: 'rgba(46, 134, 193, 0.08)',
-                padding: '1.5rem',
-                borderRadius: '0.5rem',
-                border: '1px solid rgba(46, 134, 193, 0.2)',
-              }}>
-                <p style={{ fontSize: '0.875rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.5rem' }}>✓ Licensed #L12345</p>
-                <p style={{ fontSize: '0.875rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.5rem' }}>✓ Fully Insured</p>
-                <p style={{ fontSize: '0.875rem', fontWeight: 700, color: '#1B3A5C' }}>✓ Bonded</p>
+              {/* Service Areas */}
+              <div>
+                <p style={{
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: '#64748b',
+                  marginBottom: '0.75rem',
+                }}>
+                  Service Areas
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                  {serviceAreas.map((area) => (
+                    <p key={area} style={{ fontSize: '14px', color: '#1e293b' }}>
+                      <span style={{ color: '#2E86C1', marginRight: '0.5rem', fontWeight: 700 }}>✓</span>{area}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+              {/* Credentials */}
+              <div>
+                <p style={{
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: '#64748b',
+                  marginBottom: '0.75rem',
+                }}>
+                  Credentials
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                  {['Licensed #L12345', 'Fully Insured', 'Bonded'].map((item) => (
+                    <p key={item} style={{ fontSize: '14px', color: '#1e293b', fontWeight: 600 }}>{item}</p>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Service Areas */}
-      <section className="section-navy" style={{ padding: '4rem 0' }}>
+      {/* Service Areas strip */}
+      <section style={{ backgroundColor: '#1B3A5C', padding: '2.5rem 0' }}>
         <div className="container-wide">
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, textAlign: 'center', marginBottom: '2rem' }}>
-            Service Areas
-          </h2>
-          <div className="areas-grid">
-            {serviceAreas.map((area) => (
-              <p key={area} style={{ color: '#d1d5db', fontSize: '0.875rem' }}>✓ {area}</p>
-            ))}
-          </div>
-          <p style={{ textAlign: 'center', color: '#9ca3af', fontSize: '0.875rem', marginTop: '1.5rem' }}>
-            Not listed? Call us—we may still serve your area.
+          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.55)' }}>
+            Serving: {serviceAreas.join(' · ')}
           </p>
         </div>
       </section>
 
-      {/* Calendly Placeholder */}
-      <section className="section-light" style={{ padding: '5rem 0' }}>
+      {/* Online Booking Placeholder */}
+      <section style={{ backgroundColor: '#F0F4F8', padding: '5rem 0' }}>
         <div className="container-wide">
-          <div style={{ maxWidth: '42rem', marginLeft: 'auto', marginRight: 'auto' }}>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.5rem', textAlign: 'center' }}>
+          <div style={{ maxWidth: '480px' }}>
+            <h2 style={{
+              fontSize: 'clamp(22px, 3vw, 30px)',
+              fontWeight: 900,
+              color: '#1B3A5C',
+              marginBottom: '0.75rem',
+              lineHeight: 1.1,
+            }}>
               Book a Service Call
             </h2>
-            <p style={{ color: '#4b5563', textAlign: 'center', marginBottom: '2rem' }}>
-              Prefer to schedule online? Use the calendar below to book a time that works for you.
+            <p style={{ fontSize: '15px', color: '#64748b', marginBottom: '2rem', lineHeight: 1.65 }}>
+              Prefer to schedule online? Online booking is coming soon.
             </p>
             <div style={{
-              backgroundColor: '#ffffff',
-              border: '2px dashed #2E86C1',
-              borderRadius: '0.5rem',
-              padding: '3rem',
+              border: '2px dashed #cbd5e1',
+              padding: '3rem 2rem',
               textAlign: 'center',
             }}>
-              <p style={{ color: '#4b5563', marginBottom: '1rem' }}>
-                Calendly calendar embed will appear here.
-              </p>
-              <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-                Once you provide the Calendly embed code, this section will display your booking calendar.
+              <p style={{ fontSize: '16px', color: '#64748b', fontWeight: 600 }}>Online booking coming soon</p>
+              <p style={{ fontSize: '14px', color: '#94a3b8', marginTop: '0.5rem' }}>
+                In the meantime, call us at (604) 555-0123 or submit the form above.
               </p>
             </div>
           </div>

@@ -13,145 +13,157 @@ const navLinks = [
 ];
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
       <style>{`
-        .header-logo-name { display: none; }
-        .header-desktop-nav { display: none; }
-        .header-desktop-cta { display: none !important; }
-        .header-mobile-btn { display: flex; }
-        @media (min-width: 640px) {
-          .header-logo-name { display: inline; }
-        }
+        .hdr-tagline { display: none; }
+        .hdr-nav-links { display: none; }
+        .hdr-nav-cta { display: none !important; }
+        .hdr-hamburger { display: flex; }
         @media (min-width: 768px) {
-          .header-desktop-nav { display: flex; }
-          .header-desktop-cta { display: inline-block !important; }
-          .header-mobile-btn { display: none; }
+          .hdr-tagline { display: block; }
+          .hdr-nav-links { display: flex; }
+          .hdr-nav-cta { display: inline-block !important; }
+          .hdr-hamburger { display: none; }
         }
-        .header-nav-link:hover { color: #2E86C1; }
+        .hdr-nav-link {
+          color: rgba(255,255,255,0.85);
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+          letter-spacing: 0.01em;
+          padding: 4px 0;
+          transition: color 0.15s;
+        }
+        .hdr-nav-link:hover { color: #ffffff; }
+        .hdr-phone-link {
+          color: #1B3A5C;
+          font-weight: 700;
+          font-size: 1.25rem;
+          text-decoration: none;
+          display: block;
+          line-height: 1.2;
+          transition: color 0.15s;
+        }
+        .hdr-phone-link:hover { color: #2E86C1; }
       `}</style>
 
-      <header style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        backgroundColor: '#1B3A5C',
-        color: '#ffffff',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
-      }}>
-        <div className="container-wide">
-          <div style={{
+      <header style={{ position: 'sticky', top: 0, zIndex: 50 }}>
+        {/* White top bar — logo + phone */}
+        <div style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e2e8f0' }}>
+          <div className="container-wide" style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: '5rem',
+            height: '60px',
           }}>
-            {/* Logo */}
-            <Link href="/" style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              flexShrink: 0,
-              color: '#ffffff',
-            }}>
+            <Link href="/" style={{ display: 'block', flexShrink: 0 }}>
               <Image
-                src="/icon.png"
+                src="/logo.png"
                 alt="Clearwater Plumbing"
-                width={40}
-                height={40}
-                style={{ width: '2.5rem', height: '2.5rem' }}
+                width={180}
+                height={48}
+                style={{ height: '46px', width: 'auto', objectFit: 'contain' }}
+                priority
               />
-              <span className="header-logo-name" style={{ fontWeight: 700, fontSize: '1.125rem' }}>
-                Clearwater
-              </span>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="header-desktop-nav" style={{ gap: '2rem' }}>
+            <div style={{ textAlign: 'right' }}>
+              <a href="tel:6045550123" className="hdr-phone-link">
+                (604) 555-0123
+              </a>
+              <span className="hdr-tagline" style={{ fontSize: '12px', color: '#64748b', display: 'block' }}>
+                Available 24/7
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Navy nav bar */}
+        <div style={{ backgroundColor: '#1B3A5C' }}>
+          <div className="container-wide" style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: '48px',
+          }}>
+            {/* Desktop nav */}
+            <nav className="hdr-nav-links" style={{ gap: '2.5rem', alignItems: 'center' }}>
               {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="header-nav-link"
-                  style={{ fontSize: '0.875rem', fontWeight: 500, color: '#ffffff' }}
-                >
+                <Link key={link.href} href={link.href} className="hdr-nav-link">
                   {link.label}
                 </Link>
               ))}
             </nav>
 
-            {/* Desktop CTA */}
-            <Link href="/contact" className="btn-primary header-desktop-cta">
-              Get Quote
-            </Link>
-
             {/* Mobile hamburger */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="header-mobile-btn"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="hdr-hamburger"
               style={{
-                padding: '0.5rem',
                 background: 'none',
                 border: 'none',
                 color: '#ffffff',
                 cursor: 'pointer',
+                padding: '8px',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              aria-label="Toggle menu"
+              aria-label="Toggle navigation"
             >
-              <svg
-                style={{ width: '1.5rem', height: '1.5rem' }}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
+                  d={menuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
                 />
               </svg>
             </button>
+
+            {/* Desktop CTA */}
+            <Link
+              href="/contact"
+              className="hdr-nav-cta btn-primary"
+              style={{ padding: '8px 20px', fontSize: '14px' }}
+            >
+              Get a Free Quote
+            </Link>
           </div>
 
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <nav style={{
-              borderTop: '1px solid rgba(46, 134, 193, 0.2)',
-              paddingTop: '1rem',
-              paddingBottom: '1rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.75rem',
-            }}>
-              {navLinks.map((link) => (
+          {/* Mobile dropdown */}
+          {menuOpen && (
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+              <div className="container-wide" style={{ padding: '0.75rem 1.5rem 1.25rem' }}>
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    style={{
+                      display: 'block',
+                      color: 'rgba(255,255,255,0.88)',
+                      fontSize: '15px',
+                      fontWeight: 500,
+                      padding: '11px 0',
+                      borderBottom: '1px solid rgba(255,255,255,0.08)',
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
                 <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  style={{
-                    fontSize: '0.875rem',
-                    fontWeight: 500,
-                    color: '#ffffff',
-                    padding: '0.375rem 0',
-                  }}
+                  href="/contact"
+                  onClick={() => setMenuOpen(false)}
+                  className="btn-primary"
+                  style={{ display: 'block', textAlign: 'center', marginTop: '1rem' }}
                 >
-                  {link.label}
+                  Get a Free Quote
                 </Link>
-              ))}
-              <Link
-                href="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="btn-primary"
-                style={{ marginTop: '0.5rem' }}
-              >
-                Get Quote
-              </Link>
-            </nav>
+              </div>
+            </div>
           )}
         </div>
       </header>

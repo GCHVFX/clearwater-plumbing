@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 const quickLinks = [
   { label: 'Home', href: '/' },
@@ -14,85 +15,114 @@ export default function Footer() {
   return (
     <>
       <style>{`
-        .footer-grid {
+        .ftr-grid {
           display: grid;
           grid-template-columns: 1fr;
           gap: 3rem;
-          margin-bottom: 3rem;
+          padding-bottom: 3rem;
         }
         @media (min-width: 768px) {
-          .footer-grid { grid-template-columns: repeat(3, 1fr); }
+          .ftr-grid { grid-template-columns: 2fr 1fr 1.5fr; gap: 4rem; }
         }
-        .footer-bottom {
+        .ftr-bottom {
           display: flex;
           flex-direction: column;
-          align-items: center;
-          gap: 1rem;
+          gap: 0.75rem;
         }
         @media (min-width: 768px) {
-          .footer-bottom { flex-direction: row; justify-content: space-between; }
+          .ftr-bottom { flex-direction: row; justify-content: space-between; align-items: center; }
         }
-        .footer-link:hover { color: #2E86C1; }
-        .footer-contact-link:hover { color: #f59e0b; }
+        .ftr-link {
+          color: rgba(255,255,255,0.6);
+          font-size: 14px;
+          text-decoration: none;
+          transition: color 0.15s;
+          display: block;
+          padding: 3px 0;
+        }
+        .ftr-link:hover { color: #ffffff; }
+        .ftr-contact-link {
+          color: rgba(255,255,255,0.6);
+          text-decoration: none;
+          transition: color 0.15s;
+        }
+        .ftr-contact-link:hover { color: #2E86C1; }
       `}</style>
 
-      <footer className="section-navy">
-        <div className="container-wide" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
-          <div className="footer-grid">
+      <footer style={{ backgroundColor: '#1B3A5C', color: '#ffffff' }}>
+        <div className="container-wide" style={{ paddingTop: '4rem', paddingBottom: '0' }}>
+          <div className="ftr-grid">
             {/* Brand */}
             <div>
-              <h3 style={{ fontWeight: 700, fontSize: '1.25rem', marginBottom: '1rem' }}>
-                Clearwater Plumbing
-              </h3>
-              <p style={{ fontSize: '0.875rem', color: '#d1d5db', marginBottom: '1rem' }}>
-                Fast. Dependable. Professional.
-              </p>
-              <p style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
-                Serving the Lower Mainland since 2012
+              <Link href="/" style={{ display: 'inline-block', marginBottom: '1.25rem' }}>
+                <Image
+                  src="/logo.png"
+                  alt="Clearwater Plumbing"
+                  width={140}
+                  height={40}
+                  style={{ height: '40px', width: 'auto', objectFit: 'contain' }}
+                />
+              </Link>
+              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, maxWidth: '280px' }}>
+                Fast. Dependable. Professional. Serving the Lower Mainland since 2012.
               </p>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h4 style={{ fontWeight: 700, fontSize: '0.875rem', marginBottom: '1rem' }}>Quick Links</h4>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem' }}>
-                {quickLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="footer-link" style={{ color: '#d1d5db' }}>
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <h4 style={{
+                fontSize: '11px',
+                fontWeight: 700,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.45)',
+                marginBottom: '1rem',
+              }}>
+                Quick Links
+              </h4>
+              {quickLinks.map((link) => (
+                <Link key={link.href} href={link.href} className="ftr-link">
+                  {link.label}
+                </Link>
+              ))}
             </div>
 
             {/* Contact */}
             <div>
-              <h4 style={{ fontWeight: 700, fontSize: '0.875rem', marginBottom: '1rem' }}>Get in Touch</h4>
-              <p style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                <span style={{ color: '#d1d5db' }}>Phone: </span>
-                <a href="tel:6045550123" className="footer-contact-link" style={{ color: '#2E86C1' }}>
-                  (604) 555-0123
-                </a>
-              </p>
-              <p style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                <span style={{ color: '#d1d5db' }}>Email: </span>
-                <a href="mailto:info@clearwaterplumbing.com" className="footer-contact-link" style={{ color: '#2E86C1' }}>
-                  info@clearwaterplumbing.com
-                </a>
-              </p>
-              <p style={{ fontSize: '0.75rem', color: '#9ca3af', marginTop: '1rem' }}>
-                Available 24/7 for emergencies
-              </p>
+              <h4 style={{
+                fontSize: '11px',
+                fontWeight: 700,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.45)',
+                marginBottom: '1rem',
+              }}>
+                Get in Touch
+              </h4>
+              <a href="tel:6045550123" style={{
+                display: 'block',
+                fontSize: '1.375rem',
+                fontWeight: 700,
+                color: '#ffffff',
+                textDecoration: 'none',
+                marginBottom: '0.625rem',
+              }}>
+                (604) 555-0123
+              </a>
+              <a href="mailto:info@clearwaterplumbing.com" className="ftr-contact-link" style={{ fontSize: '14px', display: 'block', marginBottom: '1rem' }}>
+                info@clearwaterplumbing.com
+              </a>
+              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}>Available 24/7 for emergencies</p>
             </div>
           </div>
 
-          <div style={{ borderTop: '1px solid rgba(46, 134, 193, 0.2)', paddingTop: '2rem' }}>
-            <div className="footer-bottom">
-              <p style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
-                Licensed #L12345 | Insured | Bonded
+          {/* Bottom bar */}
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
+            <div className="ftr-bottom">
+              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
+                Licensed #L12345 &nbsp;|&nbsp; Insured &nbsp;|&nbsp; Bonded
               </p>
-              <p style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
+              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
                 &copy; {new Date().getFullYear()} Clearwater Plumbing. All rights reserved.
               </p>
             </div>

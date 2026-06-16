@@ -8,20 +8,26 @@ export default function TestimonialCard({ quote, author, rating }: TestimonialCa
   return (
     <div style={{
       backgroundColor: '#ffffff',
-      padding: '1.5rem',
-      borderRadius: '0.5rem',
-      border: '1px solid #e5e7eb',
-      boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+      padding: '2rem',
+      boxShadow: '0 2px 16px rgba(0,0,0,0.07)',
     }}>
-      <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '1rem' }}>
+      <div style={{ marginBottom: '1rem' }}>
         {[...Array(rating)].map((_, i) => (
-          <span key={i} style={{ color: '#f59e0b', fontSize: '1.25rem' }}>★</span>
+          <span key={i} style={{ color: '#FDB022', fontSize: '1rem', letterSpacing: '1px' }}>★</span>
         ))}
       </div>
-      <p style={{ color: '#374151', fontSize: '0.875rem', marginBottom: '1rem', fontStyle: 'italic' }}>
-        "{quote}"
+      <p style={{
+        color: '#1e293b',
+        fontSize: '0.9375rem',
+        lineHeight: 1.7,
+        fontStyle: 'italic',
+        marginBottom: '1.25rem',
+      }}>
+        &ldquo;{quote}&rdquo;
       </p>
-      <p style={{ fontWeight: 600, color: '#2C3E50', fontSize: '0.875rem' }}>— {author}</p>
+      <p style={{ fontSize: '0.875rem', color: '#64748b', fontWeight: 500 }}>
+        &mdash; {author}
+      </p>
     </div>
   );
 }

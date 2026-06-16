@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import ServiceCard from '@/components/ServiceCard';
 
 export const metadata = {
   title: 'Plumbing Services | Clearwater Plumbing',
@@ -7,14 +6,14 @@ export const metadata = {
 };
 
 const services = [
-  { icon: '🚨', title: 'Emergency Repairs', description: 'Burst pipes, no hot water, leaks, and other urgent issues. Same-day response available.', priceRange: 'Starting at $200' },
-  { icon: '🚰', title: 'Faucets & Fixtures', description: 'Install or replace kitchen faucets, bathroom fixtures, and outdoor taps.', priceRange: 'From $150-400' },
-  { icon: '🚿', title: 'Drain Cleaning', description: 'Clogged drain? We use professional equipment to clear blockages fast and clean.', priceRange: 'From $175-350' },
-  { icon: '💧', title: 'Water Heater Service', description: 'Installation of new units, repair of existing tanks, and tankless system maintenance.', priceRange: 'From $300-1500' },
-  { icon: '🏠', title: 'Renovations', description: 'Bathroom and kitchen plumbing for renovations. We work with contractors and homeowners.', priceRange: 'Call for quote' },
-  { icon: '🔧', title: 'Maintenance', description: 'Annual inspections and preventive maintenance to keep your system running smoothly.', priceRange: 'From $150-250' },
-  { icon: '🧊', title: 'Frost-Free Sillcocks', description: "Install outdoor taps that won't freeze in winter. Essential for Lower Mainland homes.", priceRange: 'From $120-200' },
-  { icon: '📏', title: 'Shut-Off Valve Repair', description: 'Fix or replace main water shut-off valves and zone shut-offs.', priceRange: 'From $100-300' },
+  { title: 'Emergency Repairs', description: 'Burst pipes, no hot water, active leaks, and other urgent situations. We prioritise emergency calls and aim to be on-site within 2 hours.', price: 'Starting at $200' },
+  { title: 'Faucets & Fixtures', description: 'Install or replace kitchen faucets, bathroom taps, showerheads, and outdoor fixtures. We supply parts or use customer-supplied fixtures.', price: 'From $150–400' },
+  { title: 'Drain Cleaning', description: 'Clogged drain or slow drainage? We clear blockages using professional-grade equipment. Fast, clean, and effective.', price: 'From $175–350' },
+  { title: 'Water Heater Service', description: 'Installation of new tank or tankless water heaters, repair of existing units, and regular maintenance to extend equipment life.', price: 'From $300–1,500' },
+  { title: 'Bathroom & Kitchen Renovations', description: 'Full plumbing rough-in and finish work for renovations. We coordinate with your general contractor or work directly with homeowners.', price: 'Call for quote' },
+  { title: 'Preventive Maintenance', description: 'Annual plumbing inspections to catch problems before they become expensive. Ideal for older homes or rental properties.', price: 'From $150–250' },
+  { title: 'Frost-Free Sillcocks', description: "Install outdoor taps designed to prevent freezing. An essential upgrade for any Lower Mainland home.", price: 'From $120–200' },
+  { title: 'Shut-Off Valve Service', description: 'Repair or replace main water shut-off valves, zone shut-offs, and isolation valves throughout your home.', price: 'From $100–300' },
 ];
 
 const serviceAreas = ['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam', 'Delta', 'Langley', 'Maple Ridge'];
@@ -23,98 +22,128 @@ export default function Services() {
   return (
     <div>
       <style>{`
-        .services-grid {
+        .services-list {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-          gap: 1.5rem;
+          grid-template-columns: 1fr;
+          border-top: 1px solid #e2e8f0;
         }
-        .areas-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-          gap: 1.5rem;
-          text-align: center;
+        @media (min-width: 768px) {
+          .services-list { grid-template-columns: 1fr 1fr; }
+        }
+        .service-row {
+          padding: 2rem 0;
+          border-bottom: 1px solid #e2e8f0;
+        }
+        @media (min-width: 768px) {
+          .service-row { padding: 2rem 2rem 2rem 0; }
+          .service-row:nth-child(even) { padding-left: 2rem; border-left: 1px solid #e2e8f0; }
         }
       `}</style>
 
       {/* Hero */}
-      <section className="section-navy" style={{ padding: '4rem 0' }}>
-        <div className="container-wide" style={{ textAlign: 'center' }}>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '1rem' }}>
+      <section style={{ backgroundColor: '#1B3A5C', padding: '4rem 0' }}>
+        <div className="container-wide">
+          <h1 style={{
+            fontSize: 'clamp(32px, 5vw, 54px)',
+            fontWeight: 900,
+            color: '#ffffff',
+            marginBottom: '1rem',
+            lineHeight: 1.1,
+            letterSpacing: '-0.01em',
+          }}>
             Plumbing Services We Offer
           </h1>
-          <p style={{ fontSize: '1.125rem', color: '#d1d5db', maxWidth: '42rem', marginLeft: 'auto', marginRight: 'auto' }}>
-            From emergency repairs to full installations. Serving Vancouver, Burnaby, Surrey, Richmond, and the surrounding Lower Mainland.
+          <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.7)', maxWidth: '540px', lineHeight: 1.65 }}>
+            From burst pipes at midnight to full bathroom renovations. Serving the Lower Mainland since 2012.
           </p>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="section-light" style={{ padding: '5rem 0' }}>
+      {/* Services List */}
+      <section style={{ backgroundColor: '#ffffff', padding: '4rem 0' }}>
         <div className="container-wide">
-          <div className="services-grid">
+          <div className="services-list">
             {services.map((s) => (
-              <ServiceCard key={s.title} icon={s.icon} title={s.title} description={s.description} priceRange={s.priceRange} />
+              <div key={s.title} className="service-row">
+                <h3 style={{ fontWeight: 800, fontSize: '1.0625rem', color: '#1B3A5C', marginBottom: '0.5rem' }}>
+                  {s.title}
+                </h3>
+                <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65, marginBottom: '0.625rem' }}>
+                  {s.description}
+                </p>
+                <p style={{ fontSize: '14px', color: '#2E86C1', fontWeight: 600 }}>{s.price}</p>
+              </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Note */}
+      <section style={{ backgroundColor: '#F0F4F8', padding: '3rem 0' }}>
+        <div className="container-wide">
+          <div style={{
+            backgroundColor: '#ffffff',
+            borderLeft: '4px solid #2E86C1',
+            padding: '1.75rem 2rem',
+            maxWidth: '640px',
+          }}>
+            <h3 style={{ fontWeight: 800, fontSize: '1rem', color: '#1B3A5C', marginBottom: '0.75rem' }}>
+              How We Price Our Work
+            </h3>
+            <p style={{ fontSize: '14px', color: '#1e293b', lineHeight: 1.7, marginBottom: '0.625rem' }}>
+              All prices shown are estimates based on typical jobs. Every plumbing situation is different, so we quote each job individually before starting. No hidden fees.
+            </p>
+            <p style={{ fontSize: '14px', color: '#1e293b', lineHeight: 1.7 }}>
+              Service call fee: <strong>$80</strong> — credited toward any work we perform.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Service Areas */}
-      <section className="section-navy" style={{ padding: '5rem 0' }}>
+      <section style={{ backgroundColor: '#ffffff', padding: '3.5rem 0' }}>
         <div className="container-wide">
-          <h2 style={{ fontSize: '1.875rem', fontWeight: 700, textAlign: 'center', marginBottom: '3rem' }}>
-            Our Service Areas
-          </h2>
-          <div className="areas-grid">
-            {serviceAreas.map((area) => (
-              <div key={area}>
-                <p style={{ fontSize: '1.125rem', fontWeight: 600 }}>{area}</p>
-              </div>
-            ))}
-          </div>
-          <p style={{ textAlign: 'center', color: '#9ca3af', marginTop: '2rem', fontSize: '0.875rem' }}>
-            Not listed? Call us—we may serve your area: (604) 555-0123
-          </p>
-        </div>
-      </section>
-
-      {/* Pricing Note */}
-      <section className="section-light" style={{ padding: '4rem 0' }}>
-        <div className="container-wide">
-          <div style={{
-            backgroundColor: '#ffffff',
-            borderLeft: '4px solid #2E86C1',
-            borderRadius: '0.5rem',
-            padding: '2rem',
-            maxWidth: '42rem',
-            marginLeft: 'auto',
-            marginRight: 'auto',
+          <p style={{
+            fontSize: '11px',
+            fontWeight: 700,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: '#64748b',
+            marginBottom: '0.75rem',
           }}>
-            <h3 style={{ fontWeight: 700, fontSize: '1.125rem', marginBottom: '0.75rem', color: '#1B3A5C' }}>
-              How We Price
-            </h3>
-            <p style={{ color: '#374151', marginBottom: '0.75rem', fontSize: '0.875rem' }}>
-              All prices shown are estimates based on typical jobs. Every plumbing issue is different, so we quote individual jobs before starting work. No surprises.
-            </p>
-            <p style={{ color: '#374151', fontSize: '0.875rem' }}>
-              Service call fee is $80, which is credited toward any work we do.
-            </p>
-          </div>
+            Service Areas
+          </p>
+          <p style={{ fontSize: '16px', color: '#1e293b' }}>
+            {serviceAreas.join(' &nbsp;&bull;&nbsp; ')}
+          </p>
+          <p style={{ fontSize: '14px', color: '#64748b', marginTop: '0.625rem' }}>
+            Not on this list? Call us — we may serve your area: (604) 555-0123
+          </p>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section-blue" style={{ padding: '5rem 0' }}>
-        <div className="container-wide" style={{ textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1.5rem' }}>
+      <section style={{ backgroundColor: '#1B3A5C', borderLeft: '6px solid #2E86C1', padding: '4rem 0' }}>
+        <div className="container-wide">
+          <h2 style={{
+            fontSize: 'clamp(24px, 3.5vw, 36px)',
+            fontWeight: 900,
+            color: '#ffffff',
+            marginBottom: '1rem',
+            lineHeight: 1.1,
+            letterSpacing: '-0.01em',
+          }}>
             Need a Plumber?
           </h2>
-          <p style={{ fontSize: '1.125rem', color: 'rgba(255,255,255,0.88)', marginBottom: '2rem' }}>
+          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.68)', marginBottom: '2rem' }}>
             Get a free quote on any of our services.
           </p>
-          <Link href="/contact" className="btn-primary" style={{ backgroundColor: '#ffffff', color: '#2E86C1', fontWeight: 700, fontSize: '1.125rem' }}>
-            Request a Free Quote
-          </Link>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            <Link href="/contact" className="btn-primary">Request a Free Quote</Link>
+            <a href="tel:6045550123" style={{ fontSize: '15px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>
+              or call <span style={{ color: '#ffffff', fontWeight: 600 }}>(604) 555-0123</span>
+            </a>
+          </div>
         </div>
       </section>
     </div>

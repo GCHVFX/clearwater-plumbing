@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Example Gallery | Clearwater Plumbing',
-  description: 'Example service categories showing the types of plumbing work we handle across the Lower Mainland.',
+  title: 'Services Gallery | Clearwater Plumbing',
+  description: 'Types of plumbing work we handle across the Lower Mainland — leaks, drains, water heaters, renovations, and more.',
 };
 
 const serviceCategories = [
@@ -13,7 +13,7 @@ const serviceCategories = [
   { title: 'Toilet Replacement', type: 'Toilets', desc: 'New toilet installs and repairs for running or leaking toilets.' },
   { title: 'Emergency Response', type: 'Emergency', desc: 'Burst pipes, flooding, and after-hours emergency calls.' },
   { title: 'Outdoor Fixtures', type: 'Fixtures', desc: 'Sillcocks, hose bibs, and outdoor plumbing installs.' },
-  { title: 'Sump Pump Install', type: 'Emergency', desc: 'Sump pump installs for basements with water infiltration.' },
+  { title: 'Sump Pump Install', type: 'Sump Pumps', desc: 'Sump pump installs for basements with water infiltration.' },
   { title: 'Kitchen Faucet Install', type: 'Faucets & Fixtures', desc: 'Kitchen and bathroom faucet replacements and upgrades.' },
 ];
 
@@ -31,10 +31,10 @@ export default function Gallery() {
             lineHeight: 1.1,
             letterSpacing: '0',
           }}>
-            Example Service Photos
+            Types of Work We Handle
           </h1>
           <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.7)', maxWidth: '520px', lineHeight: 1.65 }}>
-            Example project layout showing service categories we handle. Replace with real job photos before using this for a real contractor.
+            From small repairs to full renovations, here are the kinds of plumbing jobs we take on.
           </p>
         </div>
       </section>
@@ -42,18 +42,6 @@ export default function Gallery() {
       {/* Gallery Grid */}
       <section style={{ backgroundColor: '#F0F4F8', padding: '5rem 0' }}>
         <div className="container-wide">
-          <div style={{
-            backgroundColor: '#eff8ff',
-            border: '1px solid #bfdbfe',
-            borderRadius: '8px',
-            padding: '1rem 1.25rem',
-            marginBottom: '2rem',
-            fontSize: '14px',
-            color: '#1e40af',
-            lineHeight: 1.6,
-          }}>
-            These are example service categories, not completed projects. Replace placeholder images with real job photos when setting up a live contractor site.
-          </div>
           <div className="gallery-grid">
             {serviceCategories.map((item) => (
               <div key={item.title} className="gallery-card">
@@ -65,25 +53,17 @@ export default function Gallery() {
                   justifyContent: 'center',
                 }}>
                   <div style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(46,134,193,0.2)',
                     display: 'flex',
-                    flexDirection: 'column',
                     alignItems: 'center',
-                    gap: '0.5rem',
+                    justifyContent: 'center',
                   }}>
-                    <div style={{
-                      width: '48px',
-                      height: '48px',
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(46,134,193,0.2)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                      <svg width="24" height="24" fill="none" stroke="rgba(255,255,255,0.6)" viewBox="0 0 24 24" strokeWidth="1.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
-                      </svg>
-                    </div>
-                    <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>Placeholder</span>
+                    <svg width="24" height="24" fill="none" stroke="rgba(255,255,255,0.6)" viewBox="0 0 24 24" strokeWidth="1.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
+                    </svg>
                   </div>
                 </div>
                 <div style={{ padding: '1.5rem' }}>

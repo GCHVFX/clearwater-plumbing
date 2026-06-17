@@ -3,10 +3,49 @@ import HeroQuoteStart from '@/components/HeroQuoteStart';
 import Icon from '@/components/Icon';
 
 const howItWorks = [
-  { step: '1', title: 'Select the issue' },
-  { step: '2', title: 'Upload photos' },
-  { step: '3', title: 'We review it' },
-  { step: '4', title: 'Get your estimate' },
+  {
+    step: '1',
+    title: 'Tell us what’s wrong',
+    desc: 'Choose the issue that best matches your problem.',
+  },
+  {
+    step: '2',
+    title: 'Upload photos',
+    desc: 'Show us the situation from a few angles.',
+  },
+  {
+    step: '3',
+    title: 'We review the details',
+    desc: 'We review photos and details before recommending work.',
+  },
+  {
+    step: '4',
+    title: 'Receive your estimate',
+    desc: 'Receive an estimate before scheduling service.',
+  },
+];
+
+const whyPhotos = [
+  {
+    title: 'Faster estimates',
+    desc: 'Get pricing without a site visit when possible.',
+    icon: 'clock',
+  },
+  {
+    title: 'Less back-and-forth',
+    desc: 'Photos answer many of the questions we’d normally ask.',
+    icon: 'message-circle',
+  },
+  {
+    title: 'Better preparation',
+    desc: 'We can often identify tools, parts, or access requirements in advance.',
+    icon: 'wrench',
+  },
+  {
+    title: 'More accurate recommendations',
+    desc: 'Seeing the issue helps us recommend the right solution.',
+    icon: 'check-circle',
+  },
 ];
 
 const serviceExamples = [
@@ -49,14 +88,14 @@ export default function Home() {
           <div className="hero-layout">
             <div>
               <p style={{
-                fontSize: '14px',
-                fontWeight: 800,
-                letterSpacing: '0.14em',
+                fontSize: '13px',
+                fontWeight: 600,
+                letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                color: '#ffffff',
+                color: 'rgba(255,255,255,0.55)',
                 marginBottom: '1.125rem',
               }}>
-                Clearwater Plumbing
+                Plumbing Repairs &amp; Installations
               </p>
               <h1 className="hero-h1" style={{
                 fontWeight: 900,
@@ -92,7 +131,7 @@ export default function Home() {
                   borderLeft: '3px solid #2E86C1',
                 }}>
                   <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)' }}>
-                    Upfront estimates &middot; Real people &middot; Quality work
+                    Send photos. Get an estimate before we schedule the work.
                   </span>
                 </div>
                 <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.38)', paddingLeft: '1rem' }}>
@@ -163,7 +202,7 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section style={{ backgroundColor: '#ffffff', padding: '3.5rem 0', borderBottom: '1px solid #e2e8f0' }}>
+      <section style={{ backgroundColor: '#ffffff', padding: '4.5rem 0', borderBottom: '1px solid #e2e8f0' }}>
         <div className="container-wide">
           <p style={{
             fontSize: '12px',
@@ -171,11 +210,21 @@ export default function Home() {
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
             color: '#64748b',
-            marginBottom: '1.5rem',
+            marginBottom: '0.5rem',
             textAlign: 'center',
           }}>
             How It Works
           </p>
+          <h2 style={{
+            fontSize: 'clamp(22px, 3vw, 30px)',
+            fontWeight: 900,
+            color: '#1B3A5C',
+            lineHeight: 1.1,
+            textAlign: 'center',
+            marginBottom: '2.5rem',
+          }}>
+            Four steps to an estimate
+          </h2>
           <div className="hiw-grid">
             {howItWorks.map((item, i) => (
               <div key={item.step} style={{
@@ -183,27 +232,28 @@ export default function Home() {
                 position: 'relative',
               }}>
                 <div style={{
-                  width: '44px',
-                  height: '44px',
+                  width: '48px',
+                  height: '48px',
                   borderRadius: '50%',
                   backgroundColor: '#1B3A5C',
                   color: '#ffffff',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '16px',
+                  fontSize: '18px',
                   fontWeight: 800,
-                  margin: '0 auto 0.75rem',
+                  margin: '0 auto 1rem',
                 }}>
                   {item.step}
                 </div>
-                <p style={{ fontSize: '14px', fontWeight: 700, color: '#1e293b' }}>{item.title}</p>
+                <p style={{ fontSize: '15px', fontWeight: 700, color: '#1e293b', marginBottom: '0.375rem' }}>{item.title}</p>
+                <p style={{ fontSize: '13px', color: '#64748b', lineHeight: 1.55, maxWidth: '220px', margin: '0 auto' }}>{item.desc}</p>
                 {i < howItWorks.length - 1 && (
                   <div className="hiw-connector" style={{
                     position: 'absolute',
-                    top: '22px',
-                    left: 'calc(50% + 30px)',
-                    width: 'calc(100% - 60px)',
+                    top: '24px',
+                    left: 'calc(50% + 32px)',
+                    width: 'calc(100% - 64px)',
                     height: '2px',
                     backgroundColor: '#e2e8f0',
                   }} />
@@ -214,8 +264,65 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Why Send Photos? */}
+      <section style={{ backgroundColor: '#F0F4F8', padding: '4.5rem 0' }}>
+        <div className="container-wide">
+          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+            <p style={{
+              fontSize: '12px',
+              fontWeight: 700,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: '#64748b',
+              marginBottom: '0.5rem',
+            }}>
+              Why Send Photos?
+            </p>
+            <p style={{
+              fontSize: '1.0625rem',
+              color: '#1e293b',
+              lineHeight: 1.65,
+              maxWidth: '480px',
+              margin: '0 auto',
+            }}>
+              A few photos help us understand the problem before we arrive.
+            </p>
+          </div>
+          <div className="why-photos-grid">
+            {whyPhotos.map((item) => (
+              <div key={item.title} style={{
+                backgroundColor: '#ffffff',
+                borderRadius: '12px',
+                padding: '1.75rem 1.5rem',
+                border: '1px solid #e2e8f0',
+              }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '10px',
+                  backgroundColor: '#eff8ff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#2E86C1',
+                  marginBottom: '1rem',
+                }}>
+                  <Icon name={item.icon} size={20} />
+                </div>
+                <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.375rem' }}>
+                  {item.title}
+                </h3>
+                <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.6 }}>
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Service problems — asymmetric grid, not uniform cards */}
-      <section style={{ backgroundColor: '#F0F4F8', padding: '5rem 0' }}>
+      <section style={{ backgroundColor: '#ffffff', padding: '5rem 0' }}>
         <div className="container-wide">
           <div style={{ marginBottom: '2.5rem' }}>
             <p style={{
@@ -300,7 +407,7 @@ export default function Home() {
             {[
               { title: 'Upfront Estimates', desc: 'We quote before we start. The price you receive is the price you pay.', icon: 'file-text' },
               { title: 'Real People', desc: 'Talk directly with the person doing the work. No call centres.', icon: 'user' },
-              { title: 'Quality Work', desc: 'Qualified plumber on every job. We clean up when we&apos;re done.', icon: 'check-circle' },
+              { title: 'Quality Work', desc: 'Every job done right. We clean up when we&apos;re done.', icon: 'check-circle' },
             ].map((item) => (
               <div key={item.title} className="trust-item">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '0.625rem' }}>
@@ -379,7 +486,7 @@ export default function Home() {
             Serving Vancouver &middot; Burnaby &middot; Surrey &middot; Richmond &middot; Coquitlam &middot; Delta &middot; Langley &middot; Maple Ridge
           </p>
           <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>
-            Credentials can be added here once verified.
+            Plumbing Repairs &amp; Installations
           </p>
         </div>
       </section>

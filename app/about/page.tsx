@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import { CONTRACTOR } from '@/lib/contractor';
 
 export const metadata = {
   title: 'About Clearwater Plumbing',
@@ -19,12 +20,10 @@ const values = [
   },
   {
     title: 'Professionalism',
-    desc: 'Qualified plumbers on every job. We treat your home with respect and clean up after ourselves.',
+    desc: 'Every job done right. We treat your home with respect and clean up after ourselves.',
     icon: 'shield',
   },
 ];
-
-const serviceAreas = ['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam', 'Delta', 'Langley', 'Maple Ridge'];
 
 export default function About() {
   return (
@@ -40,7 +39,7 @@ export default function About() {
             lineHeight: 1.1,
             letterSpacing: '0',
           }}>
-            About Clearwater Plumbing
+            About {CONTRACTOR.name}
           </h1>
           <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.7)', maxWidth: '500px', lineHeight: 1.65 }}>
             Reliable plumbing in the Lower Mainland.
@@ -53,10 +52,10 @@ export default function About() {
         <div className="container-wide">
           <div style={{ maxWidth: '640px' }}>
             <p style={{ fontSize: '17px', color: '#1e293b', lineHeight: 1.8, marginBottom: '1.25rem' }}>
-              Clearwater Plumbing has served the Lower Mainland since 2012. We started with a simple idea: plumbing work should be honest, on time, and done right.
+              {CONTRACTOR.name} serves the Lower Mainland. We started with a simple idea: plumbing work should be honest, on time, and done right.
             </p>
             <p style={{ fontSize: '17px', color: '#1e293b', lineHeight: 1.8 }}>
-              We&apos;re a small team. Every job gets a qualified plumber. We quote before we start, and the price you&apos;re given is the price you pay.
+              We&apos;re a small team. We quote before we start, and the price you&apos;re given is the price you pay.
             </p>
           </div>
         </div>
@@ -94,34 +93,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Credentials */}
-      <section style={{ backgroundColor: '#ffffff', padding: '4rem 0' }}>
-        <div className="container-wide">
-          <div style={{ maxWidth: '480px' }}>
-            <h2 style={{
-              fontSize: 'clamp(22px, 3vw, 30px)',
-              fontWeight: 900,
-              color: '#1B3A5C',
-              marginBottom: '1.75rem',
-              lineHeight: 1.1,
-            }}>
-              Credentials
-            </h2>
-            <p style={{
-              fontSize: '15px',
-              color: '#64748b',
-              lineHeight: 1.7,
-              padding: '1.25rem',
-              backgroundColor: '#F0F4F8',
-              borderRadius: '8px',
-              border: '1px solid #e2e8f0',
-            }}>
-              Credentials can be added here once verified. This section will display licence number, insurance details, and bonding information for the contractor.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Service Area */}
       <section style={{ backgroundColor: '#1B3A5C', padding: '3.5rem 0' }}>
         <div className="container-wide">
@@ -136,7 +107,7 @@ export default function About() {
             Service Areas
           </p>
           <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.8)' }}>
-            {serviceAreas.join(' · ')}
+            {CONTRACTOR.serviceAreas.join(' · ')}
           </p>
         </div>
       </section>
@@ -158,8 +129,8 @@ export default function About() {
           </p>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/contact" className="btn-primary">Get a Quote</Link>
-            <a href="tel:6045550123" style={{ fontSize: '15px', color: '#64748b', textDecoration: 'none' }}>
-              or call <span style={{ color: '#2E86C1', fontWeight: 600 }}>(604) 555-0123</span>
+            <a href={`tel:${CONTRACTOR.phoneTel}`} style={{ fontSize: '15px', color: '#64748b', textDecoration: 'none' }}>
+              or call <span style={{ color: '#2E86C1', fontWeight: 600 }}>{CONTRACTOR.phone}</span>
             </a>
           </div>
         </div>

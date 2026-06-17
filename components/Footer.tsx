@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { CONTRACTOR } from '@/lib/contractor';
 
 const quickLinks = [
   { label: 'Home', href: '/' },
   { label: 'Services', href: '/services' },
   { label: 'About Us', href: '/about' },
-  { label: 'Gallery', href: '/gallery' },
   { label: 'Contact', href: '/contact' },
 ];
 
@@ -21,14 +21,14 @@ export default function Footer() {
             <Link href="/" style={{ display: 'inline-block', marginBottom: '1.25rem' }}>
               <Image
                 src="/logo.png"
-                alt="Clearwater Plumbing"
+                alt={CONTRACTOR.name}
                 width={140}
                 height={40}
                 style={{ height: '40px', width: 'auto', objectFit: 'contain' }}
               />
             </Link>
             <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, maxWidth: '280px' }}>
-              Fast. Dependable. Professional. Serving the Lower Mainland since 2012.
+              Fast. Dependable. Professional. Serving the Lower Mainland.
             </p>
           </div>
 
@@ -63,7 +63,7 @@ export default function Footer() {
             }}>
               Get in Touch
             </h4>
-            <a href="tel:6045550123" style={{
+            <a href={`tel:${CONTRACTOR.phoneTel}`} style={{
               display: 'block',
               fontSize: '1.375rem',
               fontWeight: 700,
@@ -71,10 +71,10 @@ export default function Footer() {
               textDecoration: 'none',
               marginBottom: '0.625rem',
             }}>
-              (604) 555-0123
+              {CONTRACTOR.phone}
             </a>
-            <a href="mailto:info@clearwaterplumbing.com" className="ftr-contact-link" style={{ fontSize: '14px', display: 'block', marginBottom: '1rem' }}>
-              info@clearwaterplumbing.com
+            <a href={`mailto:${CONTRACTOR.email}`} className="ftr-contact-link" style={{ fontSize: '14px', display: 'block', marginBottom: '1rem' }}>
+              {CONTRACTOR.email}
             </a>
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}>Available 24/7 for emergencies</p>
           </div>
@@ -84,10 +84,10 @@ export default function Footer() {
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
           <div className="ftr-bottom">
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
-              Credentials can be added here once verified.
+              {CONTRACTOR.serviceAreas.join(' · ')}
             </p>
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
-              &copy; {new Date().getFullYear()} Clearwater Plumbing. All rights reserved.
+              &copy; {new Date().getFullYear()} {CONTRACTOR.name}. All rights reserved.
             </p>
           </div>
         </div>

@@ -19,7 +19,7 @@ export default function HeroQuoteStart() {
     <div style={{
       backgroundColor: 'rgba(255,255,255,0.07)',
       borderRadius: '16px',
-      border: '1px solid rgba(255,255,255,0.12)',
+      border: '1px solid rgba(255,255,255,0.15)',
       padding: '1.75rem',
       backdropFilter: 'blur(8px)',
     }}>
@@ -32,7 +32,7 @@ export default function HeroQuoteStart() {
         <p style={{
           fontSize: '14px',
           fontWeight: 700,
-          color: 'rgba(255,255,255,0.5)',
+          color: 'rgba(255,255,255,0.55)',
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
         }}>
@@ -56,7 +56,7 @@ export default function HeroQuoteStart() {
               className="hqs-tile"
               style={{ textDecoration: 'none' }}
             >
-              <Icon name={s.icon} size={24} />
+              <Icon name={s.icon} size={28} />
               <span style={{ fontSize: '12px', fontWeight: 600 }}>Call Now</span>
             </a>
           ) : (
@@ -65,7 +65,7 @@ export default function HeroQuoteStart() {
               className="hqs-tile"
               onClick={() => router.push(`/contact?service=${s.id}`)}
             >
-              <Icon name={s.icon} size={24} />
+              <Icon name={s.icon} size={28} />
               <span style={{ fontSize: '12px', fontWeight: 600 }}>{s.label}</span>
             </button>
           )

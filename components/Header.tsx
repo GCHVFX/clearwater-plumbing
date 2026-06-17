@@ -8,7 +8,6 @@ const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'Services', href: '/services' },
   { label: 'About', href: '/about' },
-  { label: 'Gallery', href: '/gallery' },
   { label: 'Contact', href: '/contact' },
 ];
 
@@ -112,6 +111,8 @@ export default function Header() {
                 justifyContent: 'center',
               }}
               aria-label="Toggle navigation"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav-menu"
             >
               <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -135,7 +136,7 @@ export default function Header() {
 
           {/* Mobile dropdown */}
           {menuOpen && (
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <div id="mobile-nav-menu" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
               <div className="container-wide" style={{ padding: '0.75rem 1.5rem 1.25rem' }}>
                 {navLinks.map((link) => (
                   <Link

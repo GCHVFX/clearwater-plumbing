@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import type { QuoteRequest } from '@/types/quote';
 import { SERVICE_TYPES, LOCATIONS, URGENCY_LEVELS } from '@/types/quote';
+import { compressImage } from '@/lib/compress-image';
 import Icon from '@/components/Icon';
 
 const TOTAL_STEPS = 6;
@@ -12,6 +13,7 @@ const MAX_PHOTOS = 5;
 interface PhotoPreview {
   file: File;
   url: string;
+  originalSize?: number;
 }
 
 const STEP_LABELS = ['Service', 'Location', 'Urgency', 'Photos', 'Details', 'Contact'];
@@ -25,6 +27,11 @@ function formatPhone(value: string): string {
 
 function phoneDigits(value: string): string {
   return value.replace(/\D/g, '');
+}
+
+function formatSize(bytes: number): string {
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
 export default function GuidedQuoteFlow() {
@@ -41,13 +48,23 @@ export default function GuidedQuoteFlow() {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
+  const [honeypot, setHoneypot] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [submitFailed, setSubmitFailed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState('');
   const [error, setError] = useState('');
+  const [compressing, setCompressing] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+  const errorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (error && errorRef.current) {
+      errorRef.current.focus();
+    }
+  }, [error]);
 
   const goNext = () => {
     setError('');
@@ -75,6 +92,13 @@ export default function GuidedQuoteFlow() {
   const handleSubmit = async () => {
     setSubmitting(true);
     setSubmitFailed(false);
+
+    if (honeypot) {
+      setSubmitted(true);
+      setSubmitting(false);
+      return;
+    }
+
     const request: QuoteRequest = {
       serviceType,
       location,
@@ -88,6 +112,8 @@ export default function GuidedQuoteFlow() {
     };
 
     try {
+      setUploadStatus(request.photos.length > 0 ? 'Uploading photos, this may take a moment...' : 'Submitting...');
+
       const formData = new FormData();
       formData.append('name', request.customerName);
       formData.append('phone', phoneDigits(request.phone));
@@ -97,6 +123,7 @@ export default function GuidedQuoteFlow() {
       formData.append('location', request.location);
       formData.append('urgency', request.urgency);
       formData.append('description', request.description);
+      formData.append('honeypot', honeypot);
       for (const photo of request.photos) {
         formData.append('photos', photo);
       }
@@ -105,23 +132,53 @@ export default function GuidedQuoteFlow() {
         method: 'POST',
         body: formData,
       });
-      if (!response.ok) throw new Error('Failed to submit');
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        throw new Error(body?.error || 'Failed to submit');
+      }
       setSubmitted(true);
-    } catch {
+    } catch (err) {
       setSubmitFailed(true);
+      setError(err instanceof Error ? err.message : 'Failed to submit your request. Please try again or give us a call.');
     }
+    setUploadStatus('');
     setSubmitting(false);
   };
 
-  const addPhotos = useCallback((files: FileList | File[]) => {
-    const newPhotos: PhotoPreview[] = [];
+  const addPhotos = useCallback(async (files: FileList | File[]) => {
     const fileArray = Array.from(files);
+    const toProcess: File[] = [];
+
     for (const file of fileArray) {
-      if (photos.length + newPhotos.length >= MAX_PHOTOS) break;
-      if (!file.type.startsWith('image/')) continue;
-      newPhotos.push({ file, url: URL.createObjectURL(file) });
+      if (photos.length + toProcess.length >= MAX_PHOTOS) break;
+      if (!file.type.startsWith('image/') && !file.name.toLowerCase().match(/\.(heic|heif)$/)) continue;
+      toProcess.push(file);
     }
+
+    if (toProcess.length === 0) return;
+
+    setCompressing(true);
+    setError('');
+
+    const newPhotos: PhotoPreview[] = [];
+    for (const file of toProcess) {
+      if (photos.length + newPhotos.length >= MAX_PHOTOS) break;
+      try {
+        const compressed = await compressImage(file);
+        newPhotos.push({
+          file: compressed,
+          url: URL.createObjectURL(compressed),
+          originalSize: file.size,
+        });
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to process photo.');
+        setCompressing(false);
+        return;
+      }
+    }
+
     setPhotos((prev) => [...prev, ...newPhotos].slice(0, MAX_PHOTOS));
+    setCompressing(false);
   }, [photos.length]);
 
   const removePhoto = (index: number) => {
@@ -138,6 +195,13 @@ export default function GuidedQuoteFlow() {
     if (e.dataTransfer.files) addPhotos(e.dataTransfer.files);
   }, [addPhotos]);
 
+  const handleUploadKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      fileInputRef.current?.click();
+    }
+  }, []);
+
   const getSelectionLabel = (stepNum: number): string | null => {
     if (stepNum === 1 && serviceType) return SERVICE_TYPES.find((s) => s.id === serviceType)?.label || null;
     if (stepNum === 2 && location) return LOCATIONS.find((l) => l.id === location)?.label || null;
@@ -148,7 +212,7 @@ export default function GuidedQuoteFlow() {
 
   if (submitFailed) {
     return (
-      <div style={{
+      <div role="alert" style={{
         textAlign: 'center',
         padding: '3rem 1.5rem',
         backgroundColor: '#ffffff',
@@ -172,11 +236,11 @@ export default function GuidedQuoteFlow() {
           Something Went Wrong
         </h2>
         <p style={{ fontSize: '1rem', color: '#64748b', lineHeight: 1.7, maxWidth: '420px', margin: '0 auto 1.5rem' }}>
-          We couldn&apos;t submit your request. Please try again or give us a call.
+          {error || 'We couldn\'t submit your request. Please try again or give us a call.'}
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
           <button
-            onClick={() => { setSubmitFailed(false); handleSubmit(); }}
+            onClick={() => { setSubmitFailed(false); setError(''); handleSubmit(); }}
             className="btn-primary"
             style={{ fontSize: '15px', padding: '14px 28px', borderRadius: '8px' }}
           >
@@ -201,7 +265,7 @@ export default function GuidedQuoteFlow() {
 
   if (submitted) {
     return (
-      <div style={{
+      <div role="status" style={{
         textAlign: 'center',
         padding: '3rem 1.5rem',
         backgroundColor: '#ffffff',
@@ -253,7 +317,7 @@ export default function GuidedQuoteFlow() {
     border: selected ? '2px solid #2E86C1' : '2px solid #e2e8f0',
     backgroundColor: selected ? '#eff8ff' : '#ffffff',
     cursor: 'pointer',
-    textAlign: 'center',
+    textAlign: 'center' as const,
     transition: 'all 0.15s ease',
     display: 'flex',
     flexDirection: 'column',
@@ -261,6 +325,9 @@ export default function GuidedQuoteFlow() {
     gap: '0.5rem',
     color: selected ? '#2E86C1' : '#64748b',
     minHeight: '48px',
+    fontFamily: 'inherit',
+    fontSize: 'inherit',
+    lineHeight: 'inherit',
   });
 
   const inputStyle: React.CSSProperties = {
@@ -284,6 +351,10 @@ export default function GuidedQuoteFlow() {
     marginBottom: '6px',
     color: '#1B3A5C',
   };
+
+  const totalSize = photos.reduce((sum, p) => sum + p.file.size, 0);
+  const totalOriginalSize = photos.reduce((sum, p) => sum + (p.originalSize || p.file.size), 0);
+  const wasCompressed = totalOriginalSize > totalSize * 1.1;
 
   return (
     <div style={{
@@ -385,17 +456,19 @@ export default function GuidedQuoteFlow() {
             <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '1.25rem' }}>
               Select the option that best describes your issue.
             </p>
-            <div className="gqf-option-grid">
+            <div className="gqf-option-grid" role="group" aria-label="Service type">
               {SERVICE_TYPES.map((s) => (
-                <div
+                <button
+                  type="button"
                   key={s.id}
                   className="gqf-option-card"
                   onClick={() => setServiceType(s.id)}
+                  aria-pressed={serviceType === s.id}
                   style={optionCardStyle(serviceType === s.id)}
                 >
                   <Icon name={s.icon} size={24} />
                   <span style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>{s.label}</span>
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -410,17 +483,19 @@ export default function GuidedQuoteFlow() {
             <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '1.25rem' }}>
               This helps us prepare the right tools and parts.
             </p>
-            <div className="gqf-option-grid">
+            <div className="gqf-option-grid" role="group" aria-label="Problem location">
               {LOCATIONS.map((loc) => (
-                <div
+                <button
+                  type="button"
                   key={loc.id}
                   className="gqf-option-card"
                   onClick={() => setLocation(loc.id)}
+                  aria-pressed={location === loc.id}
                   style={optionCardStyle(location === loc.id)}
                 >
                   <Icon name={loc.icon} size={24} />
                   <span style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>{loc.label}</span>
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -435,12 +510,14 @@ export default function GuidedQuoteFlow() {
             <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '1.25rem' }}>
               This helps us prioritize your request.
             </p>
-            <div className="gqf-urgency-grid">
+            <div className="gqf-urgency-grid" role="group" aria-label="Urgency level">
               {URGENCY_LEVELS.map((u) => (
-                <div
+                <button
+                  type="button"
                   key={u.id}
                   className="gqf-option-card"
                   onClick={() => setUrgency(u.id)}
+                  aria-pressed={urgency === u.id}
                   style={{
                     ...optionCardStyle(urgency === u.id),
                     flexDirection: 'row',
@@ -462,7 +539,7 @@ export default function GuidedQuoteFlow() {
                     <span style={{ fontSize: '15px', fontWeight: 700, color: '#1e293b', display: 'block' }}>{u.label}</span>
                     <span style={{ fontSize: '13px', color: '#64748b' }}>{u.desc}</span>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -483,6 +560,10 @@ export default function GuidedQuoteFlow() {
                 {/* Desktop: drag-drop zone */}
                 <div
                   className="gqf-photo-desktop"
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Upload photos by clicking or dragging"
+                  onKeyDown={handleUploadKeyDown}
                   onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
                   onDragLeave={() => setDragOver(false)}
                   onDrop={handleDrop}
@@ -506,7 +587,7 @@ export default function GuidedQuoteFlow() {
                     <Icon name="camera" size={36} />
                   </div>
                   <p style={{ fontSize: '15px', fontWeight: 600, color: '#1e293b', marginBottom: '0.25rem' }}>
-                    Drag photos here or click to upload
+                    {compressing ? 'Compressing photos...' : 'Drag photos here or click to upload'}
                   </p>
                   <p style={{ fontSize: '13px', color: '#94a3b8' }}>
                     {photos.length}/{MAX_PHOTOS} photos added
@@ -525,6 +606,7 @@ export default function GuidedQuoteFlow() {
                   <button
                     type="button"
                     onClick={() => cameraInputRef.current?.click()}
+                    disabled={compressing}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -539,16 +621,18 @@ export default function GuidedQuoteFlow() {
                       backgroundColor: '#2E86C1',
                       border: 'none',
                       borderRadius: '10px',
-                      cursor: 'pointer',
+                      cursor: compressing ? 'wait' : 'pointer',
                       transition: 'background-color 0.15s ease',
+                      opacity: compressing ? 0.7 : 1,
                     }}
                   >
                     <Icon name="camera" size={22} color="#ffffff" />
-                    Take Photo
+                    {compressing ? 'Compressing...' : 'Take Photo'}
                   </button>
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
+                    disabled={compressing}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -563,8 +647,9 @@ export default function GuidedQuoteFlow() {
                       backgroundColor: '#ffffff',
                       border: '2px solid #e2e8f0',
                       borderRadius: '10px',
-                      cursor: 'pointer',
+                      cursor: compressing ? 'wait' : 'pointer',
                       transition: 'border-color 0.15s ease',
+                      opacity: compressing ? 0.7 : 1,
                     }}
                   >
                     <Icon name="image" size={22} color="#64748b" />
@@ -596,40 +681,50 @@ export default function GuidedQuoteFlow() {
             )}
 
             {photos.length > 0 && (
-              <div className="gqf-photo-grid">
-                {photos.map((photo, i) => (
-                  <div key={i} style={{ position: 'relative', aspectRatio: '1', borderRadius: '8px', overflow: 'hidden' }}>
-                    <img
-                      src={photo.url}
-                      alt={`Upload ${i + 1}`}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                    <button
-                      onClick={() => removePhoto(i)}
-                      style={{
-                        position: 'absolute',
-                        top: '4px',
-                        right: '4px',
-                        width: '28px',
-                        height: '28px',
-                        borderRadius: '50%',
-                        backgroundColor: 'rgba(0,0,0,0.6)',
-                        color: '#ffffff',
-                        border: 'none',
-                        cursor: 'pointer',
-                        fontSize: '16px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        lineHeight: 1,
-                      }}
-                      aria-label={`Remove photo ${i + 1}`}
-                    >
-                      &times;
-                    </button>
-                  </div>
-                ))}
-              </div>
+              <>
+                <div className="gqf-photo-grid">
+                  {photos.map((photo, i) => (
+                    <div key={i} style={{ position: 'relative', aspectRatio: '1', borderRadius: '8px', overflow: 'hidden' }}>
+                      <img
+                        src={photo.url}
+                        alt={`Upload ${i + 1}`}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                      <button
+                        onClick={() => removePhoto(i)}
+                        style={{
+                          position: 'absolute',
+                          top: '4px',
+                          right: '4px',
+                          width: '28px',
+                          height: '28px',
+                          borderRadius: '50%',
+                          backgroundColor: 'rgba(0,0,0,0.6)',
+                          color: '#ffffff',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: '16px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          lineHeight: 1,
+                        }}
+                        aria-label={`Remove photo ${i + 1}`}
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <p style={{ fontSize: '13px', color: '#64748b', marginTop: '0.5rem' }}>
+                  Estimated upload: {formatSize(totalSize)}
+                  {wasCompressed && (
+                    <span style={{ color: '#16a34a', fontWeight: 600 }}>
+                      {' '}(compressed from {formatSize(totalOriginalSize)})
+                    </span>
+                  )}
+                </p>
+              </>
             )}
           </div>
         )}
@@ -643,7 +738,9 @@ export default function GuidedQuoteFlow() {
             <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '1.25rem' }}>
               The more detail you provide, the better our estimate will be.
             </p>
+            <label htmlFor="quote-description" style={labelStyle}>Problem Description</label>
             <textarea
+              id="quote-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={5}
@@ -668,8 +765,9 @@ export default function GuidedQuoteFlow() {
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
-                <label style={labelStyle}>Name</label>
+                <label htmlFor="quote-name" style={labelStyle}>Name</label>
                 <input
+                  id="quote-name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -681,8 +779,9 @@ export default function GuidedQuoteFlow() {
               </div>
               <div className="gqf-contact-grid">
                 <div>
-                  <label style={labelStyle}>Phone</label>
+                  <label htmlFor="quote-phone" style={labelStyle}>Phone</label>
                   <input
+                    id="quote-phone"
                     type="tel"
                     inputMode="numeric"
                     value={phone}
@@ -694,8 +793,9 @@ export default function GuidedQuoteFlow() {
                   />
                 </div>
                 <div>
-                  <label style={labelStyle}>Email</label>
+                  <label htmlFor="quote-email" style={labelStyle}>Email</label>
                   <input
+                    id="quote-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -707,8 +807,9 @@ export default function GuidedQuoteFlow() {
                 </div>
               </div>
               <div>
-                <label style={labelStyle}>Address</label>
+                <label htmlFor="quote-address" style={labelStyle}>Address</label>
                 <input
+                  id="quote-address"
                   type="text"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
@@ -718,21 +819,39 @@ export default function GuidedQuoteFlow() {
                   autoComplete="street-address"
                 />
               </div>
+              {/* Honeypot */}
+              <div style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+                <label htmlFor="quote-website">Website</label>
+                <input
+                  id="quote-website"
+                  type="text"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
             </div>
           </div>
         )}
 
         {/* Error */}
         {error && (
-          <div style={{
-            backgroundColor: '#fef2f2',
-            border: '1px solid #fca5a5',
-            color: '#991b1b',
-            fontSize: '14px',
-            padding: '12px 16px',
-            borderRadius: '8px',
-            marginTop: '1rem',
-          }}>
+          <div
+            ref={errorRef}
+            role="alert"
+            tabIndex={-1}
+            style={{
+              backgroundColor: '#fef2f2',
+              border: '1px solid #fca5a5',
+              color: '#991b1b',
+              fontSize: '14px',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              marginTop: '1rem',
+              outline: 'none',
+            }}
+          >
             {error}
           </div>
         )}
@@ -767,17 +886,17 @@ export default function GuidedQuoteFlow() {
           )}
           <button
             onClick={goNext}
-            disabled={submitting}
+            disabled={submitting || compressing}
             className="btn-primary gqf-next-btn"
             style={{
               padding: '12px 28px',
               fontSize: '15px',
               borderRadius: '8px',
               flex: step === 6 ? 1 : undefined,
-              opacity: submitting ? 0.7 : 1,
+              opacity: submitting || compressing ? 0.7 : 1,
             }}
           >
-            {submitting ? 'Submitting...' : step === 4 ? (photos.length > 0 ? 'Next' : 'Skip') : step === 6 ? 'Submit Quote Request' : 'Next'}
+            {submitting ? (uploadStatus || 'Submitting...') : step === 4 ? (photos.length > 0 ? 'Next' : 'Skip') : step === 6 ? 'Submit Quote Request' : 'Next'}
           </button>
         </div>
 

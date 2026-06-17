@@ -1,12 +1,11 @@
 import { Suspense } from 'react';
 import GuidedQuoteFlow from '@/components/GuidedQuoteFlow';
+import { CONTRACTOR } from '@/lib/contractor';
 
 export const metadata = {
   title: 'Get a Quote | Clearwater Plumbing',
   description: 'Request a plumbing quote in minutes. Upload photos, describe the problem, and receive an estimate.',
 };
-
-const serviceAreas = ['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam', 'Delta', 'Langley', 'Maple Ridge'];
 
 export default function Contact() {
   return (
@@ -197,7 +196,7 @@ export default function Contact() {
                   Service Areas
                 </p>
                 <p style={{ fontSize: '14px', color: '#1e293b', lineHeight: 1.8 }}>
-                  {serviceAreas.join(' · ')}
+                  {CONTRACTOR.serviceAreas.join(' · ')}
                 </p>
               </div>
             </div>

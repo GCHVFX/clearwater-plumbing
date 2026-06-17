@@ -1,24 +1,23 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Gallery | Clearwater Plumbing',
-  description: 'Gallery of completed plumbing projects. Emergency repairs, installations, renovations, and more.',
+  title: 'Recent Work | Clearwater Plumbing',
+  description: 'Examples of recent plumbing projects completed by Clearwater Plumbing in the Lower Mainland.',
 };
 
-const galleryItems = [
-  { id: 1, title: 'Kitchen Renovation', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=500&fit=crop' },
-  { id: 2, title: 'Bathroom Upgrade', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=500&fit=crop' },
-  { id: 3, title: 'Emergency Pipe Repair', image: 'https://images.unsplash.com/photo-1549887534-7f1e1e6d6d0f?w=600&h=500&fit=crop' },
-  { id: 4, title: 'Water Heater Installation', image: 'https://images.unsplash.com/photo-1565103668306-00d82f3cc069?w=600&h=500&fit=crop' },
-  { id: 5, title: 'Drain Cleaning', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=500&fit=crop' },
-  { id: 6, title: 'Fixture Installation', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=500&fit=crop' },
-  { id: 7, title: 'Leak Repair', image: 'https://images.unsplash.com/photo-1565103668306-00d82f3cc069?w=600&h=500&fit=crop' },
-  { id: 8, title: 'Sump Pump Install', image: 'https://images.unsplash.com/photo-1549887534-7f1e1e6d6d0f?w=600&h=500&fit=crop' },
-  { id: 9, title: 'Frost-Free Sillcock', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=500&fit=crop' },
-  { id: 10, title: 'Toilet Replacement', image: 'https://images.unsplash.com/photo-1565103668306-00d82f3cc069?w=600&h=500&fit=crop' },
-  { id: 11, title: 'Gas Line Service', image: 'https://images.unsplash.com/photo-1549887534-7f1e1e6d6d0f?w=600&h=500&fit=crop' },
-  { id: 12, title: 'Backflow Prevention', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=500&fit=crop' },
+const projects = [
+  { title: 'Kitchen Faucet Replacement', location: 'Burnaby', type: 'Faucets & Fixtures', desc: 'Replaced a leaking kitchen faucet with a new pull-down model. Included supply line replacement.' },
+  { title: 'Tankless Water Heater Install', location: 'Vancouver', type: 'Water Heater', desc: 'Upgraded from a 40-gallon tank to a tankless unit. Included gas line and venting work.' },
+  { title: 'Emergency Pipe Repair', location: 'Surrey', type: 'Emergency', desc: 'Responded to a burst pipe in a finished basement. Repaired the pipe and dried the affected area.' },
+  { title: 'Bathroom Renovation Plumbing', location: 'Richmond', type: 'Renovation', desc: 'Full plumbing rough-in for a main bathroom renovation. New shower valve, toilet, and vanity.' },
+  { title: 'Main Drain Clearing', location: 'Coquitlam', type: 'Drain Cleaning', desc: 'Cleared a main sewer line blockage using professional-grade equipment. Camera inspection included.' },
+  { title: 'Toilet Replacement', location: 'Delta', type: 'Toilets', desc: 'Replaced two toilets with high-efficiency models. Included wax rings and supply lines.' },
+  { title: 'Outdoor Sillcock Install', location: 'Langley', type: 'Fixtures', desc: 'Installed two frost-free sillcocks to replace old outdoor taps that were freezing in winter.' },
+  { title: 'Sump Pump Installation', location: 'Maple Ridge', type: 'Emergency', desc: 'Installed a sump pump in a basement that was experiencing seasonal water infiltration.' },
+  { title: 'Water Heater Repair', location: 'Vancouver', type: 'Water Heater', desc: 'Diagnosed and repaired a faulty thermostat on a gas water heater. Extended the unit life by years.' },
+  { title: 'Kitchen Sink Drain Repair', location: 'Burnaby', type: 'Drain Cleaning', desc: 'Replaced corroded drain pipes under a kitchen sink. Included new P-trap and tailpiece.' },
+  { title: 'Basement Bathroom Rough-In', location: 'Surrey', type: 'Renovation', desc: 'Roughed in plumbing for a new basement bathroom. Included ejector pump for below-grade drainage.' },
+  { title: 'Leak Detection & Repair', location: 'Richmond', type: 'Leaks', desc: 'Located a hidden leak behind a wall using pressure testing. Repaired and patched the drywall.' },
 ];
 
 export default function Gallery() {
@@ -28,13 +27,24 @@ export default function Gallery() {
         .gallery-grid {
           display: grid;
           grid-template-columns: 1fr;
-          gap: 2.5rem;
+          gap: 1.5rem;
         }
         @media (min-width: 600px) {
           .gallery-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (min-width: 900px) {
           .gallery-grid { grid-template-columns: 1fr 1fr 1fr; }
+        }
+        .gallery-card {
+          background-color: #ffffff;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .gallery-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.1);
         }
       `}</style>
 
@@ -49,10 +59,10 @@ export default function Gallery() {
             lineHeight: 1.1,
             letterSpacing: '-0.01em',
           }}>
-            Our Work
+            Recent Work
           </h1>
-          <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.7)', maxWidth: '480px', lineHeight: 1.65 }}>
-            A selection of completed plumbing projects — from emergency repairs to full installations.
+          <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.7)', maxWidth: '520px', lineHeight: 1.65 }}>
+            Examples of plumbing projects we&apos;ve completed recently across the Lower Mainland.
           </p>
         </div>
       </section>
@@ -61,20 +71,59 @@ export default function Gallery() {
       <section style={{ backgroundColor: '#F0F4F8', padding: '5rem 0' }}>
         <div className="container-wide">
           <div className="gallery-grid">
-            {galleryItems.map((item) => (
-              <div key={item.id}>
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '4/3', backgroundColor: '#e2e8f0', overflow: 'hidden' }}>
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                    sizes="(max-width: 599px) 100vw, (max-width: 899px) 50vw, 33vw"
-                  />
+            {projects.map((project) => (
+              <div key={project.title} className="gallery-card">
+                <div style={{
+                  height: '140px',
+                  backgroundColor: '#1B3A5C',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <div style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(46,134,193,0.2)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                    <svg width="24" height="24" fill="none" stroke="rgba(255,255,255,0.6)" viewBox="0 0 24 24" strokeWidth="1.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085" />
+                    </svg>
+                  </div>
                 </div>
-                <p style={{ fontSize: '14px', fontWeight: 600, color: '#1e293b', marginTop: '0.75rem' }}>
-                  {item.title}
-                </p>
+                <div style={{ padding: '1.5rem' }}>
+                  <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
+                    <span style={{
+                      fontSize: '11px',
+                      fontWeight: 700,
+                      color: '#2E86C1',
+                      backgroundColor: '#eff8ff',
+                      padding: '3px 8px',
+                      borderRadius: '4px',
+                    }}>
+                      {project.type}
+                    </span>
+                    <span style={{
+                      fontSize: '11px',
+                      fontWeight: 600,
+                      color: '#64748b',
+                      backgroundColor: '#f1f5f9',
+                      padding: '3px 8px',
+                      borderRadius: '4px',
+                    }}>
+                      {project.location}
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.5rem' }}>
+                    {project.title}
+                  </h3>
+                  <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.6 }}>
+                    {project.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -82,7 +131,7 @@ export default function Gallery() {
       </section>
 
       {/* CTA */}
-      <section style={{ backgroundColor: '#1B3A5C', borderLeft: '6px solid #2E86C1', padding: '4rem 0' }}>
+      <section style={{ backgroundColor: '#1B3A5C', padding: '4rem 0' }}>
         <div className="container-wide">
           <h2 style={{
             fontSize: 'clamp(24px, 3.5vw, 36px)',
@@ -92,13 +141,13 @@ export default function Gallery() {
             lineHeight: 1.1,
             letterSpacing: '-0.01em',
           }}>
-            Ready to Improve Your Home?
+            Have a similar project?
           </h2>
           <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.68)', marginBottom: '2rem' }}>
-            Get a free quote on any plumbing work.
+            Show us the problem and we&apos;ll send you an estimate.
           </p>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-            <Link href="/contact" className="btn-primary">Request a Quote</Link>
+            <Link href="/contact" className="btn-primary">Get a Quote</Link>
             <a href="tel:6045550123" style={{ fontSize: '15px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>
               or call <span style={{ color: '#ffffff', fontWeight: 600 }}>(604) 555-0123</span>
             </a>

@@ -129,7 +129,7 @@ export default function Header() {
               className="hdr-nav-cta btn-primary"
               style={{ padding: '8px 20px', fontSize: '14px' }}
             >
-              Get a Free Quote
+              Get a Quote
             </Link>
           </div>
 
@@ -160,7 +160,7 @@ export default function Header() {
                   className="btn-primary"
                   style={{ display: 'block', textAlign: 'center', marginTop: '1rem' }}
                 >
-                  Get a Free Quote
+                  Get a Quote
                 </Link>
               </div>
             </div>

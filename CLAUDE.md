@@ -1,5 +1,11 @@
 # Clearwater Plumbing — Demo Contractor Website
 
+Read first:
+
+- AI-WORKFLOW.md
+- ARCHITECTURE.md
+- IMPORT-SYSTEM.md (if applicable)
+
 ## Purpose
 Demo site for selling web design subscriptions to BC trades businesses. Must look professional enough that contractors feel embarrassed about their current site on a Zoom call.
 
@@ -59,3 +65,122 @@ Use CSS grid with auto-fit/minmax for responsive columns. Add media queries via 
 2. git add .
 3. git commit -m "description of change"
 4. git push
+
+# AI Workflow
+
+## Primary Roles
+
+### ChatGPT
+
+Use for:
+
+* Product planning
+* Feature design
+* Business strategy
+* Pricing decisions
+* UX planning
+* Technical specifications
+* Reviewing competing implementation approaches
+* Deciding what should be built
+
+ChatGPT is the planner and specification writer.
+
+---
+
+### Claude Code
+
+Claude Code is the primary implementation agent.
+
+Use Claude Code for:
+
+* New features
+* UI implementation
+* API development
+* Database changes
+* Refactors
+* Website development
+* TradePulse development
+* RouteBuddy development
+* AddressBuddy development
+* Executing approved specifications
+
+Claude should generally be given a complete specification before implementation begins.
+
+---
+
+### Codex
+
+Codex is the reviewer and auditor.
+
+Use Codex for:
+
+* Architecture review
+* Security review
+* Bug hunting
+* Edge-case analysis
+* Performance review
+* Requirement compliance review
+* Deployment readiness review
+* Pull request review
+* Diff review
+
+Codex should generally not be the primary implementation agent.
+
+---
+
+# Preferred Workflow
+
+For most work:
+
+1. ChatGPT creates specification
+2. Claude Code implements
+3. Codex reviews implementation
+4. Claude Code fixes findings
+5. Codex validates final result
+
+Avoid having Claude Code and Codex edit the same files simultaneously.
+
+---
+
+# When to Request a Codex Review
+
+Always consider a Codex review after:
+
+* Authentication changes
+* Database schema changes
+* Payment system changes
+* File upload systems
+* OCR integrations
+* AI integrations
+* Major refactors
+* Production deployment preparation
+
+---
+
+# Quick Decision Guide
+
+Use Claude Code when:
+
+* Building a new feature
+* Creating a page
+* Creating a website
+* Connecting systems together
+* Implementing a specification
+* Modifying UI
+* Refactoring code
+
+Use Codex when:
+
+* "Did Claude miss anything?"
+* "Review this implementation."
+* "Find bugs."
+* "Audit this feature."
+* "Review security."
+* "Review architecture."
+* "Review this diff."
+* "Is this production ready?"
+
+If unsure:
+
+Build with Claude Code first.
+Review with Codex second.

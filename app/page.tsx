@@ -9,103 +9,15 @@ const howItWorks = [
   { step: '4', title: 'Get your estimate' },
 ];
 
-const recentProjects = [
-  { title: 'Kitchen Faucet Replacement', location: 'Burnaby', type: 'Faucets & Fixtures', desc: 'Replaced a leaking kitchen faucet with a new pull-down model.' },
-  { title: 'Tankless Water Heater Install', location: 'Vancouver', type: 'Water Heater', desc: 'Upgraded from a 40-gallon tank to a tankless unit.' },
-  { title: 'Emergency Pipe Repair', location: 'Surrey', type: 'Emergency', desc: 'Responded to a burst pipe in a finished basement at midnight.' },
+const serviceExamples = [
+  { title: 'Faucet & Fixture Installs', type: 'Faucets & Fixtures', desc: 'Kitchen and bathroom faucet replacements, new fixture installs, and upgrades.' },
+  { title: 'Water Heater Service', type: 'Water Heater', desc: 'Tank and tankless water heater installs, repairs, and maintenance.' },
+  { title: '24/7 Emergency Response', type: 'Emergency', desc: 'Burst pipes, flooding, and gas leaks handled around the clock.' },
 ];
 
 export default function Home() {
   return (
     <div>
-      <style>{`
-        .hero-layout {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 2.5rem;
-          align-items: center;
-        }
-        @media (min-width: 900px) {
-          .hero-layout { grid-template-columns: 1fr 1fr; gap: 4rem; }
-        }
-        .hero-h1 { font-size: clamp(28px, 4.5vw, 48px); }
-
-        .emergency-inner {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          align-items: stretch;
-        }
-        .emergency-inner .emergency-phone {
-          text-align: center;
-          justify-content: center;
-        }
-        @media (min-width: 768px) {
-          .emergency-inner {
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-          }
-          .emergency-inner .emergency-phone {
-            text-align: left;
-          }
-        }
-
-        .hiw-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.25rem;
-        }
-        .hiw-connector { display: none; }
-        @media (min-width: 768px) {
-          .hiw-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-          .hiw-connector { display: block !important; }
-        }
-
-        .trust-row {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-        .trust-item { padding: 0; border-left: 3px solid #2E86C1; padding-left: 1.25rem; }
-        @media (min-width: 768px) {
-          .trust-row { grid-template-columns: 1fr 1fr 1fr; gap: 0; }
-          .trust-item { border-left: none; padding-left: 2rem; padding-right: 2rem; }
-          .trust-item + .trust-item { border-left: 1px solid rgba(255,255,255,0.1); }
-          .trust-item:first-child { padding-left: 0; }
-        }
-
-        .services-feature {
-          display: grid;
-          grid-template-columns: 1fr;
-        }
-        @media (min-width: 768px) {
-          .services-feature { grid-template-columns: 1fr 1fr; }
-        }
-        .service-row-link:hover {
-          background-color: #f8fbff !important;
-        }
-
-        .projects-row {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-        @media (min-width: 768px) {
-          .projects-row { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .cta-bottom {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-          align-items: flex-start;
-        }
-        @media (min-width: 768px) {
-          .cta-bottom { flex-direction: row; align-items: center; justify-content: space-between; }
-        }
-      `}</style>
-
       {/* Hero — split: headline left, quote start right */}
       <section style={{
         backgroundColor: '#1B3A5C',
@@ -151,7 +63,7 @@ export default function Home() {
                 lineHeight: 1.1,
                 color: '#ffffff',
                 marginBottom: '1rem',
-                letterSpacing: '-0.02em',
+                letterSpacing: '0',
               }}>
                 Need a plumber?<br />Show us the problem.
               </h1>
@@ -202,12 +114,6 @@ export default function Home() {
         borderTop: '1px solid rgba(255,255,255,0.06)',
         padding: '1.25rem 0',
       }}>
-        <style>{`
-          .emergency-phone:hover {
-            background-color: rgba(255,255,255,0.15) !important;
-            border-color: rgba(255,255,255,0.4) !important;
-          }
-        `}</style>
         <div className="container-wide">
           <div className="emergency-inner">
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.875rem' }}>
@@ -327,7 +233,7 @@ export default function Home() {
               fontWeight: 900,
               color: '#1B3A5C',
               lineHeight: 1.1,
-              letterSpacing: '-0.01em',
+              letterSpacing: '0',
             }}>
               What do you need fixed?
             </h2>
@@ -394,7 +300,7 @@ export default function Home() {
             {[
               { title: 'Upfront Estimates', desc: 'We quote before we start. The price you receive is the price you pay.', icon: 'file-text' },
               { title: 'Real People', desc: 'Talk directly with the person doing the work. No call centres.', icon: 'user' },
-              { title: 'Quality Work', desc: 'Licensed plumber on every job. We clean up when we&apos;re done.', icon: 'check-circle' },
+              { title: 'Quality Work', desc: 'Qualified plumber on every job. We clean up when we&apos;re done.', icon: 'check-circle' },
             ].map((item) => (
               <div key={item.title} className="trust-item">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '0.625rem' }}>
@@ -408,7 +314,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Recent Work — horizontal project summaries, not card grid */}
+      {/* What We Do — service examples, not specific completed projects */}
       <section style={{ backgroundColor: '#ffffff', padding: '5rem 0' }}>
         <div className="container-wide">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
@@ -421,25 +327,24 @@ export default function Home() {
                 color: '#64748b',
                 marginBottom: '0.5rem',
               }}>
-                Recent Work
+                What We Do
               </p>
               <h2 style={{
                 fontSize: 'clamp(22px, 3vw, 32px)',
                 fontWeight: 900,
                 color: '#1B3A5C',
                 lineHeight: 1.1,
-                letterSpacing: '-0.01em',
               }}>
-                Projects we&apos;ve completed
+                Services we offer
               </h2>
             </div>
-            <Link href="/gallery" style={{ fontSize: '14px', color: '#2E86C1', fontWeight: 600 }}>
+            <Link href="/services" style={{ fontSize: '14px', color: '#2E86C1', fontWeight: 600 }}>
               View all &rarr;
             </Link>
           </div>
           <div className="projects-row">
-            {recentProjects.map((project) => (
-              <div key={project.title} style={{
+            {serviceExamples.map((item) => (
+              <div key={item.title} style={{
                 borderLeft: '3px solid #2E86C1',
                 paddingLeft: '1.25rem',
               }}>
@@ -453,15 +358,14 @@ export default function Home() {
                   borderRadius: '4px',
                   marginBottom: '0.5rem',
                 }}>
-                  {project.type}
+                  {item.type}
                 </span>
                 <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.375rem' }}>
-                  {project.title}
+                  {item.title}
                 </h3>
-                <p style={{ fontSize: '13px', color: '#64748b', lineHeight: 1.6, marginBottom: '0.25rem' }}>
-                  {project.desc}
+                <p style={{ fontSize: '13px', color: '#64748b', lineHeight: 1.6 }}>
+                  {item.desc}
                 </p>
-                <p style={{ fontSize: '12px', color: '#94a3b8' }}>{project.location}</p>
               </div>
             ))}
           </div>
@@ -475,7 +379,7 @@ export default function Home() {
             Serving Vancouver &middot; Burnaby &middot; Surrey &middot; Richmond &middot; Coquitlam &middot; Delta &middot; Langley &middot; Maple Ridge
           </p>
           <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>
-            Licensed #L12345 &middot; Insured &middot; Bonded
+            Credentials can be added here once verified.
           </p>
         </div>
       </section>
@@ -494,7 +398,7 @@ export default function Home() {
                 color: '#ffffff',
                 marginBottom: '0.5rem',
                 lineHeight: 1.1,
-                letterSpacing: '-0.01em',
+                letterSpacing: '0',
               }}>
                 Ready to get started?
               </h2>

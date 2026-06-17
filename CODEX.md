@@ -180,3 +180,75 @@ Focus on:
 
 Do not suggest changes solely based on personal preference.
 
+## Styling Rules
+
+
+
+This project does not use Tailwind utility classes in components or pages.
+
+
+
+Preferred styling order:
+
+
+
+1\. Inline style props
+
+2\. Small component-scoped `<style>` blocks
+
+3\. Global CSS only when explicitly approved
+
+
+
+Component-scoped `<style>` blocks are acceptable when needed for:
+
+
+
+\* Media queries
+
+\* Hover states
+
+\* Focus states
+
+\* Pseudo-selectors
+
+\* Responsive layouts
+
+\* Interactions that cannot be implemented cleanly with inline styles
+
+
+
+Do not flag component-scoped `<style>` blocks as violations if they are:
+
+
+
+\* Local to the component
+
+\* Small in scope
+
+\* Not using Tailwind utilities
+
+\* Not introducing unnecessary global styling
+
+
+
+When reviewing code, prioritize:
+
+
+
+\* Functionality
+
+\* Maintainability
+
+\* Accessibility
+
+\* Mobile UX
+
+\* Build correctness
+
+
+
+Do not report component-scoped `<style>` blocks as issues unless they are excessive, global in nature, or could be replaced by a substantially cleaner implementation.
+
+When project documentation conflicts with implementation practicality, prefer maintainable and readable solutions over rigid adherence to stylistic rules.
+

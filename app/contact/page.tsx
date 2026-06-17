@@ -11,18 +11,6 @@ const serviceAreas = ['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam',
 export default function Contact() {
   return (
     <div>
-      <style>{`
-        .contact-layout {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 3rem;
-          align-items: start;
-        }
-        @media (min-width: 1024px) {
-          .contact-layout { grid-template-columns: 5fr 2fr; gap: 4rem; }
-        }
-      `}</style>
-
       {/* Hero */}
       <section style={{ backgroundColor: '#1B3A5C', padding: '4rem 0' }}>
         <div className="container-wide">
@@ -32,7 +20,7 @@ export default function Contact() {
             color: '#ffffff',
             marginBottom: '1rem',
             lineHeight: 1.1,
-            letterSpacing: '-0.01em',
+            letterSpacing: '0',
           }}>
             Get a Quote
           </h1>
@@ -45,7 +33,7 @@ export default function Contact() {
       {/* Main Content */}
       <section style={{ backgroundColor: '#F0F4F8', padding: '3rem 0 4rem' }}>
         <div className="container-wide">
-          {/* Mobile emergency callout — visible only below 1024px */}
+          {/* Mobile emergency callout — hidden on desktop via components.css */}
           <div className="contact-mobile-emergency" style={{
             display: 'flex',
             alignItems: 'center',
@@ -56,11 +44,6 @@ export default function Contact() {
             borderRadius: '10px',
             marginBottom: '1.5rem',
           }}>
-            <style>{`
-              @media (min-width: 1024px) {
-                .contact-mobile-emergency { display: none !important; }
-              }
-            `}</style>
             <div>
               <p style={{ fontSize: '14px', fontWeight: 700, color: '#ffffff' }}>Need immediate help?</p>
               <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.55)' }}>Available 24/7 for emergencies</p>

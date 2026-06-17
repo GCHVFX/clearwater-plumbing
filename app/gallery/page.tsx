@@ -1,53 +1,25 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Recent Work | Clearwater Plumbing',
-  description: 'Examples of recent plumbing projects completed by Clearwater Plumbing in the Lower Mainland.',
+  title: 'Example Gallery | Clearwater Plumbing',
+  description: 'Example service categories showing the types of plumbing work we handle across the Lower Mainland.',
 };
 
-const projects = [
-  { title: 'Kitchen Faucet Replacement', location: 'Burnaby', type: 'Faucets & Fixtures', desc: 'Replaced a leaking kitchen faucet with a new pull-down model. Included supply line replacement.' },
-  { title: 'Tankless Water Heater Install', location: 'Vancouver', type: 'Water Heater', desc: 'Upgraded from a 40-gallon tank to a tankless unit. Included gas line and venting work.' },
-  { title: 'Emergency Pipe Repair', location: 'Surrey', type: 'Emergency', desc: 'Responded to a burst pipe in a finished basement. Repaired the pipe and dried the affected area.' },
-  { title: 'Bathroom Renovation Plumbing', location: 'Richmond', type: 'Renovation', desc: 'Full plumbing rough-in for a main bathroom renovation. New shower valve, toilet, and vanity.' },
-  { title: 'Main Drain Clearing', location: 'Coquitlam', type: 'Drain Cleaning', desc: 'Cleared a main sewer line blockage using professional-grade equipment. Camera inspection included.' },
-  { title: 'Toilet Replacement', location: 'Delta', type: 'Toilets', desc: 'Replaced two toilets with high-efficiency models. Included wax rings and supply lines.' },
-  { title: 'Outdoor Sillcock Install', location: 'Langley', type: 'Fixtures', desc: 'Installed two frost-free sillcocks to replace old outdoor taps that were freezing in winter.' },
-  { title: 'Sump Pump Installation', location: 'Maple Ridge', type: 'Emergency', desc: 'Installed a sump pump in a basement that was experiencing seasonal water infiltration.' },
-  { title: 'Water Heater Repair', location: 'Vancouver', type: 'Water Heater', desc: 'Diagnosed and repaired a faulty thermostat on a gas water heater. Extended the unit life by years.' },
-  { title: 'Kitchen Sink Drain Repair', location: 'Burnaby', type: 'Drain Cleaning', desc: 'Replaced corroded drain pipes under a kitchen sink. Included new P-trap and tailpiece.' },
-  { title: 'Basement Bathroom Rough-In', location: 'Surrey', type: 'Renovation', desc: 'Roughed in plumbing for a new basement bathroom. Included ejector pump for below-grade drainage.' },
-  { title: 'Leak Detection & Repair', location: 'Richmond', type: 'Leaks', desc: 'Located a hidden leak behind a wall using pressure testing. Repaired and patched the drywall.' },
+const serviceCategories = [
+  { title: 'Leak Repair', type: 'Leaks', desc: 'Pipe leaks, faucet drips, and water damage repairs.' },
+  { title: 'Drain Clearing', type: 'Drain Cleaning', desc: 'Clogged sinks, backed-up drains, and sewer line clearing.' },
+  { title: 'Water Heater Install', type: 'Water Heater', desc: 'Tank and tankless water heater installs and repairs.' },
+  { title: 'Bathroom Renovation Plumbing', type: 'Renovation', desc: 'Rough-in and finish plumbing for bathroom and kitchen renos.' },
+  { title: 'Toilet Replacement', type: 'Toilets', desc: 'New toilet installs and repairs for running or leaking toilets.' },
+  { title: 'Emergency Response', type: 'Emergency', desc: 'Burst pipes, flooding, and after-hours emergency calls.' },
+  { title: 'Outdoor Fixtures', type: 'Fixtures', desc: 'Sillcocks, hose bibs, and outdoor plumbing installs.' },
+  { title: 'Sump Pump Install', type: 'Emergency', desc: 'Sump pump installs for basements with water infiltration.' },
+  { title: 'Kitchen Faucet Install', type: 'Faucets & Fixtures', desc: 'Kitchen and bathroom faucet replacements and upgrades.' },
 ];
 
 export default function Gallery() {
   return (
     <div>
-      <style>{`
-        .gallery-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-        @media (min-width: 600px) {
-          .gallery-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (min-width: 900px) {
-          .gallery-grid { grid-template-columns: 1fr 1fr 1fr; }
-        }
-        .gallery-card {
-          background-color: #ffffff;
-          border-radius: 12px;
-          overflow: hidden;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .gallery-card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-        }
-      `}</style>
-
       {/* Hero */}
       <section style={{ backgroundColor: '#1B3A5C', padding: '4rem 0' }}>
         <div className="container-wide">
@@ -57,12 +29,12 @@ export default function Gallery() {
             color: '#ffffff',
             marginBottom: '1rem',
             lineHeight: 1.1,
-            letterSpacing: '-0.01em',
+            letterSpacing: '0',
           }}>
-            Recent Work
+            Example Service Photos
           </h1>
           <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.7)', maxWidth: '520px', lineHeight: 1.65 }}>
-            Examples of plumbing projects we&apos;ve completed recently across the Lower Mainland.
+            Example project layout showing service categories we handle. Replace with real job photos before using this for a real contractor.
           </p>
         </div>
       </section>
@@ -70,9 +42,21 @@ export default function Gallery() {
       {/* Gallery Grid */}
       <section style={{ backgroundColor: '#F0F4F8', padding: '5rem 0' }}>
         <div className="container-wide">
+          <div style={{
+            backgroundColor: '#eff8ff',
+            border: '1px solid #bfdbfe',
+            borderRadius: '8px',
+            padding: '1rem 1.25rem',
+            marginBottom: '2rem',
+            fontSize: '14px',
+            color: '#1e40af',
+            lineHeight: 1.6,
+          }}>
+            These are example service categories, not completed projects. Replace placeholder images with real job photos when setting up a live contractor site.
+          </div>
           <div className="gallery-grid">
-            {projects.map((project) => (
-              <div key={project.title} className="gallery-card">
+            {serviceCategories.map((item) => (
+              <div key={item.title} className="gallery-card">
                 <div style={{
                   height: '140px',
                   backgroundColor: '#1B3A5C',
@@ -81,17 +65,25 @@ export default function Gallery() {
                   justifyContent: 'center',
                 }}>
                   <div style={{
-                    width: '48px',
-                    height: '48px',
-                    borderRadius: '50%',
-                    backgroundColor: 'rgba(46,134,193,0.2)',
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'center',
+                    gap: '0.5rem',
                   }}>
-                    <svg width="24" height="24" fill="none" stroke="rgba(255,255,255,0.6)" viewBox="0 0 24 24" strokeWidth="1.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085" />
-                    </svg>
+                    <div style={{
+                      width: '48px',
+                      height: '48px',
+                      borderRadius: '50%',
+                      backgroundColor: 'rgba(46,134,193,0.2)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                      <svg width="24" height="24" fill="none" stroke="rgba(255,255,255,0.6)" viewBox="0 0 24 24" strokeWidth="1.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
+                      </svg>
+                    </div>
+                    <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>Placeholder</span>
                   </div>
                 </div>
                 <div style={{ padding: '1.5rem' }}>
@@ -104,24 +96,14 @@ export default function Gallery() {
                       padding: '3px 8px',
                       borderRadius: '4px',
                     }}>
-                      {project.type}
-                    </span>
-                    <span style={{
-                      fontSize: '11px',
-                      fontWeight: 600,
-                      color: '#64748b',
-                      backgroundColor: '#f1f5f9',
-                      padding: '3px 8px',
-                      borderRadius: '4px',
-                    }}>
-                      {project.location}
+                      {item.type}
                     </span>
                   </div>
                   <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.5rem' }}>
-                    {project.title}
+                    {item.title}
                   </h3>
                   <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.6 }}>
-                    {project.desc}
+                    {item.desc}
                   </p>
                 </div>
               </div>
@@ -139,9 +121,9 @@ export default function Gallery() {
             color: '#ffffff',
             marginBottom: '1rem',
             lineHeight: 1.1,
-            letterSpacing: '-0.01em',
+            letterSpacing: '0',
           }}>
-            Have a similar project?
+            Need similar work done?
           </h2>
           <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.68)', marginBottom: '2rem' }}>
             Show us the problem and we&apos;ll send you an estimate.

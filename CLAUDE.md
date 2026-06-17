@@ -19,11 +19,22 @@ Demo site for selling web design subscriptions to BC trades businesses. Must loo
 ## Critical: Tailwind v4 Constraint
 Do NOT use Tailwind utility classes in components or pages. They do not render reliably in this setup.
 
-All styling must use inline style props directly on JSX elements:
-- CORRECT: <div style={{ backgroundColor: '#1B3A5C', padding: '80px 20px' }}>
-- WRONG: <div className="bg-navy py-20">
-
 globals.css uses @import "tailwindcss" at the top (not the v3 directives).
+
+### Styling rules
+- Default to inline style props for static styling.
+  - CORRECT: `<div style={{ backgroundColor: '#1B3A5C', padding: '80px 20px' }}>`
+  - WRONG: `<div className="bg-navy py-20">`
+- Component-level `<style>` blocks are allowed only when needed for:
+  - Media queries
+  - Hover states
+  - Focus states
+  - Pseudo-selectors
+  - Complex responsive behaviour
+- Do not use `className` for Tailwind utility classes.
+- If using `className`, it must only reference local selectors defined in the same component's `<style>` block.
+- Keep component-level CSS small and scoped.
+- Do not introduce global CSS unless explicitly requested.
 
 ## Brand
 - Navy: #1B3A5C (primary backgrounds)
@@ -39,7 +50,7 @@ Logo files:
 - public/icon.png — icon only (use as favicon fallback only)
 
 ## Responsive Layout
-Use CSS grid with auto-fit/minmax for responsive columns. Add media queries via <style> tags inside components when needed. No Tailwind responsive classes.
+Use CSS grid with auto-fit/minmax for responsive columns. No Tailwind responsive classes.
 
 ## Files — What to Edit
 - app/page.tsx — Home page
@@ -54,7 +65,6 @@ Use CSS grid with auto-fit/minmax for responsive columns. Add media queries via 
 - components/TestimonialCard.tsx — Testimonial card component
 
 ## Files — Do Not Touch
-- app/api/quote/route.ts
 - next.config.ts
 - postcss.config.mjs
 - tsconfig.json
@@ -184,3 +194,5 @@ If unsure:
 
 Build with Claude Code first.
 Review with Codex second.
+
+When project documentation conflicts with implementation practicality, prefer maintainable and readable solutions over rigid adherence to stylistic rules.

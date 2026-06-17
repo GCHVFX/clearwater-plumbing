@@ -62,28 +62,6 @@ const serviceAreas = ['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam',
 export default function Services() {
   return (
     <div>
-      <style>{`
-        .services-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-        @media (min-width: 768px) {
-          .services-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        .service-item {
-          padding: 2rem;
-          border-radius: 12px;
-          border: 2px solid #e2e8f0;
-          background-color: #ffffff;
-          transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-        .service-item:hover {
-          border-color: #2E86C1;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-        }
-      `}</style>
-
       {/* Hero */}
       <section style={{ backgroundColor: '#1B3A5C', padding: '4rem 0' }}>
         <div className="container-wide">
@@ -93,7 +71,7 @@ export default function Services() {
             color: '#ffffff',
             marginBottom: '1rem',
             lineHeight: 1.1,
-            letterSpacing: '-0.01em',
+            letterSpacing: '0',
           }}>
             What Do You Need Help With?
           </h1>
@@ -191,7 +169,7 @@ export default function Services() {
             color: '#1B3A5C',
             marginBottom: '1rem',
             lineHeight: 1.1,
-            letterSpacing: '-0.01em',
+            letterSpacing: '0',
           }}>
             Ready to get started?
           </h2>

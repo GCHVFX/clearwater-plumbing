@@ -3,7 +3,7 @@ import Icon from '@/components/Icon';
 
 export const metadata = {
   title: 'About Clearwater Plumbing',
-  description: 'Licensed, insured, and bonded plumbing in the Lower Mainland. Reliable service, honest communication, quality work.',
+  description: 'Professional plumbing in the Lower Mainland. Reliable service, honest communication, quality work.',
 };
 
 const values = [
@@ -19,16 +19,9 @@ const values = [
   },
   {
     title: 'Professionalism',
-    desc: 'Licensed plumbers on every job. We treat your home with respect and clean up after ourselves.',
+    desc: 'Qualified plumbers on every job. We treat your home with respect and clean up after ourselves.',
     icon: 'shield',
   },
-];
-
-const credentials = [
-  'Licensed Plumber — Licence #L12345',
-  'Fully insured — $2M liability coverage',
-  'Bonded for your protection',
-  'All work meets BC Building Code standards',
 ];
 
 const serviceAreas = ['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam', 'Delta', 'Langley', 'Maple Ridge'];
@@ -36,17 +29,6 @@ const serviceAreas = ['Vancouver', 'Burnaby', 'Richmond', 'Surrey', 'Coquitlam',
 export default function About() {
   return (
     <div>
-      <style>{`
-        .about-values-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-        @media (min-width: 768px) {
-          .about-values-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-      `}</style>
-
       {/* Hero */}
       <section style={{ backgroundColor: '#1B3A5C', padding: '4rem 0' }}>
         <div className="container-wide">
@@ -56,12 +38,12 @@ export default function About() {
             color: '#ffffff',
             marginBottom: '1rem',
             lineHeight: 1.1,
-            letterSpacing: '-0.01em',
+            letterSpacing: '0',
           }}>
             About Clearwater Plumbing
           </h1>
           <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.7)', maxWidth: '500px', lineHeight: 1.65 }}>
-            Reliable plumbing in the Lower Mainland. Licensed, insured, and bonded.
+            Reliable plumbing in the Lower Mainland.
           </p>
         </div>
       </section>
@@ -74,7 +56,7 @@ export default function About() {
               Clearwater Plumbing has served the Lower Mainland since 2012. We started with a simple idea: plumbing work should be honest, on time, and done right.
             </p>
             <p style={{ fontSize: '17px', color: '#1e293b', lineHeight: 1.8 }}>
-              We&apos;re a small team. Every job gets a qualified, licensed plumber. We quote before we start, and the price you&apos;re given is the price you pay.
+              We&apos;re a small team. Every job gets a qualified plumber. We quote before we start, and the price you&apos;re given is the price you pay.
             </p>
           </div>
         </div>
@@ -89,7 +71,7 @@ export default function About() {
             color: '#1B3A5C',
             marginBottom: '3rem',
             lineHeight: 1.1,
-            letterSpacing: '-0.01em',
+            letterSpacing: '0',
           }}>
             What We Stand For
           </h2>
@@ -125,14 +107,17 @@ export default function About() {
             }}>
               Credentials
             </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {credentials.map((item) => (
-                <p key={item} style={{ fontSize: '15px', color: '#1e293b' }}>
-                  <span style={{ color: '#2E86C1', fontWeight: 700, marginRight: '0.5rem' }}>&#10003;</span>
-                  {item}
-                </p>
-              ))}
-            </div>
+            <p style={{
+              fontSize: '15px',
+              color: '#64748b',
+              lineHeight: 1.7,
+              padding: '1.25rem',
+              backgroundColor: '#F0F4F8',
+              borderRadius: '8px',
+              border: '1px solid #e2e8f0',
+            }}>
+              Credentials can be added here once verified. This section will display licence number, insurance details, and bonding information for the contractor.
+            </p>
           </div>
         </div>
       </section>

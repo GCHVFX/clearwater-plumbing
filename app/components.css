@@ -1,0 +1,338 @@
+/*
+ * Component-level responsive and pseudo-class styles.
+ *
+ * Media queries and pseudo-class selectors (:hover, :focus, :active)
+ * cannot be expressed as inline styles. This file is the single
+ * exception to the inline-styles-only rule documented in CLAUDE.md.
+ *
+ * Rules are grouped by component. Only add rules here that truly
+ * require CSS (media queries, pseudo-classes, adjacent-sibling
+ * selectors). Everything else must remain as inline style props.
+ */
+
+/* ============================================================
+   GuidedQuoteFlow
+   ============================================================ */
+.gqf-option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.625rem;
+}
+@media (min-width: 640px) {
+  .gqf-option-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+}
+
+.gqf-urgency-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.625rem;
+}
+@media (min-width: 640px) {
+  .gqf-urgency-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.gqf-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.625rem;
+}
+@media (min-width: 640px) {
+  .gqf-photo-grid { grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
+}
+
+.gqf-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .gqf-contact-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.gqf-input:focus {
+  border-color: #2E86C1 !important;
+  box-shadow: 0 0 0 3px rgba(46,134,193,0.12);
+}
+
+.gqf-option-card:hover {
+  border-color: #2E86C1 !important;
+  background-color: #f8fbff !important;
+}
+
+.gqf-steps-bar { display: none; }
+@media (min-width: 640px) {
+  .gqf-steps-bar { display: flex; }
+}
+
+.gqf-photo-desktop { display: none; }
+.gqf-photo-mobile { display: flex; }
+@media (min-width: 768px) {
+  .gqf-photo-desktop { display: flex; }
+  .gqf-photo-mobile { display: none; }
+}
+
+.gqf-mobile-phone { display: flex; }
+@media (min-width: 1024px) {
+  .gqf-mobile-phone { display: none; }
+}
+
+.gqf-back-btn:hover {
+  border-color: #94a3b8 !important;
+  color: #1e293b !important;
+}
+
+.gqf-next-btn { min-height: 48px; }
+
+/* ============================================================
+   HeroQuoteStart
+   ============================================================ */
+.hqs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.625rem;
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hqs-grid { grid-template-columns: repeat(6, 1fr); }
+}
+
+.hqs-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.125rem 0.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background-color: rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  color: rgba(255,255,255,0.6);
+}
+.hqs-tile:hover {
+  background-color: rgba(46,134,193,0.15);
+  border-color: rgba(46,134,193,0.5);
+  transform: translateY(-3px);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.hqs-tile:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.hqs-other:hover {
+  border-color: rgba(255,255,255,0.3) !important;
+  color: rgba(255,255,255,0.8) !important;
+}
+
+/* ============================================================
+   Home page (app/page.tsx)
+   ============================================================ */
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .hero-layout { grid-template-columns: 1fr 1fr; gap: 4rem; }
+}
+.hero-h1 { font-size: clamp(28px, 4.5vw, 48px); }
+
+.emergency-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+}
+.emergency-inner .emergency-phone {
+  text-align: center;
+  justify-content: center;
+}
+@media (min-width: 768px) {
+  .emergency-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .emergency-inner .emergency-phone {
+    text-align: left;
+  }
+}
+.emergency-phone:hover {
+  background-color: rgba(255,255,255,0.15) !important;
+  border-color: rgba(255,255,255,0.4) !important;
+}
+
+.hiw-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+.hiw-connector { display: none; }
+@media (min-width: 768px) {
+  .hiw-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .hiw-connector { display: block !important; }
+}
+
+.trust-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+.trust-item {
+  padding: 0;
+  border-left: 3px solid #2E86C1;
+  padding-left: 1.25rem;
+}
+@media (min-width: 768px) {
+  .trust-row { grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+  .trust-item { border-left: none; padding-left: 2rem; padding-right: 2rem; }
+  .trust-item + .trust-item { border-left: 1px solid rgba(255,255,255,0.1); }
+  .trust-item:first-child { padding-left: 0; }
+}
+
+.services-feature {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .services-feature { grid-template-columns: 1fr 1fr; }
+}
+.service-row-link:hover {
+  background-color: #f8fbff !important;
+}
+
+.projects-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  .projects-row { grid-template-columns: repeat(3, 1fr); }
+}
+
+.cta-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+@media (min-width: 768px) {
+  .cta-bottom { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+
+/* ============================================================
+   Contact page
+   ============================================================ */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .contact-layout { grid-template-columns: 5fr 2fr; gap: 4rem; }
+  .contact-mobile-emergency { display: none !important; }
+}
+
+/* ============================================================
+   Gallery page
+   ============================================================ */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 600px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 900px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+.gallery-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.gallery-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+/* ============================================================
+   About page
+   ============================================================ */
+.about-values-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  .about-values-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ============================================================
+   Services page
+   ============================================================ */
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.service-item {
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.service-item:hover {
+  border-color: #2E86C1;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.ftr-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  padding-bottom: 3rem;
+}
+@media (min-width: 768px) {
+  .ftr-grid { grid-template-columns: 2fr 1fr 1.5fr; gap: 4rem; }
+}
+
+.ftr-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+@media (min-width: 768px) {
+  .ftr-bottom { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+
+.ftr-link {
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.15s;
+  display: block;
+  padding: 3px 0;
+}
+.ftr-link:hover { color: #ffffff; }
+
+.ftr-contact-link {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.ftr-contact-link:hover { color: #2E86C1; }

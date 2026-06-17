@@ -16,6 +16,17 @@ interface PhotoPreview {
 
 const STEP_LABELS = ['Service', 'Location', 'Urgency', 'Photos', 'Details', 'Contact'];
 
+function formatPhone(value: string): string {
+  const digits = value.replace(/\D/g, '').slice(0, 10);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
+
+function phoneDigits(value: string): string {
+  return value.replace(/\D/g, '');
+}
+
 export default function GuidedQuoteFlow() {
   const searchParams = useSearchParams();
   const preselected = searchParams.get('service') || '';
@@ -31,6 +42,7 @@ export default function GuidedQuoteFlow() {
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [submitFailed, setSubmitFailed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [dragOver, setDragOver] = useState(false);
@@ -45,7 +57,7 @@ export default function GuidedQuoteFlow() {
     if (step === 5 && description.trim().length < 10) { setError('Please describe the problem in at least 10 characters.'); return; }
     if (step === 6) {
       if (!name.trim()) { setError('Please enter your name.'); return; }
-      if (!phone.trim()) { setError('Please enter your phone number.'); return; }
+      if (phoneDigits(phone).length < 10) { setError('Please enter a 10-digit phone number.'); return; }
       if (!email.trim()) { setError('Please enter your email.'); return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setError('Please enter a valid email address.'); return; }
       if (!address.trim()) { setError('Please enter your address.'); return; }
@@ -62,6 +74,7 @@ export default function GuidedQuoteFlow() {
 
   const handleSubmit = async () => {
     setSubmitting(true);
+    setSubmitFailed(false);
     const request: QuoteRequest = {
       serviceType,
       location,
@@ -75,23 +88,29 @@ export default function GuidedQuoteFlow() {
     };
 
     try {
+      const formData = new FormData();
+      formData.append('name', request.customerName);
+      formData.append('phone', phoneDigits(request.phone));
+      formData.append('email', request.email);
+      formData.append('address', request.address);
+      formData.append('serviceType', request.serviceType);
+      formData.append('location', request.location);
+      formData.append('urgency', request.urgency);
+      formData.append('description', request.description);
+      for (const photo of request.photos) {
+        formData.append('photos', photo);
+      }
+
       const response = await fetch('/api/quote', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: request.customerName,
-          phone: request.phone,
-          email: request.email,
-          address: request.address,
-          jobDescription: `[${request.serviceType}] [${request.location}] [${request.urgency}] ${request.description}`,
-        }),
+        body: formData,
       });
       if (!response.ok) throw new Error('Failed to submit');
+      setSubmitted(true);
     } catch {
-      // Phase 1: submit silently even if API fails
+      setSubmitFailed(true);
     }
     setSubmitting(false);
-    setSubmitted(true);
   };
 
   const addPhotos = useCallback((files: FileList | File[]) => {
@@ -126,6 +145,59 @@ export default function GuidedQuoteFlow() {
     if (stepNum === 4) return photos.length > 0 ? `${photos.length} photo${photos.length > 1 ? 's' : ''}` : null;
     return null;
   };
+
+  if (submitFailed) {
+    return (
+      <div style={{
+        textAlign: 'center',
+        padding: '3rem 1.5rem',
+        backgroundColor: '#ffffff',
+        borderRadius: '12px',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
+      }}>
+        <div style={{
+          width: '72px',
+          height: '72px',
+          borderRadius: '50%',
+          backgroundColor: '#fef2f2',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '0 auto 1.5rem',
+          color: '#dc2626',
+        }}>
+          <Icon name="alert-triangle" size={36} color="#dc2626" />
+        </div>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1B3A5C', marginBottom: '0.75rem' }}>
+          Something Went Wrong
+        </h2>
+        <p style={{ fontSize: '1rem', color: '#64748b', lineHeight: 1.7, maxWidth: '420px', margin: '0 auto 1.5rem' }}>
+          We couldn&apos;t submit your request. Please try again or give us a call.
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+          <button
+            onClick={() => { setSubmitFailed(false); handleSubmit(); }}
+            className="btn-primary"
+            style={{ fontSize: '15px', padding: '14px 28px', borderRadius: '8px' }}
+          >
+            Try Again
+          </button>
+          <a href="tel:6045550123" style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            fontSize: '15px',
+            color: '#1B3A5C',
+            fontWeight: 700,
+            textDecoration: 'none',
+          }}>
+            <Icon name="phone" size={16} color="#2E86C1" />
+            Call (604) 555-0123
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   if (submitted) {
     return (
@@ -220,78 +292,6 @@ export default function GuidedQuoteFlow() {
       boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
       overflow: 'hidden',
     }}>
-      <style>{`
-        .gqf-option-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 0.625rem;
-        }
-        @media (min-width: 640px) {
-          .gqf-option-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
-        }
-        .gqf-urgency-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 0.625rem;
-        }
-        @media (min-width: 640px) {
-          .gqf-urgency-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        .gqf-photo-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0.625rem;
-        }
-        @media (min-width: 640px) {
-          .gqf-photo-grid { grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
-        }
-        .gqf-contact-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1rem;
-        }
-        @media (min-width: 640px) {
-          .gqf-contact-grid { grid-template-columns: 1fr 1fr; }
-        }
-        .gqf-input:focus {
-          border-color: #2E86C1 !important;
-          box-shadow: 0 0 0 3px rgba(46,134,193,0.12);
-        }
-        .gqf-option-card:hover {
-          border-color: #2E86C1 !important;
-          background-color: #f8fbff !important;
-        }
-        .gqf-steps-bar {
-          display: none;
-        }
-        @media (min-width: 640px) {
-          .gqf-steps-bar { display: flex; }
-        }
-        .gqf-photo-desktop {
-          display: none;
-        }
-        .gqf-photo-mobile {
-          display: flex;
-        }
-        @media (min-width: 768px) {
-          .gqf-photo-desktop { display: flex; }
-          .gqf-photo-mobile { display: none; }
-        }
-        .gqf-mobile-phone {
-          display: flex;
-        }
-        @media (min-width: 1024px) {
-          .gqf-mobile-phone { display: none; }
-        }
-        .gqf-back-btn:hover {
-          border-color: #94a3b8 !important;
-          color: #1e293b !important;
-        }
-        .gqf-next-btn {
-          min-height: 48px;
-        }
-      `}</style>
-
       {/* Progress header */}
       <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f0f0f0' }}>
         {/* Step dots — desktop */}
@@ -684,8 +684,9 @@ export default function GuidedQuoteFlow() {
                   <label style={labelStyle}>Phone</label>
                   <input
                     type="tel"
+                    inputMode="numeric"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => setPhone(formatPhone(e.target.value))}
                     className="gqf-input"
                     style={inputStyle}
                     placeholder="(604) 555-0100"

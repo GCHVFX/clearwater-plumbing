@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import GuidedQuoteFlow from '@/components/GuidedQuoteFlow';
 
 export const metadata = {
@@ -42,12 +43,52 @@ export default function Contact() {
       </section>
 
       {/* Main Content */}
-      <section style={{ backgroundColor: '#F0F4F8', padding: '4rem 0' }}>
+      <section style={{ backgroundColor: '#F0F4F8', padding: '3rem 0 4rem' }}>
         <div className="container-wide">
+          {/* Mobile emergency callout — visible only below 1024px */}
+          <div className="contact-mobile-emergency" style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            padding: '1rem 1.25rem',
+            backgroundColor: '#0f2b44',
+            borderRadius: '10px',
+            marginBottom: '1.5rem',
+          }}>
+            <style>{`
+              @media (min-width: 1024px) {
+                .contact-mobile-emergency { display: none !important; }
+              }
+            `}</style>
+            <div>
+              <p style={{ fontSize: '14px', fontWeight: 700, color: '#ffffff' }}>Need immediate help?</p>
+              <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.55)' }}>Available 24/7 for emergencies</p>
+            </div>
+            <a href="tel:6045550123" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.375rem',
+              padding: '8px 16px',
+              backgroundColor: 'rgba(255,255,255,0.1)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '6px',
+              fontSize: '14px',
+              fontWeight: 700,
+              color: '#ffffff',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+            }}>
+              Call Now
+            </a>
+          </div>
+
           <div className="contact-layout">
             {/* Guided Quote Flow */}
             <div>
-              <GuidedQuoteFlow />
+              <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>Loading...</div>}>
+                <GuidedQuoteFlow />
+              </Suspense>
             </div>
 
             {/* Sidebar */}

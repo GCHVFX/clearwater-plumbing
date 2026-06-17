@@ -1,260 +1,275 @@
 import Link from 'next/link';
-
-const trustPoints = [
-  {
-    title: 'Upfront Estimates',
-    desc: 'Know what to expect before work begins.',
-    icon: '📋',
-  },
-  {
-    title: 'Real People',
-    desc: 'Talk directly with someone who understands the job.',
-    icon: '👤',
-  },
-  {
-    title: 'Quality Work',
-    desc: 'Work completed properly with attention to detail.',
-    icon: '✅',
-  },
-];
+import HeroQuoteStart from '@/components/HeroQuoteStart';
+import Icon from '@/components/Icon';
 
 const howItWorks = [
-  { step: '01', title: 'Tell Us What’s Happening', desc: 'Select from common plumbing issues.', icon: '💬' },
-  { step: '02', title: 'Upload Photos', desc: 'Help us understand the problem before we arrive.', icon: '📷' },
-  { step: '03', title: 'We Review the Request', desc: 'A real person reviews everything you send.', icon: '🔍' },
-  { step: '04', title: 'Receive Your Estimate', desc: 'We contact you with pricing before scheduling work.', icon: '📨' },
-];
-
-const serviceCards = [
-  { title: 'Leaks', desc: 'Dripping taps, pipe leaks, water stains on the ceiling.', icon: '💧', href: '/contact' },
-  { title: 'Drain Cleaning', desc: 'Slow drains, clogs, or backups in sinks and tubs.', icon: '🚿', href: '/contact' },
-  { title: 'Water Heaters', desc: 'No hot water, strange noises, or visible leaks.', icon: '🔥', href: '/contact' },
-  { title: 'Toilets', desc: 'Running toilets, weak flush, leaks at the base.', icon: '🚽', href: '/contact' },
-  { title: 'Renovation Plumbing', desc: 'Rough-in and finish work for kitchen or bath renos.', icon: '🏠', href: '/contact' },
-  { title: 'Emergency Plumbing', desc: 'Burst pipes, flooding, or no water at all.', icon: '🚨', href: '/contact' },
+  { step: '1', title: 'Select the issue' },
+  { step: '2', title: 'Upload photos' },
+  { step: '3', title: 'We review it' },
+  { step: '4', title: 'Get your estimate' },
 ];
 
 const recentProjects = [
-  { title: 'Kitchen Faucet Replacement', location: 'Burnaby', type: 'Faucets & Fixtures' },
-  { title: 'Tankless Water Heater Install', location: 'Vancouver', type: 'Water Heater' },
-  { title: 'Emergency Pipe Repair', location: 'Surrey', type: 'Emergency' },
-  { title: 'Bathroom Renovation Plumbing', location: 'Richmond', type: 'Renovation' },
+  { title: 'Kitchen Faucet Replacement', location: 'Burnaby', type: 'Faucets & Fixtures', desc: 'Replaced a leaking kitchen faucet with a new pull-down model.' },
+  { title: 'Tankless Water Heater Install', location: 'Vancouver', type: 'Water Heater', desc: 'Upgraded from a 40-gallon tank to a tankless unit.' },
+  { title: 'Emergency Pipe Repair', location: 'Surrey', type: 'Emergency', desc: 'Responded to a burst pipe in a finished basement at midnight.' },
 ];
 
 export default function Home() {
   return (
     <div>
       <style>{`
-        .hero-h1 { font-size: clamp(32px, 5.5vw, 60px); }
-        .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-        .trust-grid {
+        .hero-layout {
           display: grid;
           grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-        @media (min-width: 768px) {
-          .trust-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .hiw-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 2rem;
-        }
-        @media (min-width: 640px) {
-          .hiw-grid { grid-template-columns: repeat(2, 1fr); }
+          gap: 2.5rem;
+          align-items: center;
         }
         @media (min-width: 900px) {
-          .hiw-grid { grid-template-columns: repeat(4, 1fr); }
+          .hero-layout { grid-template-columns: 1fr 1fr; gap: 4rem; }
         }
+        .hero-h1 { font-size: clamp(28px, 4.5vw, 48px); }
 
-        .service-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.25rem;
-        }
-        @media (min-width: 600px) {
-          .service-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 900px) {
-          .service-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .projects-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.25rem;
-        }
-        @media (min-width: 600px) {
-          .projects-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 900px) {
-          .projects-grid { grid-template-columns: repeat(4, 1fr); }
-        }
-
-        .cta-inner {
+        .emergency-inner {
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
-          align-items: flex-start;
+          gap: 1rem;
+          align-items: stretch;
+        }
+        .emergency-inner .emergency-phone {
+          text-align: center;
+          justify-content: center;
         }
         @media (min-width: 768px) {
-          .cta-inner {
+          .emergency-inner {
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
           }
-        }
-        .cta-actions {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          align-items: flex-start;
-          flex-shrink: 0;
-        }
-        @media (min-width: 640px) {
-          .cta-actions { flex-direction: row; align-items: center; }
+          .emergency-inner .emergency-phone {
+            text-align: left;
+          }
         }
 
-        .service-card-link {
-          display: block;
-          text-decoration: none;
-          color: inherit;
-          height: 100%;
+        .hiw-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.25rem;
         }
-        .service-card-link:hover .service-card-inner {
-          border-color: #2E86C1;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        .hiw-connector { display: none; }
+        @media (min-width: 768px) {
+          .hiw-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+          .hiw-connector { display: block !important; }
+        }
+
+        .trust-row {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        .trust-item { padding: 0; border-left: 3px solid #2E86C1; padding-left: 1.25rem; }
+        @media (min-width: 768px) {
+          .trust-row { grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+          .trust-item { border-left: none; padding-left: 2rem; padding-right: 2rem; }
+          .trust-item + .trust-item { border-left: 1px solid rgba(255,255,255,0.1); }
+          .trust-item:first-child { padding-left: 0; }
+        }
+
+        .services-feature {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+        @media (min-width: 768px) {
+          .services-feature { grid-template-columns: 1fr 1fr; }
+        }
+        .service-row-link:hover {
+          background-color: #f8fbff !important;
+        }
+
+        .projects-row {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+          .projects-row { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .cta-bottom {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          align-items: flex-start;
+        }
+        @media (min-width: 768px) {
+          .cta-bottom { flex-direction: row; align-items: center; justify-content: space-between; }
         }
       `}</style>
 
-      {/* Hero */}
+      {/* Hero — split: headline left, quote start right */}
       <section style={{
         backgroundColor: '#1B3A5C',
-        minHeight: '480px',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '5rem 0',
+        padding: '4rem 0 5rem',
         position: 'relative',
         overflow: 'hidden',
       }}>
         <div style={{
           position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          width: '50%',
-          background: 'linear-gradient(135deg, rgba(46,134,193,0.15) 0%, rgba(27,58,92,0) 60%)',
+          top: '-20%',
+          right: '-5%',
+          width: '500px',
+          height: '500px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(46,134,193,0.12) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute',
+          bottom: '-30%',
+          left: '-10%',
+          width: '400px',
+          height: '400px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(46,134,193,0.08) 0%, transparent 70%)',
           pointerEvents: 'none',
         }} />
         <div className="container-wide" style={{ position: 'relative' }}>
-          <p style={{
-            fontSize: '13px',
-            fontWeight: 700,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: '#2E86C1',
-            marginBottom: '1rem',
-          }}>
-            Lower Mainland Plumbing
-          </p>
-          <h1 className="hero-h1" style={{
-            fontWeight: 900,
-            lineHeight: 1.08,
-            color: '#ffffff',
-            marginBottom: '1.25rem',
-            maxWidth: '700px',
-            letterSpacing: '-0.02em',
-          }}>
-            Need a plumber? Show us the problem.
-          </h1>
-          <p style={{
-            fontSize: '1.125rem',
-            color: 'rgba(255,255,255,0.72)',
-            lineHeight: 1.65,
-            maxWidth: '540px',
-            marginBottom: '2.5rem',
-          }}>
-            Upload a few photos and tell us what&apos;s going on. We&apos;ll review everything and send a proper estimate before scheduling any work.
-          </p>
+          <div className="hero-layout">
+            <div>
+              <p style={{
+                fontSize: '14px',
+                fontWeight: 800,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: '#ffffff',
+                marginBottom: '1.125rem',
+              }}>
+                Clearwater Plumbing
+              </p>
+              <h1 className="hero-h1" style={{
+                fontWeight: 900,
+                lineHeight: 1.1,
+                color: '#ffffff',
+                marginBottom: '1rem',
+                letterSpacing: '-0.02em',
+              }}>
+                Need a plumber?<br />Show us the problem.
+              </h1>
+              <p style={{
+                fontSize: '1.0625rem',
+                color: 'rgba(255,255,255,0.65)',
+                lineHeight: 1.7,
+                maxWidth: '420px',
+                marginBottom: '1.5rem',
+              }}>
+                Upload photos and describe what&apos;s going on. We review everything and send an estimate before scheduling any work.
+              </p>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.625rem',
+                maxWidth: '400px',
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.75rem 1rem',
+                  backgroundColor: 'rgba(255,255,255,0.06)',
+                  borderRadius: '8px',
+                  borderLeft: '3px solid #2E86C1',
+                }}>
+                  <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)' }}>
+                    Upfront estimates &middot; Real people &middot; Quality work
+                  </span>
+                </div>
+                <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.38)', paddingLeft: '1rem' }}>
+                  Serving Vancouver, Burnaby, Surrey &amp; the Lower Mainland
+                </p>
+              </div>
+            </div>
 
-          <div className="hero-ctas">
-            <Link href="/contact" className="btn-primary" style={{ fontSize: '16px', padding: '16px 32px' }}>
-              Get a Quote
-            </Link>
-            <a href="tel:6045550123" className="btn-secondary" style={{ fontSize: '16px', padding: '15px 31px' }}>
-              Call (604) 555-0123
+            <div>
+              <HeroQuoteStart />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Emergency Banner */}
+      <section style={{
+        backgroundColor: '#0f2b44',
+        borderTop: '1px solid rgba(255,255,255,0.06)',
+        padding: '1.25rem 0',
+      }}>
+        <style>{`
+          .emergency-phone:hover {
+            background-color: rgba(255,255,255,0.15) !important;
+            border-color: rgba(255,255,255,0.4) !important;
+          }
+        `}</style>
+        <div className="container-wide">
+          <div className="emergency-inner">
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.875rem' }}>
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(239,68,68,0.15)',
+                flexShrink: 0,
+                color: '#f87171',
+                marginTop: '1px',
+              }}>
+                <Icon name="alert-triangle" size={18} />
+              </span>
+              <div>
+                <p style={{ fontSize: '16px', fontWeight: 800, color: '#ffffff', marginBottom: '0.25rem' }}>
+                  Plumbing Emergency?
+                </p>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.5 }}>
+                  Burst pipes, flooding, gas leaks, or no water? Call now.
+                </p>
+              </div>
+            </div>
+            <a href="tel:6045550123" className="emergency-phone" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.625rem',
+              padding: '12px 24px',
+              backgroundColor: 'rgba(255,255,255,0.1)',
+              border: '1px solid rgba(255,255,255,0.25)',
+              borderRadius: '8px',
+              fontSize: '17px',
+              fontWeight: 800,
+              color: '#ffffff',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.15s ease',
+            }}>
+              <Icon name="phone" size={18} />
+              (604) 555-0123
             </a>
           </div>
         </div>
       </section>
 
-      {/* Why Homeowners Choose Clearwater */}
-      <section style={{ backgroundColor: '#ffffff', padding: '5rem 0' }}>
-        <div className="container-wide">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{
-              fontSize: 'clamp(24px, 3.5vw, 36px)',
-              fontWeight: 900,
-              color: '#1B3A5C',
-              marginBottom: '0.75rem',
-              lineHeight: 1.1,
-              letterSpacing: '-0.01em',
-            }}>
-              Why Homeowners Choose Clearwater
-            </h2>
-            <p style={{ fontSize: '16px', color: '#64748b', maxWidth: '480px', margin: '0 auto' }}>
-              We keep it simple. Honest estimates, real communication, quality work.
-            </p>
-          </div>
-          <div className="trust-grid">
-            {trustPoints.map((item) => (
-              <div key={item.title} style={{
-                textAlign: 'center',
-                padding: '2.5rem 2rem',
-                backgroundColor: '#F0F4F8',
-                borderRadius: '12px',
-              }}>
-                <div style={{
-                  fontSize: '2.5rem',
-                  marginBottom: '1.25rem',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}>
-                  {item.icon}
-                </div>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#1B3A5C', marginBottom: '0.625rem' }}>
-                  {item.title}
-                </h3>
-                <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.65 }}>
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* How It Works */}
-      <section style={{ backgroundColor: '#F0F4F8', padding: '5rem 0' }}>
+      <section style={{ backgroundColor: '#ffffff', padding: '3.5rem 0', borderBottom: '1px solid #e2e8f0' }}>
         <div className="container-wide">
-          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <h2 style={{
-              fontSize: 'clamp(24px, 3.5vw, 36px)',
-              fontWeight: 900,
-              color: '#1B3A5C',
-              marginBottom: '0.75rem',
-              lineHeight: 1.1,
-              letterSpacing: '-0.01em',
-            }}>
-              How It Works
-            </h2>
-            <p style={{ fontSize: '16px', color: '#64748b' }}>
-              From request to estimate in four simple steps.
-            </p>
-          </div>
+          <p style={{
+            fontSize: '12px',
+            fontWeight: 700,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: '#64748b',
+            marginBottom: '1.5rem',
+            textAlign: 'center',
+          }}>
+            How It Works
+          </p>
           <div className="hiw-grid">
             {howItWorks.map((item, i) => (
               <div key={item.step} style={{
@@ -262,42 +277,29 @@ export default function Home() {
                 position: 'relative',
               }}>
                 <div style={{
-                  width: '64px',
-                  height: '64px',
+                  width: '44px',
+                  height: '44px',
                   borderRadius: '50%',
                   backgroundColor: '#1B3A5C',
+                  color: '#ffffff',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  margin: '0 auto 1.25rem',
-                  fontSize: '1.5rem',
+                  fontSize: '16px',
+                  fontWeight: 800,
+                  margin: '0 auto 0.75rem',
                 }}>
-                  {item.icon}
+                  {item.step}
                 </div>
-                <div style={{
-                  fontSize: '12px',
-                  fontWeight: 700,
-                  color: '#2E86C1',
-                  letterSpacing: '0.08em',
-                  marginBottom: '0.375rem',
-                }}>
-                  STEP {item.step}
-                </div>
-                <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#1B3A5C', marginBottom: '0.5rem' }}>
-                  {item.title}
-                </h3>
-                <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65 }}>
-                  {item.desc}
-                </p>
+                <p style={{ fontSize: '14px', fontWeight: 700, color: '#1e293b' }}>{item.title}</p>
                 {i < howItWorks.length - 1 && (
-                  <div style={{
-                    display: 'none',
+                  <div className="hiw-connector" style={{
                     position: 'absolute',
-                    top: '32px',
-                    right: '-1rem',
-                    width: '2rem',
+                    top: '22px',
+                    left: 'calc(50% + 30px)',
+                    width: 'calc(100% - 60px)',
                     height: '2px',
-                    backgroundColor: '#cbd5e1',
+                    backgroundColor: '#e2e8f0',
                   }} />
                 )}
               </div>
@@ -306,146 +308,207 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What Do You Need Help With? */}
-      <section style={{ backgroundColor: '#ffffff', padding: '5rem 0' }}>
-        <div className="container-wide">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{
-              fontSize: 'clamp(24px, 3.5vw, 36px)',
-              fontWeight: 900,
-              color: '#1B3A5C',
-              marginBottom: '0.75rem',
-              lineHeight: 1.1,
-              letterSpacing: '-0.01em',
-            }}>
-              What Do You Need Help With?
-            </h2>
-            <p style={{ fontSize: '16px', color: '#64748b' }}>
-              Select a problem and we&apos;ll guide you through requesting a quote.
-            </p>
-          </div>
-          <div className="service-grid">
-            {serviceCards.map((card) => (
-              <Link key={card.title} href={card.href} className="service-card-link">
-                <div className="service-card-inner" style={{
-                  padding: '2rem',
-                  borderRadius: '12px',
-                  border: '2px solid #e2e8f0',
-                  backgroundColor: '#ffffff',
-                  transition: 'all 0.2s ease',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}>
-                  <div style={{ fontSize: '2.25rem', marginBottom: '1rem' }}>{card.icon}</div>
-                  <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#1B3A5C', marginBottom: '0.5rem' }}>
-                    {card.title}
-                  </h3>
-                  <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65, flexGrow: 1 }}>
-                    {card.desc}
-                  </p>
-                  <p style={{ fontSize: '14px', color: '#2E86C1', fontWeight: 600, marginTop: '1rem' }}>
-                    Get a Quote &rarr;
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Recent Work */}
+      {/* Service problems — asymmetric grid, not uniform cards */}
       <section style={{ backgroundColor: '#F0F4F8', padding: '5rem 0' }}>
         <div className="container-wide">
-          <div style={{ marginBottom: '3rem' }}>
+          <div style={{ marginBottom: '2.5rem' }}>
+            <p style={{
+              fontSize: '12px',
+              fontWeight: 700,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: '#64748b',
+              marginBottom: '0.5rem',
+            }}>
+              Common Problems
+            </p>
             <h2 style={{
               fontSize: 'clamp(24px, 3.5vw, 36px)',
               fontWeight: 900,
               color: '#1B3A5C',
-              marginBottom: '0.75rem',
               lineHeight: 1.1,
               letterSpacing: '-0.01em',
             }}>
-              Recent Work
+              What do you need fixed?
             </h2>
-            <p style={{ fontSize: '16px', color: '#64748b' }}>
-              A few examples of projects we&apos;ve completed recently.
-            </p>
           </div>
-          <div className="projects-grid">
-            {recentProjects.map((project) => (
-              <div key={project.title} style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-              }}>
-                <div style={{
-                  height: '160px',
-                  backgroundColor: '#1B3A5C',
+
+          <div className="services-feature" style={{ backgroundColor: '#ffffff', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+            {[
+              { icon: 'droplet', title: 'Leaks', desc: 'Dripping taps, pipe leaks, water stains on walls or ceilings.', service: 'leak' },
+              { icon: 'drain', title: 'Drains', desc: 'Slow drains, clogs, or backups in sinks and tubs.', service: 'drain' },
+              { icon: 'flame', title: 'Water Heaters', desc: 'No hot water, strange noises, or visible leaks from the unit.', service: 'water-heater' },
+              { icon: 'toilet', title: 'Toilets', desc: 'Running water, weak flush, or leaks at the base.', service: 'toilet' },
+              { icon: 'house', title: 'Renovations', desc: 'Rough-in and finish plumbing for kitchen or bathroom renos.', service: 'renovation' },
+              { icon: 'wrench', title: 'Faucets & Fixtures', desc: 'Install or replace kitchen and bathroom fixtures.', service: 'faucet' },
+            ].map((s, i) => (
+              <Link
+                key={s.title}
+                href={`/contact?service=${s.service}`}
+                className="service-row-link"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1.25rem',
+                  padding: '1.25rem 1.5rem',
+                  borderBottom: i < 5 ? '1px solid #f0f0f0' : 'none',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  transition: 'background-color 0.15s ease',
+                }}
+              >
+                <span style={{
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '10px',
+                  backgroundColor: '#eff8ff',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  flexShrink: 0,
+                  color: '#2E86C1',
                 }}>
-                  <div style={{
-                    width: '48px',
-                    height: '48px',
-                    borderRadius: '50%',
-                    backgroundColor: 'rgba(46,134,193,0.2)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                    <svg width="24" height="24" fill="none" stroke="rgba(255,255,255,0.6)" viewBox="0 0 24 24" strokeWidth="1.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085" />
-                    </svg>
-                  </div>
+                  <Icon name={s.icon} size={22} />
+                </span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ fontSize: '15px', fontWeight: 700, color: '#1B3A5C', display: 'block' }}>{s.title}</span>
+                  <span style={{ fontSize: '13px', color: '#64748b' }}>{s.desc}</span>
                 </div>
-                <div style={{ padding: '1.25rem' }}>
-                  <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.375rem' }}>
-                    {project.title}
-                  </h3>
-                  <p style={{ fontSize: '13px', color: '#64748b' }}>
-                    {project.location} &middot; {project.type}
-                  </p>
-                </div>
-              </div>
+                <Icon name="arrow-right" size={18} color="#2E86C1" />
+              </Link>
             ))}
           </div>
-          <div style={{ marginTop: '2rem' }}>
-            <Link href="/gallery" style={{ fontSize: '15px', color: '#2E86C1', fontWeight: 600 }}>
-              View all projects &rarr;
+
+          <div style={{ marginTop: '1rem' }}>
+            <Link href="/services" style={{ fontSize: '14px', color: '#2E86C1', fontWeight: 600 }}>
+              View all services &rarr;
             </Link>
           </div>
         </div>
       </section>
 
-      {/* CTA Banner */}
-      <section style={{ backgroundColor: '#1B3A5C', padding: '5rem 0' }}>
+      {/* Trust — horizontal, not cards */}
+      <section style={{ backgroundColor: '#1B3A5C', padding: '3.5rem 0' }}>
         <div className="container-wide">
-          <div className="cta-inner">
+          <div className="trust-row">
+            {[
+              { title: 'Upfront Estimates', desc: 'We quote before we start. The price you receive is the price you pay.', icon: 'file-text' },
+              { title: 'Real People', desc: 'Talk directly with the person doing the work. No call centres.', icon: 'user' },
+              { title: 'Quality Work', desc: 'Licensed plumber on every job. We clean up when we&apos;re done.', icon: 'check-circle' },
+            ].map((item) => (
+              <div key={item.title} className="trust-item">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '0.625rem' }}>
+                  <Icon name={item.icon} size={20} color="rgba(255,255,255,0.7)" />
+                  <h3 style={{ fontWeight: 800, fontSize: '1rem', color: '#ffffff' }}>{item.title}</h3>
+                </div>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.55)', lineHeight: 1.65 }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Recent Work — horizontal project summaries, not card grid */}
+      <section style={{ backgroundColor: '#ffffff', padding: '5rem 0' }}>
+        <div className="container-wide">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <div>
+              <p style={{
+                fontSize: '12px',
+                fontWeight: 700,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: '#64748b',
+                marginBottom: '0.5rem',
+              }}>
+                Recent Work
+              </p>
+              <h2 style={{
+                fontSize: 'clamp(22px, 3vw, 32px)',
+                fontWeight: 900,
+                color: '#1B3A5C',
+                lineHeight: 1.1,
+                letterSpacing: '-0.01em',
+              }}>
+                Projects we&apos;ve completed
+              </h2>
+            </div>
+            <Link href="/gallery" style={{ fontSize: '14px', color: '#2E86C1', fontWeight: 600 }}>
+              View all &rarr;
+            </Link>
+          </div>
+          <div className="projects-row">
+            {recentProjects.map((project) => (
+              <div key={project.title} style={{
+                borderLeft: '3px solid #2E86C1',
+                paddingLeft: '1.25rem',
+              }}>
+                <span style={{
+                  display: 'inline-block',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  color: '#2E86C1',
+                  backgroundColor: '#eff8ff',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  marginBottom: '0.5rem',
+                }}>
+                  {project.type}
+                </span>
+                <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#1B3A5C', marginBottom: '0.375rem' }}>
+                  {project.title}
+                </h3>
+                <p style={{ fontSize: '13px', color: '#64748b', lineHeight: 1.6, marginBottom: '0.25rem' }}>
+                  {project.desc}
+                </p>
+                <p style={{ fontSize: '12px', color: '#94a3b8' }}>{project.location}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Service Area */}
+      <section style={{ backgroundColor: '#0f2b44', padding: '2rem 0' }}>
+        <div className="container-wide" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem' }}>
+          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}>
+            Serving Vancouver &middot; Burnaby &middot; Surrey &middot; Richmond &middot; Coquitlam &middot; Delta &middot; Langley &middot; Maple Ridge
+          </p>
+          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>
+            Licensed #L12345 &middot; Insured &middot; Bonded
+          </p>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section style={{
+        backgroundColor: '#1B3A5C',
+        padding: '4rem 0',
+      }}>
+        <div className="container-wide">
+          <div className="cta-bottom">
             <div>
               <h2 style={{
-                fontSize: 'clamp(24px, 3.5vw, 36px)',
+                fontSize: 'clamp(22px, 3vw, 32px)',
                 fontWeight: 900,
                 color: '#ffffff',
-                marginBottom: '0.75rem',
+                marginBottom: '0.5rem',
                 lineHeight: 1.1,
                 letterSpacing: '-0.01em',
               }}>
                 Ready to get started?
               </h2>
-              <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.68)', lineHeight: 1.65, maxWidth: '480px' }}>
-                Show us the problem and we&apos;ll send you an estimate. No obligations, no surprises.
+              <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.65 }}>
+                Tell us the problem. We&apos;ll handle the rest.
               </p>
             </div>
-            <div className="cta-actions">
-              <Link href="/contact" className="btn-primary" style={{ fontSize: '15px', whiteSpace: 'nowrap', padding: '16px 32px' }}>
-                Get a Quote
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+              <Link href="/contact" className="btn-primary" style={{ fontSize: '15px', padding: '14px 28px', whiteSpace: 'nowrap' }}>
+                Start a Quote Request
               </Link>
-              <span style={{ fontSize: '15px', color: 'rgba(255,255,255,0.65)', whiteSpace: 'nowrap' }}>
+              <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)' }}>
                 or call{' '}
-                <a href="tel:6045550123" style={{ color: 'rgba(255,255,255,0.9)', fontWeight: 600, textDecoration: 'none' }}>
+                <a href="tel:6045550123" style={{ color: 'rgba(255,255,255,0.85)', fontWeight: 600, textDecoration: 'none' }}>
                   (604) 555-0123
                 </a>
               </span>

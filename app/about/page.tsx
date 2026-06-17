@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Icon from '@/components/Icon';
 
 export const metadata = {
   title: 'About Clearwater Plumbing',
@@ -9,17 +10,17 @@ const values = [
   {
     title: 'Reliability',
     desc: 'We show up when we say we will. If something changes, we communicate immediately.',
-    icon: '⏰',
+    icon: 'clock',
   },
   {
     title: 'Communication',
     desc: 'You talk directly with the person doing the work. No call centres, no runaround.',
-    icon: '💬',
+    icon: 'message-circle',
   },
   {
     title: 'Professionalism',
     desc: 'Licensed plumbers on every job. We treat your home with respect and clean up after ourselves.',
-    icon: '🛡️',
+    icon: 'shield',
   },
 ];
 
@@ -100,7 +101,7 @@ export default function About() {
                 borderRadius: '12px',
                 boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
               }}>
-                <div style={{ fontSize: '2.25rem', marginBottom: '1.25rem' }}>{item.icon}</div>
+                <div style={{ color: '#2E86C1', marginBottom: '1.25rem' }}><Icon name={item.icon} size={32} /></div>
                 <h3 style={{ fontWeight: 800, fontSize: '1.125rem', color: '#1B3A5C', marginBottom: '0.625rem' }}>
                   {item.title}
                 </h3>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Icon from '@/components/Icon';
 
 export const metadata = {
   title: 'Plumbing Services | Clearwater Plumbing',
@@ -9,49 +10,49 @@ const services = [
   {
     title: 'Leaks',
     desc: 'Dripping taps, pipe leaks, water stains on walls or ceilings. We find the source and fix it properly.',
-    icon: '💧',
+    icon: 'droplet',
     details: ['Pipe leak repair', 'Faucet drip repair', 'Toilet leak repair', 'Water line repair'],
   },
   {
     title: 'Drain Cleaning',
     desc: 'Slow drains, clogs, or backups. We use professional equipment to clear blockages without damaging your pipes.',
-    icon: '🚿',
+    icon: 'drain',
     details: ['Kitchen sink drains', 'Bathroom drains', 'Floor drains', 'Main sewer line'],
   },
   {
     title: 'Water Heaters',
     desc: 'No hot water, strange noises, or visible leaks. We repair and install tank and tankless water heaters.',
-    icon: '🔥',
+    icon: 'flame',
     details: ['Tank water heaters', 'Tankless water heaters', 'Repair & maintenance', 'New installation'],
   },
   {
     title: 'Toilets',
     desc: 'Running toilets, weak flush, leaks at the base, or a full replacement. We handle all toilet issues.',
-    icon: '🚽',
+    icon: 'toilet',
     details: ['Running toilet repair', 'Toilet replacement', 'Wax ring replacement', 'Flush valve repair'],
   },
   {
     title: 'Faucets & Fixtures',
     desc: 'Install or replace kitchen faucets, bathroom taps, showerheads, and outdoor fixtures.',
-    icon: '🔧',
+    icon: 'wrench',
     details: ['Kitchen faucets', 'Bathroom faucets', 'Showerheads', 'Outdoor fixtures'],
   },
   {
     title: 'Renovation Plumbing',
     desc: 'Full plumbing rough-in and finish work for kitchen and bathroom renovations.',
-    icon: '🏠',
+    icon: 'house',
     details: ['Kitchen renovation', 'Bathroom renovation', 'Rough-in plumbing', 'Fixture installation'],
   },
   {
     title: 'Emergency Plumbing',
     desc: 'Burst pipes, flooding, gas leaks, or no water. We respond quickly to urgent situations.',
-    icon: '🚨',
+    icon: 'alert-triangle',
     details: ['Burst pipe repair', 'Flood response', 'Emergency shut-off', 'After-hours service'],
   },
   {
     title: 'Preventive Maintenance',
     desc: 'Annual inspections to catch problems before they become expensive. Ideal for older homes.',
-    icon: '🛡️',
+    icon: 'shield',
     details: ['Annual inspections', 'Valve maintenance', 'Pressure testing', 'Pipe assessment'],
   },
 ];
@@ -108,7 +109,7 @@ export default function Services() {
           <div className="services-grid">
             {services.map((s) => (
               <div key={s.title} className="service-item">
-                <div style={{ fontSize: '2.25rem', marginBottom: '1rem' }}>{s.icon}</div>
+                <div style={{ color: '#2E86C1', marginBottom: '1rem' }}><Icon name={s.icon} size={32} /></div>
                 <h3 style={{ fontWeight: 800, fontSize: '1.25rem', color: '#1B3A5C', marginBottom: '0.625rem' }}>
                   {s.title}
                 </h3>

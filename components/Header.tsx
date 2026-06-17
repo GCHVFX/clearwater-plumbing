@@ -57,15 +57,15 @@ export default function Header() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: '60px',
+            height: '68px',
           }}>
             <Link href="/" style={{ display: 'block', flexShrink: 0 }}>
               <Image
                 src="/logo.png"
                 alt="Clearwater Plumbing"
-                width={180}
-                height={48}
-                style={{ height: '46px', width: 'auto', objectFit: 'contain' }}
+                width={200}
+                height={54}
+                style={{ height: '54px', width: 'auto', objectFit: 'contain' }}
                 priority
               />
             </Link>

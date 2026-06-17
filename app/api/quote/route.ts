@@ -77,6 +77,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
 
+    // --- All-or-nothing submission ---
+
     const { data: quoteRecord, error: insertError } = await supabase
       .from('tp_estimates')
       .insert({
@@ -96,76 +98,108 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (insertError || !quoteRecord) {
-      console.error('Quote insert failed:', insertError?.message);
+      console.error('Estimate insert failed:', insertError?.message);
       return NextResponse.json(
-        { error: 'Failed to save quote request' },
+        { error: 'We couldn\'t save your request. Please try again or call us directly.' },
         { status: 500 }
       );
     }
 
-    const photoRecords: Array<{
-      estimate_id: string;
-      storage_path: string;
-      original_filename: string;
-      mime_type: string;
-      file_size: number;
-    }> = [];
+    const estimateId = quoteRecord.id;
+    const uploadedPaths: string[] = [];
 
-    for (const photo of validPhotos) {
-      const safeName = photo.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-      const storagePath = `${businessId}/${quoteRecord.id}/${randomUUID()}_${safeName}`;
-      const buffer = Buffer.from(await photo.arrayBuffer());
+    if (validPhotos.length > 0) {
+      let uploadFailed = false;
 
-      const { error: uploadError } = await supabase.storage
-        .from('tp-estimate-photos')
-        .upload(storagePath, buffer, {
-          contentType: photo.type,
-          upsert: false,
-        });
+      for (const photo of validPhotos) {
+        const safeName = photo.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const storagePath = `${businessId}/${estimateId}/${randomUUID()}_${safeName}`;
+        const buffer = Buffer.from(await photo.arrayBuffer());
 
-      if (uploadError) {
-        console.error('Photo upload failed:', uploadError.message);
-        continue;
+        const { error: uploadError } = await supabase.storage
+          .from('tp-estimate-photos')
+          .upload(storagePath, buffer, {
+            contentType: photo.type,
+            upsert: false,
+          });
+
+        if (uploadError) {
+          console.error('Photo upload failed:', uploadError.message);
+          uploadFailed = true;
+          break;
+        }
+
+        uploadedPaths.push(storagePath);
       }
 
-      photoRecords.push({
-        estimate_id: quoteRecord.id,
-        storage_path: storagePath,
-        original_filename: photo.name,
-        mime_type: photo.type,
-        file_size: photo.size,
-      });
-    }
+      if (uploadFailed) {
+        await rollback(supabase, estimateId, uploadedPaths);
+        return NextResponse.json(
+          { error: 'We couldn\'t upload your photos. Please try again or call us directly.' },
+          { status: 500 }
+        );
+      }
 
-    if (photoRecords.length > 0) {
+      const photoRecords = uploadedPaths.map((path, i) => ({
+        estimate_id: estimateId,
+        storage_path: path,
+        original_filename: validPhotos[i].name,
+        mime_type: validPhotos[i].type,
+        file_size: validPhotos[i].size,
+      }));
+
       const { error: photoInsertError } = await supabase
         .from('tp_estimate_photos')
         .insert(photoRecords);
 
       if (photoInsertError) {
         console.error('Photo records insert failed:', photoInsertError.message);
+        await rollback(supabase, estimateId, uploadedPaths);
+        return NextResponse.json(
+          { error: 'We couldn\'t save your request. Please try again or call us directly.' },
+          { status: 500 }
+        );
       }
     }
 
-    console.log('Quote request saved:', {
-      requestId: quoteRecord.id,
+    console.log('Estimate saved:', {
+      estimateId,
       serviceType: serviceType || 'unknown',
       urgency: urgency || 'unknown',
-      photosUploaded: photoRecords.length,
+      photosUploaded: uploadedPaths.length,
       source: 'website_quote',
     });
 
     return NextResponse.json({
       success: true,
       message: 'Quote request received. We will contact you within 2 hours.',
-      requestId: quoteRecord.id,
-      photosReceived: photoRecords.length,
+      requestId: estimateId,
+      photosReceived: uploadedPaths.length,
     });
   } catch (error) {
     console.error('Quote API error:', error instanceof Error ? error.message : 'Unknown error');
     return NextResponse.json(
-      { error: 'Failed to process quote request' },
+      { error: 'Something went wrong. Please try again or call us directly.' },
       { status: 500 }
     );
   }
+}
+
+async function rollback(
+  supabase: ReturnType<typeof getSupabaseAdmin>,
+  estimateId: string,
+  uploadedPaths: string[],
+) {
+  if (uploadedPaths.length > 0) {
+    const { error } = await supabase.storage
+      .from('tp-estimate-photos')
+      .remove(uploadedPaths);
+    if (error) console.error('Rollback: storage delete failed:', error.message);
+  }
+
+  const { error: deleteError } = await supabase
+    .from('tp_estimates')
+    .delete()
+    .eq('id', estimateId);
+  if (deleteError) console.error('Rollback: estimate delete failed:', deleteError.message);
 }

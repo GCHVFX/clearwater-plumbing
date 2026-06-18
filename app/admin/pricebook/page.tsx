@@ -14,7 +14,7 @@ export default async function PricebookPage() {
   const businessId = process.env.TP_BUSINESS_ID;
 
   const { data: items } = await supabase
-    .from('tp_pricebook_items')
+    .from('tpe_pricebook_items')
     .select('*')
     .eq('business_id', businessId!)
     .order('category')

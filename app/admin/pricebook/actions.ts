@@ -31,7 +31,7 @@ export async function savePricebookItem(data: {
 
   if (data.id) {
     const { error } = await supabase
-      .from('tp_pricebook_items')
+      .from('tpe_pricebook_items')
       .update({
         category: data.category,
         name: data.name,
@@ -47,7 +47,7 @@ export async function savePricebookItem(data: {
     if (error) throw new Error('Failed to update item');
   } else {
     const { error } = await supabase
-      .from('tp_pricebook_items')
+      .from('tpe_pricebook_items')
       .insert({
         business_id: businessId,
         category: data.category,
@@ -69,7 +69,7 @@ export async function togglePricebookItem(id: string, active: boolean) {
   const businessId = getBusinessId();
 
   const { error } = await supabase
-    .from('tp_pricebook_items')
+    .from('tpe_pricebook_items')
     .update({ active })
     .eq('id', id)
     .eq('business_id', businessId);
@@ -94,7 +94,7 @@ export async function bulkImportPricebookItems(rows: PricebookRow[]): Promise<nu
   }));
 
   const { error } = await supabase
-    .from('tp_pricebook_items')
+    .from('tpe_pricebook_items')
     .insert(records);
 
   if (error) throw new Error('Failed to import items');

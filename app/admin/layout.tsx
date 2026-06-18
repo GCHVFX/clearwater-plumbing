@@ -20,6 +20,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             TradePulse
           </span>
           <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', margin: '0 0.75rem' }}>/</span>
+          <a href="/admin/estimates" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>
+            Estimates
+          </a>
+          <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', margin: '0 0.75rem' }}>/</span>
           <a href="/admin/pricebook" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>
             Pricebook
           </a>

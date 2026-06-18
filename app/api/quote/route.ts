@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
     // --- All-or-nothing submission ---
 
     const { data: quoteRecord, error: insertError } = await supabase
-      .from('tp_estimates')
+      .from('tpe_estimates')
       .insert({
         business_id: businessId,
         status: 'needs_review',
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
         const buffer = Buffer.from(await photo.arrayBuffer());
 
         const { error: uploadError } = await supabase.storage
-          .from('tp-estimate-photos')
+          .from('tpe-estimate-photos')
           .upload(storagePath, buffer, {
             contentType: photo.type,
             upsert: false,
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
       }));
 
       const { error: photoInsertError } = await supabase
-        .from('tp_estimate_photos')
+        .from('tpe_estimate_photos')
         .insert(photoRecords);
 
       if (photoInsertError) {
@@ -192,13 +192,13 @@ async function rollback(
 ) {
   if (uploadedPaths.length > 0) {
     const { error } = await supabase.storage
-      .from('tp-estimate-photos')
+      .from('tpe-estimate-photos')
       .remove(uploadedPaths);
     if (error) console.error('Rollback: storage delete failed:', error.message);
   }
 
   const { error: deleteError } = await supabase
-    .from('tp_estimates')
+    .from('tpe_estimates')
     .delete()
     .eq('id', estimateId);
   if (deleteError) console.error('Rollback: estimate delete failed:', deleteError.message);

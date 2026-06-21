@@ -44,11 +44,11 @@ web design subscriptions to trades businesses in BC, Canada.
 - Contractor language: estimate, quote, job, customer, service call
 
 ## Quote Form
-- Fields: name, phone, email, jobDescription, address
+- Fields: name, phone, email, jobDescription, address, service type, urgency, up to 5 photos
 - Posts to /api/quote
-- Currently logs to console — do not change this without instruction
+- Creates tpe_estimates row (source=website_quote, status=needs_review) and uploads photos to tpe-estimate-photos bucket
+- Quote appears in TradePulse app for contractor review
 
 ## Deployment
 - Vercel via git push
-- No environment variables required for base build
-- Optional: CONTRACTOR_EMAIL, TRADEPULSE_API_KEY, TRADEPULSE_BUSINESS_ID
+- Required env vars: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, TP_BUSINESS_ID, TP_ADMIN_SECRET

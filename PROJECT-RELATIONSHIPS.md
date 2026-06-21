@@ -4,8 +4,8 @@
 
 Do not delete, rename, or migrate any Supabase tables without checking BOTH repos:
 
-- C:\web-apps\clearwater-plumbing (this repo)
-- C:\web-apps\tradepulse-estimates
+- D:\Work\web-apps\clearwater-plumbing (this repo)
+- D:\Work\web-apps\tradepulse-estimates
 
 Both apps share the same TradePulse Supabase project.
 
@@ -32,15 +32,13 @@ Both apps share the same TradePulse Supabase project.
 | tpe_pricebook_items | Pricebook for building draft estimates |
 | tpe_estimate_line_items | Draft estimate line items from pricebook |
 
-## Tables Used (target — after standalone TradePulse migration)
+## Tables Not Used by This App
 
-Same as current. This app does not use:
+These tables exist in the shared project but are used only by the standalone TradePulse SaaS app:
 
 - tpe_estimate_changes
 - tpe_payment_reminders
 - tpe_rate_limits
-
-Those tables will be used by the standalone TradePulse app sharing this project.
 
 ## Storage Buckets
 
@@ -48,12 +46,11 @@ Those tables will be used by the standalone TradePulse app sharing this project.
 |---|---|
 | tpe-estimate-photos | Private photo storage for quote submissions (signed URLs only) |
 
-After standalone migration, these buckets will also exist in this project:
+Other buckets in the shared project (used by standalone TradePulse):
 
 | Bucket | Usage |
 |---|---|
 | logos | Business logos (standalone TradePulse) |
-| estimate-photos | Estimate photos (standalone TradePulse, legacy — may merge into tpe-estimate-photos) |
 
 ## Environment Variables
 
@@ -68,13 +65,19 @@ After standalone migration, these buckets will also exist in this project:
 
 Single-tenant. No Supabase Auth. Admin access via TP_ADMIN_SECRET cookie (HMAC token). All queries scoped to TP_BUSINESS_ID.
 
-## Long-Term Direction
+## Integration Model
 
-Clearwater is a demo site. It uses TradePulse as a backend for quote intake and estimate building. It will continue to use TP_BUSINESS_ID for single-tenant access. When the standalone TradePulse app migrates to this same Supabase project, both apps will share the same tables with no conflicts — Clearwater accesses by business_id, standalone accesses by owner_user_id.
+Clearwater is the first standalone contractor website using TradePulse as a backend. It is not a second TradePulse app. Both apps share the same Supabase project with no conflicts:
+- Clearwater scopes all queries by `TP_BUSINESS_ID` (= `tpe_businesses.id`)
+- TradePulse SaaS scopes by `owner_user_id` (= `auth.users`)
+
+Future contractor websites should follow the Clearwater pattern: standalone site, same Supabase project, own `TP_BUSINESS_ID`, quote form creates `tpe_estimates` rows with `source = 'website_quote'` and `status = 'needs_review'`.
 
 ## Migration Status
 
+All migrations complete:
 - Phase 1/2A/2B/2C: Complete (quote intake, pricebook, estimates dashboard)
 - Supabase project migration: Complete (moved from Web Apps to dedicated TradePulse project)
 - Table prefix migration: Complete (tp_ → tpe_)
-- Standalone TradePulse migration: Not started (schema expansion + code updates pending)
+- Standalone TradePulse migration: **Complete** (schema expansion, code updates, production verified)
+- Production quote flow: **Verified end-to-end**

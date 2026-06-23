@@ -51,4 +51,4 @@ web design subscriptions to trades businesses in BC, Canada.
 
 ## Deployment
 - Vercel via git push
-- Required env vars: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, TP_BUSINESS_ID, TP_ADMIN_SECRET
+- Required env vars: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, TP_BUSINESS_ID (`273169f5-f119-424a-8949-1731ee560f81`), TP_ADMIN_SECRET

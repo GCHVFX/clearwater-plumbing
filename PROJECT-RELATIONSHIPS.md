@@ -4,8 +4,8 @@
 
 Do not delete, rename, or migrate any Supabase tables without checking BOTH repos:
 
-- D:\Work\web-apps\clearwater-plumbing (this repo)
-- D:\Work\web-apps\tradepulse-estimates
+- C:\Work\web-apps\clearwater-plumbing (this repo)
+- C:\Work\web-apps\tradepulse-estimates
 
 Both apps share the same TradePulse Supabase project.
 
@@ -58,7 +58,7 @@ Other buckets in the shared project (used by standalone TradePulse):
 |---|---|
 | SUPABASE_URL | TradePulse Supabase project URL |
 | SUPABASE_SERVICE_ROLE_KEY | Service role key (server-only, bypasses RLS) |
-| TP_BUSINESS_ID | UUID of Clearwater Plumbing in tpe_businesses |
+| TP_BUSINESS_ID | Clearwater Plumbing business ID: `273169f5-f119-424a-8949-1731ee560f81` (active row in tpe_businesses) |
 | TP_ADMIN_SECRET | Admin password for /admin/* routes |
 
 ## Auth Model
@@ -81,3 +81,4 @@ All migrations complete:
 - Table prefix migration: Complete (tp_ → tpe_)
 - Standalone TradePulse migration: **Complete** (schema expansion, code updates, production verified)
 - Production quote flow: **Verified end-to-end**
+- Active Clearwater business ID: `273169f5-f119-424a-8949-1731ee560f81` (subscription_status = complimentary)

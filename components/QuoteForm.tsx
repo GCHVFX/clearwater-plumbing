@@ -69,12 +69,21 @@ export default function QuoteForm() {
 
     setLoading(true);
     try {
+      const body = new window.FormData();
+      body.append('name', formData.name.trim());
+      body.append('phone', formData.phone.replace(/\D/g, ''));
+      body.append('email', formData.email.trim());
+      body.append('address', formData.address.trim());
+      body.append('description', formData.jobDescription.trim());
+
       const response = await fetch('/api/quote', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body,
       });
-      if (!response.ok) throw new Error('Failed to submit quote request.');
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error((data as { error?: string } | null)?.error || 'Failed to submit quote request.');
+      }
       setSubmitted(true);
       setFormData({ name: '', phone: '', email: '', jobDescription: '', address: '' });
       setTimeout(() => setSubmitted(false), 6000);

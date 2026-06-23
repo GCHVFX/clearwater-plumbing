@@ -39,14 +39,34 @@ export async function POST(request: NextRequest) {
     const description = formData.get('description') as string | null;
     const photos = formData.getAll('photos') as File[];
 
-    if (!name || !description) {
+    if (!name?.trim()) {
+      return NextResponse.json({ error: 'Name is required' }, { status: 400 });
+    }
+    if (!description?.trim() || description.trim().length < 10) {
       return NextResponse.json(
-        { error: 'Name and job description are required' },
+        { error: 'Please describe the job in at least 10 characters' },
         { status: 400 }
       );
     }
 
-    if (!phone && !email) {
+    const phoneDigits = phone ? phone.replace(/\D/g, '') : '';
+    const emailTrimmed = email ? email.trim() : '';
+    const hasValidPhone = phoneDigits.length >= 10;
+    const hasValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrimmed);
+
+    if (phone && !hasValidPhone) {
+      return NextResponse.json(
+        { error: 'Please enter a valid 10-digit phone number' },
+        { status: 400 }
+      );
+    }
+    if (emailTrimmed && !hasValidEmail) {
+      return NextResponse.json(
+        { error: 'Please enter a valid email address' },
+        { status: 400 }
+      );
+    }
+    if (!hasValidPhone && !hasValidEmail) {
       return NextResponse.json(
         { error: 'Please enter a phone number or email so we can contact you' },
         { status: 400 }
@@ -86,6 +106,46 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = getSupabaseAdmin();
+
+    const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+      || request.headers.get('x-real-ip')
+      || 'unknown';
+    if (clientIp === 'unknown') {
+      console.warn('[quote] Could not determine client IP for rate limiting');
+    }
+    const rlKey = `quote_ip:${clientIp}`;
+    const { data: rlExisting } = await supabase
+      .from('tpe_rate_limits')
+      .select('count, expires_at')
+      .eq('key', rlKey)
+      .eq('action', 'quote-submit')
+      .maybeSingle();
+
+    const now = new Date();
+    const RL_LIMIT = 10;
+    const RL_WINDOW = 3600;
+
+    if (rlExisting && new Date(rlExisting.expires_at) > now) {
+      if (rlExisting.count >= RL_LIMIT) {
+        return NextResponse.json(
+          { error: 'Too many requests. Please try again later.' },
+          { status: 429 }
+        );
+      }
+      await supabase
+        .from('tpe_rate_limits')
+        .update({ count: rlExisting.count + 1 })
+        .eq('key', rlKey)
+        .eq('action', 'quote-submit');
+    } else {
+      await supabase.from('tpe_rate_limits').upsert({
+        key: rlKey,
+        action: 'quote-submit',
+        count: 1,
+        expires_at: new Date(now.getTime() + RL_WINDOW * 1000).toISOString(),
+      });
+    }
+
     const businessId = process.env.TP_BUSINESS_ID;
     if (!businessId) {
       console.error('TP_BUSINESS_ID not configured');

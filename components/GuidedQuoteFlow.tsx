@@ -74,10 +74,9 @@ export default function GuidedQuoteFlow() {
     if (step === 5 && description.trim().length < 10) { setError('Please describe the problem in at least 10 characters.'); return; }
     if (step === 6) {
       if (!name.trim()) { setError('Please enter your name.'); return; }
-      if (phoneDigits(phone).length < 10) { setError('Please enter a 10-digit phone number.'); return; }
-      if (!email.trim()) { setError('Please enter your email.'); return; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setError('Please enter a valid email address.'); return; }
-      if (!address.trim()) { setError('Please enter your address.'); return; }
+      if (!phoneDigits(phone) && !email.trim()) { setError('Please enter a phone number or email so we can contact you.'); return; }
+      if (phoneDigits(phone) && phoneDigits(phone).length < 10) { setError('Please enter a 10-digit phone number.'); return; }
+      if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setError('Please enter a valid email address.'); return; }
       handleSubmit();
       return;
     }
@@ -761,7 +760,7 @@ export default function GuidedQuoteFlow() {
               Contact Information
             </h3>
             <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '1.25rem' }}>
-              We&apos;ll use this to send you the estimate.
+              We need at least a phone number or email to send you the estimate.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
@@ -777,37 +776,45 @@ export default function GuidedQuoteFlow() {
                   autoComplete="name"
                 />
               </div>
-              <div className="gqf-contact-grid">
-                <div>
-                  <label htmlFor="quote-phone" style={labelStyle}>Phone</label>
-                  <input
-                    id="quote-phone"
-                    type="tel"
-                    inputMode="numeric"
-                    value={phone}
-                    onChange={(e) => setPhone(formatPhone(e.target.value))}
-                    className="gqf-input"
-                    style={inputStyle}
-                    placeholder="(604) 555-0100"
-                    autoComplete="tel"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="quote-email" style={labelStyle}>Email</label>
-                  <input
-                    id="quote-email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="gqf-input"
-                    style={inputStyle}
-                    placeholder="john@example.com"
-                    autoComplete="email"
-                  />
-                </div>
+              <div>
+                <label htmlFor="quote-phone" style={labelStyle}>Phone</label>
+                <input
+                  id="quote-phone"
+                  type="tel"
+                  inputMode="numeric"
+                  value={phone}
+                  onChange={(e) => setPhone(formatPhone(e.target.value))}
+                  className="gqf-input"
+                  style={inputStyle}
+                  placeholder="(604) 555-0100"
+                  autoComplete="tel"
+                />
+                <p style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>
+                  So the contractor can call or text you about the job.
+                </p>
               </div>
               <div>
-                <label htmlFor="quote-address" style={labelStyle}>Address</label>
+                <label htmlFor="quote-email" style={labelStyle}>
+                  Email <span style={{ fontWeight: 400, color: '#94a3b8' }}>optional if phone provided</span>
+                </label>
+                <input
+                  id="quote-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="gqf-input"
+                  style={inputStyle}
+                  placeholder="john@example.com"
+                  autoComplete="email"
+                />
+                <p style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>
+                  Optional if you provide a phone number. Used for a written estimate or follow-up.
+                </p>
+              </div>
+              <div>
+                <label htmlFor="quote-address" style={labelStyle}>
+                  Address <span style={{ fontWeight: 400, color: '#94a3b8' }}>optional</span>
+                </label>
                 <input
                   id="quote-address"
                   type="text"

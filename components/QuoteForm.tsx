@@ -54,15 +54,18 @@ export default function QuoteForm() {
     setError('');
 
     if (!formData.name.trim()) { setError('Please enter your name.'); return; }
-    if (!formData.phone.trim()) { setError('Please enter your phone number.'); return; }
-    if (!formData.email.trim()) { setError('Please enter your email.'); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    if (!formData.phone.trim() && !formData.email.trim()) {
+      setError('Please enter a phone number or email so we can contact you.'); return;
+    }
+    if (formData.phone.trim() && formData.phone.replace(/\D/g, '').length < 10) {
+      setError('Please enter a 10-digit phone number.'); return;
+    }
+    if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       setError('Please enter a valid email address.'); return;
     }
     if (formData.jobDescription.trim().length < 10) {
       setError('Please describe the job in at least 10 characters.'); return;
     }
-    if (!formData.address.trim()) { setError('Please enter your service address.'); return; }
 
     setLoading(true);
     try {
@@ -135,39 +138,48 @@ export default function QuoteForm() {
           />
         </div>
 
-        <div className="qf-two-col">
-          <div>
-            <label htmlFor="phone" style={labelStyle}>Phone Number</label>
-            <input
-              id="phone"
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className="qf-input"
-              style={inputStyle}
-              placeholder="(604) 555-0100"
-              disabled={loading}
-            />
-          </div>
-          <div>
-            <label htmlFor="email" style={labelStyle}>Email Address</label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="qf-input"
-              style={inputStyle}
-              placeholder="john@example.com"
-              disabled={loading}
-            />
-          </div>
+        <div>
+          <label htmlFor="phone" style={labelStyle}>Phone Number</label>
+          <input
+            id="phone"
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className="qf-input"
+            style={inputStyle}
+            placeholder="(604) 555-0100"
+            disabled={loading}
+          />
+          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>
+            So the contractor can call or text you about the job.
+          </p>
         </div>
 
         <div>
-          <label htmlFor="address" style={labelStyle}>Service Address</label>
+          <label htmlFor="email" style={labelStyle}>
+            Email Address <span style={{ fontWeight: 400, color: '#94a3b8' }}>optional if phone provided</span>
+          </label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="qf-input"
+            style={inputStyle}
+            placeholder="john@example.com"
+            disabled={loading}
+          />
+          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>
+            Optional if you provide a phone number. Used for a written estimate or follow-up.
+          </p>
+        </div>
+
+        <div>
+          <label htmlFor="address" style={labelStyle}>
+            Service Address <span style={{ fontWeight: 400, color: '#94a3b8' }}>optional</span>
+          </label>
           <input
             id="address"
             type="text"

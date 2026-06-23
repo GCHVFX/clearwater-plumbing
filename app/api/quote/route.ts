@@ -9,7 +9,15 @@ const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.formData();
+    let formData: FormData;
+    try {
+      formData = await request.formData();
+    } catch {
+      return NextResponse.json(
+        { error: 'Request must be multipart form data' },
+        { status: 400 }
+      );
+    }
 
     const honeypot = formData.get('honeypot') as string | null;
     if (honeypot) {
@@ -31,9 +39,16 @@ export async function POST(request: NextRequest) {
     const description = formData.get('description') as string | null;
     const photos = formData.getAll('photos') as File[];
 
-    if (!name || !email || !phone || !address || !description) {
+    if (!name || !description) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Name and job description are required' },
+        { status: 400 }
+      );
+    }
+
+    if (!phone && !email) {
+      return NextResponse.json(
+        { error: 'Please enter a phone number or email so we can contact you' },
         { status: 400 }
       );
     }
@@ -86,9 +101,9 @@ export async function POST(request: NextRequest) {
         status: 'needs_review',
         source: 'website_quote',
         customer_name: name,
-        customer_phone: phone,
-        customer_email: email,
-        job_address: address,
+        customer_phone: phone || '',
+        customer_email: email || '',
+        job_address: address || '',
         service_type: serviceType || 'unknown',
         location: location || 'unknown',
         urgency: urgency || 'unknown',
@@ -160,6 +175,11 @@ export async function POST(request: NextRequest) {
           { status: 500 }
         );
       }
+
+      await supabase
+        .from('tpe_estimates')
+        .update({ include_photos: true })
+        .eq('id', estimateId);
     }
 
     console.log('Estimate saved:', {

@@ -1,6 +1,6 @@
 # Clearwater Plumbing handoff
 
-Updated: 2026-09-12 00:52 PT
+Updated: 2026-09-12 01:01 PT
 
 ## Project
 
@@ -60,3 +60,35 @@ Updated: 2026-09-12 00:52 PT
   command, unless explicitly supplied).
 - No changes were made to the AICC application itself; the existing
   mechanism was fully sufficient.
+
+## Web Chat / browser-chat handoff integration (2026-09-12 01:01 PT)
+
+- Problem: AICC's Web Chat column showed "None recorded" for this project
+  despite Claude Code session tracking already working.
+- Copied the established working implementation from
+  `C:\Work\tools\routebuddy\.claude\hooks\aicc-handoff.mjs` and
+  `C:\Work\tools\routebuddy\.claude\settings.json` verbatim (no new
+  integration invented). The hook is a Claude Code `UserPromptSubmit` hook
+  that detects prompts starting with `[AICC]` and pipes the full raw prompt
+  to the AICC CLI's `handoff record --stdin` command; the hook itself
+  contains no dedupe logic — the CLI handles that via a stable fingerprint.
+- Files added:
+  - `.claude/hooks/aicc-handoff.mjs` (copied unchanged)
+  - `.claude/settings.json` (new — no prior settings file existed in this
+    repo, so no merge was needed; content matches routebuddy's exactly)
+- Verified end-to-end using this session's actual `[AICC]` header (Source:
+  ChatGPT, Model: GPT-5.6 Sol, Effort: High, Session type: Debugging) via
+  `npm run aicc -- handoff record --project "C:\Work\websites\clearwater-plumbing" --prompt-file <this prompt> --json`
+  from the AICC repo:
+  - First call: `"status": "recorded"`, projectReindexed: true.
+  - Identical replay: `"status": "skipped"`, warning "Duplicate of an
+    existing recorded handoff — skipped.", same fingerprint, no new event
+    and no reindex — confirms no duplicate handoff is created on retry.
+- Confirmed directly in `project_derived` (AICC sqlite):
+  `browser_chat_provider_key` = `chatgpt`, `browser_chat_model` =
+  `GPT-5.6 Sol`, `browser_chat_effort` = `High`, `browser_chat_session_title`
+  = "Debugging handoff", `browser_chat_at` populated. All were empty before
+  this test.
+- No Clearwater application code, UI, Supabase config, dependencies, or
+  deployment configuration was touched — only `.claude/` files and
+  `HANDOFF.md`.

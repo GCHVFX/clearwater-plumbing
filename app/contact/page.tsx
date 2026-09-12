@@ -103,28 +103,6 @@ export default function Contact() {
                 </p>
               </div>
 
-              {/* Email */}
-              <div>
-                <p style={{
-                  fontSize: '11px',
-                  fontWeight: 700,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: '#64748b',
-                  marginBottom: '0.625rem',
-                }}>
-                  Email
-                </p>
-                <a href="mailto:info@clearwaterplumbing.com" style={{
-                  fontSize: '15px',
-                  color: '#2E86C1',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                }}>
-                  info@clearwaterplumbing.com
-                </a>
-              </div>
-
               {/* Hours */}
               <div>
                 <p style={{

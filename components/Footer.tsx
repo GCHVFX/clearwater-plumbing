@@ -73,9 +73,6 @@ export default function Footer() {
             }}>
               {CONTRACTOR.phone}
             </a>
-            <a href={`mailto:${CONTRACTOR.email}`} className="ftr-contact-link" style={{ fontSize: '14px', display: 'block', marginBottom: '1rem' }}>
-              {CONTRACTOR.email}
-            </a>
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}>Available 24/7 for emergencies</p>
           </div>
         </div>

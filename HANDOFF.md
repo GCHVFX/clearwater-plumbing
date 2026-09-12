@@ -1,6 +1,6 @@
 # Clearwater Plumbing handoff
 
-Updated: 2026-09-12 01:01 PT
+Updated: 2026-09-12 01:07 PT
 
 ## Project
 
@@ -92,3 +92,14 @@ Updated: 2026-09-12 01:01 PT
 - No Clearwater application code, UI, Supabase config, dependencies, or
   deployment configuration was touched — only `.claude/` files and
   `HANDOFF.md`.
+
+## Footer email removal (2026-09-12 01:07 PT)
+
+- Removed the unused footer email link (`mailto:${CONTRACTOR.email}`) from
+  `components/Footer.tsx`. "Get in Touch", the phone number link, and
+  "Available 24/7 for emergencies" are unchanged, as is all other footer
+  content/styling.
+- Verified: `npm run build` compiled clean (zero errors, TypeScript passed,
+  all 12 routes generated); grep confirmed no remaining `mailto`/
+  `CONTRACTOR.email` reference in the file.
+- Committed and pushed to `main`.
